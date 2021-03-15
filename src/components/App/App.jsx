@@ -8,7 +8,6 @@ import {
 
 import { useDispatch } from 'react-redux';
 
-import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -17,6 +16,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../Homepage/HomePage';
+import NewBeerPage from '../NewBeerPage/NewBeerPage';
 
 import './App.css';
 
@@ -76,6 +76,14 @@ function App() {
             path="/home"
           >
             <HomePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/newbeer"
+          >
+            <NewBeerPage />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
