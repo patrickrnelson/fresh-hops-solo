@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -6,12 +7,21 @@ function HomePage() {
   const history = useHistory();
   const user = useSelector(store => store.user)
 
+  // On load, grab a random beer
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_RANDOM_BEER'
+    })
+  }, []);
+
+  // LOGOUT on button click
   const handleLogout = () => {
     dispatch ({
       type: 'LOGOUT'
     })
   }
 
+  // ADD A BEER button
   const handleAdd = () => {
     history.push('/newbeer')
   }
@@ -20,6 +30,7 @@ function HomePage() {
     <div>
       <button onClick={handleAdd}> Add Beer </button>
       <h2>Hi, {user.name}!</h2>
+      
       <button onClick={handleLogout}>Log Out</button>
     </div>
   )
