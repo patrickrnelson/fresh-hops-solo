@@ -17,8 +17,10 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
   console.log('user is', req.user);
 
   let queryText = `
-      SELECT * FROM "beers"
-      WHERE id = $1;
+    SELECT "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
+    JOIN "styles" ON "style_id" = "styles".id
+    JOIN "breweries" ON "brewery_id" = "breweries".id
+    WHERE "beers".id = $1;
   `;
 
   // get the id of the logged in user
