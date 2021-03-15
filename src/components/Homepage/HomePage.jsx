@@ -6,6 +6,7 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(store => store.user)
+  const randomBeer = useSelector(store => store.randomBeer)
 
   // On load, grab a random beer
   useEffect(() => {
@@ -30,7 +31,7 @@ function HomePage() {
     <div>
       <button onClick={handleAdd}> Add Beer </button>
       <h2>Hi, {user.name}!</h2>
-      
+      <p>{randomBeer[0] ? randomBeer[0].name : ''}</p>
       <button onClick={handleLogout}>Log Out</button>
     </div>
   )

@@ -18,7 +18,7 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
 
   let queryText = `
       SELECT * FROM "beers"
-      WHERE beer_id = $1;
+      WHERE id = $1;
   `;
 
   // get the id of the logged in user
