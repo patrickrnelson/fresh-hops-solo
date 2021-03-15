@@ -5,8 +5,14 @@ import { useHistory } from 'react-router-dom';
 function LoginPage() {
   const history = useHistory();
 
+  const aboutPage = () => {
+    history.push('/about')
+  }
+
   return (
     <div>
+      <button onClick={aboutPage}>About</button>
+      
       <LoginForm />
 
       <center>
