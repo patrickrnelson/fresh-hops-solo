@@ -32,7 +32,6 @@ function LoginForm() {
           {errors.loginMessage}
         </h3>
       )}
-      <div>
         <label htmlFor="username">
           Username:
           <input
@@ -43,8 +42,6 @@ function LoginForm() {
             onChange={(event) => setUsername(event.target.value)}
           />
         </label>
-      </div>
-      <div>
         <label htmlFor="password">
           Password:
           <input
@@ -55,10 +52,7 @@ function LoginForm() {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-      </div>
-      <div>
         <input className="btn" type="submit" name="submit" value="Log In" />
-      </div>
     </form>
   );
 }
