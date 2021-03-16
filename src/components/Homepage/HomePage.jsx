@@ -29,7 +29,7 @@ function HomePage() {
 
   // ADD A BEER button
   const handleAdd = () => {
-    history.push('/newbeer')
+    history.push('/addbeer')
   }
 
   return (
