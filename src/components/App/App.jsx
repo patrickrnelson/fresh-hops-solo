@@ -19,6 +19,7 @@ import HomePage from '../Homepage/HomePage';
 import AddBeerPage from '../AddBeerPage/AddBeerPage';
 import MyBeersPage from '../MyBeersPage/MyBeersPage';
 import WantTroTryPage from '../WantToTryPage/WantToTryPage';
+import AutoCompleteData from '../AutoCompleteData/AutoCompleteData';
 
 import './App.css';
 

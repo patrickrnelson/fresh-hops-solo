@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 // Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 });
 
 function Header() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -60,7 +62,7 @@ function Header() {
           </IconButton>
         </Grid>
         <Grid item xs={6}>
-          <Link id="recommendationsLink">Recommendations</Link>
+          <Link id="recommendationsLink" onClick={() => history.push('/')}>Recommendations</Link>
         </Grid>
         <Grid item xs={6}>
           <Link id="myBeersLink" onClick={() => history.push('/mybeers')}>My Beers</Link>
