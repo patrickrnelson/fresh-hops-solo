@@ -25,7 +25,7 @@ function HomePage() {
     })
   }, []);
 
- 
+
 
   // ADD A BEER button
   const handleAdd = () => {

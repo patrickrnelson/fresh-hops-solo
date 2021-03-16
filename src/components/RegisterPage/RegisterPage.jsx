@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 import RegisterForm from '../RegisterForm/RegisterForm';
+import Button from '@material-ui/core/Button';
 
 function RegisterPage() {
   const history = useHistory();
@@ -12,20 +13,20 @@ function RegisterPage() {
 
   return (
     <div>
-      <button onClick={aboutPage}>About</button>
-
       <RegisterForm />
 
       <center>
-        <button
+        <Button
           type="button"
+          variant="contained"
           className="btn btn_asLink"
           onClick={() => {
             history.push('/');
           }}
         >
           Login
-        </button>
+        </Button>
+        <Button style={{display: 'block', marginTop: '100px'}} onClick={aboutPage}>About Our App</Button>
       </center>
     </div>
   );

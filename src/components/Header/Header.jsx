@@ -26,9 +26,10 @@ const useStyles = makeStyles({
 function Header() {
   const dispatch = useDispatch();
   const classes = useStyles();
+
   // local state for drawer (hamburger menu)
   const [drawer, setDrawer] = useState(false);
-
+  
   const toggleDrawer = () => {
     setDrawer(!drawer);
   };
@@ -74,17 +75,20 @@ function Header() {
 
   return (
     <div>
-      {/* Will probably be able to pull header out into it's own component */}
+
       <header style={{ textAlign: 'right', paddingRight: '17px' }}>
+        
         {/* This section handles the hamburger menu and drawer */}
         <IconButton onClick={toggleDrawer} >
           <MenuIcon fontSize="large"/>
         </IconButton>
-        <Drawer anchor="left" open={drawer} onClose={toggleDrawer}>
+        <Drawer anchor="right" open={drawer} onClose={toggleDrawer}>
           {list}
         </Drawer>
         {/* End drawer section */}
+      
       </header>
+
     </div>
   )
 }

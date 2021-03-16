@@ -95,7 +95,7 @@ Form Treatment
   width: 400px;
   max-width: 100%;
   padding: 25px;
-  margin: 0 auto 20px;
+  margin: 0 auto 0px;
   display: flex;
   flex-direction: column;
 }

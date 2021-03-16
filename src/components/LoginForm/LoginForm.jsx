@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
+// Material UI imports
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,35 +30,53 @@ function LoginForm() {
   }; // end login
 
   return (
+    
+    
     <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
+      <Grid container spacing={1} alignItems='center'>
+          <img
+            style={{
+              display: 'block', 
+              margin: '30px auto',
+            }} 
+            src="https://images.creativemarket.com/0.1.0/ps/2889213/600/400/m1/fpnw/wm0/zdqaf6hi0uarrkccaer5wiyxufqblvcuc6lmh8sahffmftdybuzexhckyrvtuts8-.jpg?1498334639&s=29d6a93972e8d8e8cc3f2175c01f42c0" 
+            height="110px"
+          />
+      </Grid>
+      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Login</h2>
       {errors.loginMessage && (
         <h3 className="alert" role="alert">
           {errors.loginMessage}
         </h3>
       )}
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
+      <Grid container spacing={3} alignItems='center' justify='center' >
+        <Grid item xs={11}>
+          <TextField 
+            label="Username" 
+            variant="outlined" 
+            id="username" 
+            fullWidth 
             required
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
+            />
+        </Grid>
+        <Grid item xs={11}>
+          <TextField
+            label="Password" 
+            variant="outlined" 
+            id="username" 
+            fullWidth 
             type="password"
-            name="password"
             required
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </label>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        </Grid>
+          <Button className="btn" type="submit" name="submit" color="primary" variant="contained">Login</Button>
+      </Grid>
     </form>
+
   );
 }
 
