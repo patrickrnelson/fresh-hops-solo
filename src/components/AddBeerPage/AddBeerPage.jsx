@@ -20,8 +20,14 @@ function AddBeerPage() {
   const [newBeerType, setNewBeerType] = useState('');
   const [newBeerBrewery, setNewBeerBrewery] = useState('');
 
+  const [characteristicOne, setCharacteristicOne] = useState('');
+  const [characteristicTwo, setCharacteristicTwo] = useState('');
+  const [characteristicThree, setCharacteristicThree] = useState('');
+
+  // Contains the characteristics associated with the current beer type that is selected
   const [typeCharacteristics, setTypeCharacteristics] = useState([]);
 
+  // defines the current like status and button colors
   const [likeStatus, setLikeStatus] = useState(null)
   const [thumbsUpColor, setThumbsUpColor] = useState('inherit')
   const [thumbsDownColor, setThumbsDownColor] = useState('inherit')
@@ -30,6 +36,7 @@ function AddBeerPage() {
     dispatch({
       type: 'FETCH_CHARACTERISTICS'
     })
+    // correctly colors the thumb buttons on load
     if(likeStatus === true) {
       setThumbsUpColor('primary')
       setThumbsDownColor('inherit')
@@ -43,7 +50,7 @@ function AddBeerPage() {
   }, [])
 
   // If someone clicks 'Thumbs up', set likeStatus to true
-  // and set the button colors accordingly
+  // and set the thumb button colors accordingly
   const likeClick = () => {
     if(likeStatus === null || likeStatus === false) {
       setLikeStatus(true)
@@ -58,7 +65,7 @@ function AddBeerPage() {
   }
 
   // If someone clicks 'Thumbs down', set likeStatus to false
-  // and set the button colors accordingly
+  // and set the thumb button colors accordingly
   const dislikeClick = () => {
     if(likeStatus === null || likeStatus === true) {
       setLikeStatus(false)
@@ -71,6 +78,9 @@ function AddBeerPage() {
     }
   }
 
+  // triggered on characteristic dropdown click
+  // Sets the typeCharacteristics state to contain characs. 
+  // associated with the current beer type that is selected
   const defineTypeCharacteristics = () => {
     characteristics.map((object) => {
       if(object.type == newBeerType) {
@@ -84,7 +94,9 @@ function AddBeerPage() {
     console.log('Type', newBeerType);
     console.log('Brewery', newBeerBrewery);
     console.log('Like Status', likeStatus);
-    console.log('characteristics', characteristics);
+    console.log('characteristicOne', characteristicOne);
+    console.log('characteristicTwo', characteristicTwo);
+    console.log('characteristicThree', characteristicThree);
   }
 
   // Data for Autocomplete input
@@ -131,7 +143,8 @@ function AddBeerPage() {
     {type: 'Hazy Pale Ale'},
     {type: 'Table Beer'},
     {type: 'Saison'},
-    {type: 'Pale Ale'}
+    {type: 'Pale Ale'},
+    {type: ''},
   ]);
 
   // Data for Autocomplete input
@@ -146,7 +159,8 @@ function AddBeerPage() {
     {name: 'Falling Knife'},
     {name: 'Able'},
     {name: 'Bauhaus'},
-    {name: 'Voyageur'}
+    {name: 'Voyageur'},
+    {name: ''},
   ]);
 
   return (
@@ -204,22 +218,57 @@ function AddBeerPage() {
             </IconButton>
           </Grid>
 
-          <Grid>
-            <select
-              type="text" 
-              // value={characteristicsArray}
-              // onChange={handleClassChange}
-              onClick={defineTypeCharacteristics}
-            >
-            <option value="">--Select a Characteristic--</option>
-              {typeCharacteristics.map((items) => {
-                  return (
-                    <option>{items}</option>
-                  )
-                }
-              )}
-            </select>
-          </Grid>
+          {/* Characteristic 1 dropdown */}
+            <Grid item xs={10} >
+              <select
+                type="text" 
+                value={characteristicOne}
+                onChange={(event) => {setCharacteristicOne(event.target.value)}}
+                onClick={defineTypeCharacteristics}
+              >
+              <option value="">--Select a Characteristic--</option>
+                {typeCharacteristics.map((items) => {
+                    return (
+                      <option>{items}</option>
+                    )
+                  }
+                )}
+              </select>
+            </Grid>
+            {/* Characteristic 2 dropdown */}
+            <Grid item xs={10} >
+              <select
+                type="text" 
+                value={characteristicTwo}
+                onChange={(event) => {setCharacteristicTwo(event.target.value)}}
+                onClick={defineTypeCharacteristics}
+              >
+              <option value="">--Select a Characteristic--</option>
+                {typeCharacteristics.map((items) => {
+                    return (
+                      <option>{items}</option>
+                    )
+                  }
+                )}
+              </select>
+            </Grid>
+            {/* Characteristic 3 dropdown */}
+            <Grid item xs={10} >
+              <select
+                type="text" 
+                value={characteristicThree}
+                onChange={(event) => {setCharacteristicThree(event.target.value)}}
+                onClick={defineTypeCharacteristics}
+              >
+              <option value="">--Select a Characteristic--</option>
+                {typeCharacteristics.map((items) => {
+                    return (
+                      <option>{items}</option>
+                    )
+                  }
+                )}
+              </select>
+            </Grid>
         </Grid>
         <Button onClick={randomButtonClick}>Click Me!</Button>
       </form>
