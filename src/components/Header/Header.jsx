@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 
@@ -55,8 +55,8 @@ function Header() {
         onKeyDown={toggleDrawer}
         role="presentation">
         <Grid item xs={6}>
-          <IconButton onClick={toggleDrawer}>
-            <ArrowBackIcon />
+          <IconButton onClick={toggleDrawer} style={{alignItems: "center"}}>
+            <ArrowForwardIcon />
           </IconButton>
         </Grid>
         <Grid item xs={6}>

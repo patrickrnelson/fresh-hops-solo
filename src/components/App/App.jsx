@@ -16,7 +16,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../Homepage/HomePage';
-import NewBeerPage from '../NewBeerPage/NewBeerPage';
+import AddBeerPage from '../AddBeerPage/AddBeerPage';
 import MyBeersPage from '../MyBeersPage/MyBeersPage';
 import WantTroTryPage from '../WantToTryPage/WantToTryPage';
 
@@ -99,9 +99,9 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/newbeer"
+            path="/addbeer"
           >
-            <NewBeerPage />
+            <AddBeerPage />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
