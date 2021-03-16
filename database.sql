@@ -98,8 +98,15 @@ VALUES ('IPA'),
 ('Saison'),
 ('Pale Ale');
 
-INSERT INTO "breweries" ("name")
-VALUES ('Pryes'), ('Modist'), ('Dangerous Man'), ('Indeed'), ('Inbound'), ('Castle Danger'), ('Fulton'), ('Fair State');
+INSERT INTO "breweries" ("name", "image_url")
+VALUES ('Pryes', 'https://lh3.ggpht.com/9mxyCSyWYzSl1YecJaHQ5CyvYtsvEZq3y2k1fJwwVjhudsZbJYS1c0gVWBHm9USAtgs-Et9kqkAU13FF_BQFwQBnp8YwuA=s750'), 
+  ('Modist', 'https://swag.modistbrewing.com/uploads/b/919d6d60-67bc-11ea-8f20-bfa72d20fbcf/store%20logo.jpg'), 
+  ('Dangerous Man', 'https://i.pinimg.com/originals/99/79/85/99798521204a334461a5f95a52e87198.jpg'), 
+  ('Indeed', 'https://www.indeedbrewing.com/uploads/press-kit/Indeed_Brewing_Co__Logo_Badge_RGB.png'), 
+  ('Inbound', 'https://d2pxm94gkd1wuq.cloudfront.net/BreweryLogos/Standard/225213172.pint.glass.black.png'), 
+  ('Castle Danger', 'https://www.castledangerbrewery.com/wp-content/uploads/Castle-Danger-Brewery-Full-Color-Logo-e1447365135126.png'), 
+  ('Fulton', 'https://www.mnbeer.com/wp-content/uploads/fulton-brewing-logo-200x200.png'), 
+  ('Fair State', 'https://craftpeak-cooler-images.imgix.net/fair-state-brewing-cooperative/FS-logo-color_2x.png?auto=compress%2Cformat&ixlib=php-1.2.1');
 
 INSERT INTO "beers" ("name", "style_id", "dominant_flavor_id", "brewery_id")
 VALUES 
@@ -109,7 +116,7 @@ VALUES
 ('Pragmatic Pils', 2, 3, 1),
 ('Course Correct', 39, 12, 1),
 ('Peace Offering', 7, 5, 1),
-('Bohemian Blonde', 6, 3, 1),
+('Bohemian Blonde', 5, 3, 1),
 ('Dublin Dry Stout', 7, 5, 1),
 ('Stoppage Time', 8, 2, 1),
 ('Sunrise Beach', 9, 6, 1),
