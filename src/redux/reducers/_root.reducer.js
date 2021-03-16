@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import characteristics from './characteristics.reducer'
 import errors from './errors.reducer';
 import user from './user.reducer';
 import randomBeer from './randomBeer.reducer';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   randomBeer, // this gives us a random beer to display on the homepage
+  characteristics, // gives us characteristics to select in drop down menu
 });
 
 export default rootReducer;

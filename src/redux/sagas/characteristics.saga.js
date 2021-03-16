@@ -1,24 +1,23 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchRandomBeer(action) {
-  let randomNumber = Math.floor(Math.random() * 119); 
-
+function* fetchCharacteristics() {
   try {
 
-    // gets a random beer from the DB
-    let beer = yield axios.get(`/api/beer/random/${randomNumber}`);
+    // gets the characteristics from the DB
+    let characteristics = yield axios.get(`/api/beer/characteristics/`);
+    console.log('GET characteristics', characteristics.data);
 
-    // automatically log a user in after registration
-    yield put({ type: 'SET_RANDOM_BEER', payload: beer.data });
+    // SET the characteristics in the reducer
+    yield put({ type: 'SET_CHARACTERISTICS', payload: characteristics.data });
 
   } catch (error) {
-    console.log('Error getting beer', error);
+    console.log('Error getting characteristics', error);
   }
 }
 
-function* randomBeerSaga() {
-  yield takeLatest('FETCH_RANDOM_BEER', fetchRandomBeer);
+function* characteristicsSaga() {
+  yield takeLatest('FETCH_CHARACTERISTICS', fetchCharacteristics);
 }
 
-export default randomBeerSaga;
+export default characteristicsSaga;

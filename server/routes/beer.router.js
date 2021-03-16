@@ -37,6 +37,33 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// get characteristics
+router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
+  // res.sendStatus(200); // For testing only, can be removed
+
+  console.log('***Hit characteristics endpoint***');
+
+  let queryText = `
+    SELECT "style_name" as "type", ARRAY_AGG ("characteristics".characteristic) as "all_characteristics" FROM "styles"
+    JOIN "style_characteristics" ON "styles".id = "style_characteristics".style_id
+    JOIN "characteristics" ON "characteristics".id = "style_characteristics".characteristic_id
+    GROUP BY "style_name";
+  `;
+
+  // get the id of the logged in user
+  // let userId = req.user.id;
+
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 /**
  * POST route template
  */

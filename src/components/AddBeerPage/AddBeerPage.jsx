@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header';
 
 // Material UI imports
@@ -14,27 +14,31 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 function AddBeerPage() {
   const dispatch = useDispatch();
 
+  const characteristics = useSelector(store => store.characteristics)
+
   const [newBeerName, setNewBeerName] = useState('');
   const [newBeerType, setNewBeerType] = useState('');
   const [newBeerBrewery, setNewBeerBrewery] = useState('');
 
+  const [typeCharacteristics, setTypeCharacteristics] = useState([]);
+
   const [likeStatus, setLikeStatus] = useState(null)
-  const [thumbsUpColor, setThumbsUpColor] = useState('default')
-  const [thumbsDownColor, setThumbsDownColor] = useState('default')
+  const [thumbsUpColor, setThumbsUpColor] = useState('inherit')
+  const [thumbsDownColor, setThumbsDownColor] = useState('inherit')
 
   useEffect(() => {
-    dispatchEvent({
+    dispatch({
       type: 'FETCH_CHARACTERISTICS'
     })
     if(likeStatus === true) {
       setThumbsUpColor('primary')
-      setThumbsDownColor('default')
+      setThumbsDownColor('inherit')
     } else if(likeStatus === false) {
-      setThumbsUpColor('default')
+      setThumbsUpColor('inherit')
       setThumbsDownColor('secondary')
     } else {
-      setThumbsUpColor('default')
-      setThumbsDownColor('default')
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
     }
   }, [])
 
@@ -44,11 +48,11 @@ function AddBeerPage() {
     if(likeStatus === null || likeStatus === false) {
       setLikeStatus(true)
       setThumbsUpColor('primary')
-      setThumbsDownColor('default')
+      setThumbsDownColor('inherit')
     } else {
       setLikeStatus(null)
-      setThumbsUpColor('default')
-      setThumbsDownColor('default')
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
     }
     
   }
@@ -58,13 +62,21 @@ function AddBeerPage() {
   const dislikeClick = () => {
     if(likeStatus === null || likeStatus === true) {
       setLikeStatus(false)
-      setThumbsUpColor('default')
+      setThumbsUpColor('inherit')
       setThumbsDownColor('secondary')
     } else {
       setLikeStatus(null)
-      setThumbsUpColor('default')
-      setThumbsDownColor('default')
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
     }
+  }
+
+  const defineTypeCharacteristics = () => {
+    characteristics.map((object) => {
+      if(object.type == newBeerType) {
+        setTypeCharacteristics(object.all_characteristics)
+      }
+    })
   }
 
   const randomButtonClick = () => {
@@ -72,6 +84,7 @@ function AddBeerPage() {
     console.log('Type', newBeerType);
     console.log('Brewery', newBeerBrewery);
     console.log('Like Status', likeStatus);
+    console.log('characteristics', characteristics);
   }
 
   // Data for Autocomplete input
@@ -162,9 +175,9 @@ function AddBeerPage() {
               getOptionLabel={(option) => option.type}
               style={{ width: 300 }}
               inputValue={newBeerType}
-              onChange={(e,v) => setNewBeerType(v.type)}
+              onChange={(event,value) => setNewBeerType(value.type)}
               renderInput={(params) => 
-                <TextField {...params} label="Beer Type" variant="filled" fullWidth onChange={({ target }) => setNewBeerBrewery(target.value)} />}
+                <TextField {...params} label="Beer Type" variant="filled" fullWidth onChange={({ target }) => setNewBeerType(target.value)} />}
             />
           </Grid>
           {/* Brewery Autocomplete Input */}
@@ -189,6 +202,23 @@ function AddBeerPage() {
             <IconButton onClick={dislikeClick}>
               <ThumbDownAltIcon color={thumbsDownColor}/>
             </IconButton>
+          </Grid>
+
+          <Grid>
+            <select
+              type="text" 
+              // value={characteristicsArray}
+              // onChange={handleClassChange}
+              onClick={defineTypeCharacteristics}
+            >
+            <option value="">--Select a Characteristic--</option>
+              {typeCharacteristics.map((items) => {
+                  return (
+                    <option>{items}</option>
+                  )
+                }
+              )}
+            </select>
           </Grid>
         </Grid>
         <Button onClick={randomButtonClick}>Click Me!</Button>
