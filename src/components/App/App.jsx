@@ -17,6 +17,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../Homepage/HomePage';
 import NewBeerPage from '../NewBeerPage/NewBeerPage';
+import MyBeersPage from '../MyBeersPage/MyBeersPage';
+import WantTroTryPage from '../WantToTryPage/WantToTryPage';
 
 import './App.css';
 
@@ -71,11 +73,27 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+            // logged in shows Homepage else shows LoginPage
             exact
             path="/home"
           >
             <HomePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows My Beers Page else shows LoginPage
+            exact
+            path="/mybeers"
+          >
+            <MyBeersPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Want to try else shows LoginPage
+            exact
+            path="/wanttotry"
+          >
+            <WantTroTryPage />
           </ProtectedRoute>
 
           <ProtectedRoute

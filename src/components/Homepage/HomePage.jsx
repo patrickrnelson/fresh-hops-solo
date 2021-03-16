@@ -7,8 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Drawer from '@material-ui/core/Drawer';
@@ -44,19 +44,33 @@ function HomePage() {
 
   // list that appears when hamburger menu is clicked
   const list = (
-    <div
-      className={classes.list}
-      onClick={toggleDrawer}
-      onKeyDown={toggleDrawer}
-      role="presentation">
-        <IconButton onClick={toggleDrawer}>
-          <ArrowBackIcon />
-        </IconButton>
-        <List>
-          <ListItem id="recommendationsLink">Recommendations</ListItem>
-          <ListItem id="myBeersLink">My Beers</ListItem>
-          <ListItem id="wantToTryLink">Want to Try</ListItem>
-        </List>
+    <div style={{ padding: 20 }}>
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+        justify="left"
+        alignItems="left"
+        className={classes.list}
+        onClick={toggleDrawer}
+        onKeyDown={toggleDrawer}
+        role="presentation">
+        <Grid item xs={6}>
+          <IconButton onClick={toggleDrawer}>
+            <ArrowBackIcon />
+          </IconButton>
+        </Grid>
+        <Grid item xs={6}>
+          <Link id="recommendationsLink">Recommendations</Link>
+        </Grid>
+        <Grid item xs={6}>
+          <Link id="myBeersLink" onClick={() => history.push('/mybeers')}>My Beers</Link>
+        </Grid>
+        <Grid item xs={6}>
+          <Link id="wantToTryLink" onClick={() => history.push('/wanttotry')}>Want to Try</Link>
+        </Grid>
+        <Button onClick={handleLogout}>Log Out</Button>
+      </Grid>
     </div>
   )
 
@@ -98,7 +112,7 @@ function HomePage() {
         <p>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
         <p>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
       </div>
-      <button onClick={handleLogout}>Log Out</button>
+      
     </div>
   )
 }
