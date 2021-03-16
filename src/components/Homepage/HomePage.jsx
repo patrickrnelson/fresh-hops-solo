@@ -49,13 +49,13 @@ function HomePage() {
       onClick={toggleDrawer}
       onKeyDown={toggleDrawer}
       role="presentation">
-        <IconButton>
+        <IconButton onClick={toggleDrawer}>
           <ArrowBackIcon />
         </IconButton>
         <List>
-          <ListItem>Recommendations</ListItem>
-          <ListItem>My Beers</ListItem>
-          <ListItem>Want to Try</ListItem>
+          <ListItem id="recommendationsLink">Recommendations</ListItem>
+          <ListItem id="myBeersLink">My Beers</ListItem>
+          <ListItem id="wantToTryLink">Want to Try</ListItem>
         </List>
     </div>
   )
