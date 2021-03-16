@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,10 +15,16 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles({
   list: {
     width: "225px",
+  },
+  
+  logOut: { 
+    marginTop: '120px', 
+    color: 'red'
   }
 });
 
 function Header() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   // local state for drawer (hamburger menu)
   const [drawer, setDrawer] = useState(false);
@@ -38,7 +45,7 @@ function Header() {
     <div style={{ padding: 20 }}>
       <Grid
         container
-        spacing={2}
+        spacing={3}
         direction="column"
         justify="left"
         alignItems="left"
@@ -60,7 +67,7 @@ function Header() {
         <Grid item xs={6}>
           <Link id="wantToTryLink" onClick={() => history.push('/wanttotry')}>Want to Try</Link>
         </Grid>
-        <Button onClick={handleLogout}>Log Out</Button>
+        <Button onClick={handleLogout} className={classes.logOut}>Log Out</Button>
       </Grid>
     </div>
   ) // end list

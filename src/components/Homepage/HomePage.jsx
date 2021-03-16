@@ -36,15 +36,15 @@ function HomePage() {
     <div id='pageContainer'>
       <Header />
       
-      <h1>Hi, {user.name}!</h1>
+      <h1 id="greetingText">Hi, {user.name}!</h1>
 
-      <h2>Random Beer:</h2>
+      <h2 id="secondaryText">Random Beer:</h2>
 
       <div className='beerCards'>
         <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='180'/>
         <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
         <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
-        <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
+        <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
       </div>
 
       <Button onClick={handleAdd}> Add Beer </Button>
