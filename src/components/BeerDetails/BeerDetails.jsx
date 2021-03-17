@@ -8,8 +8,15 @@ import Button from '@material-ui/core/Button';
 function BeerDetails() {
   const history = useHistory();
 
-  // random beer from store
+  // beer details from store
   const beerDetails = useSelector(store => store.beerDetails);
+
+  const saveBeerClick = () => {
+    console.log('Save Beer');
+    dispatch({
+      type: 'SAVE_BEER'
+    })
+  }
 
   return (
     <div>
@@ -35,15 +42,16 @@ function BeerDetails() {
           <h4>Characteristics</h4>
           <ul>
             {beerDetails[0].array_agg.map((characters) => {
-            <li>
-              {characters}
-            </li>
+              return (
+                <li>
+                  {characters}
+                </li>
+              )
             })}
           </ul>
         </div>
         {/* Add Button */}
-        <Button>TESTER</Button>
-        <Button>Add Beer</Button>
+        <Button onClick={saveBeerClick}>Save Beer</Button>
       
     </div>
   )

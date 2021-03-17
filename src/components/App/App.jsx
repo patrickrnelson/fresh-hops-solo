@@ -82,9 +82,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/home"
-            // - else shows LoginPage at /
+            // logged in shows details Page else shows LoginPage
             exact
             path="/details"
           >
@@ -108,7 +106,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+            // logged in shows add beer page else shows LoginPage
             exact
             path="/addbeer"
           >

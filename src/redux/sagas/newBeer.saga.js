@@ -16,8 +16,15 @@ function* addNewBeer(action) {
   }
 }
 
+function* saveBeer(action) {
+  try {
+    yield axios.post(`/api/beer/savebeer`, action.payload)
+  }
+}
+
 function* addNewBeerSaga() {
   yield takeLatest('ADD_NEW_BEER', addNewBeer);
+  yield takeLatest('SAVE_BEER', saveBeer)
 }
 
 export default addNewBeerSaga;

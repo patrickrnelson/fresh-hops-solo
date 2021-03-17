@@ -1,4 +1,4 @@
-const beerDetailsReducer = (state = {}, action) => {
+const beerDetailsReducer = (state = [{array_agg: [], beer: '', brewery: '', flavor_name: '', style_name: ''}], action) => {
   switch (action.type) {
     case 'SET_BEER_DETAILS':
       return action.payload;

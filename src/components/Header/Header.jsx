@@ -50,8 +50,8 @@ function Header() {
         container
         spacing={3}
         direction="column"
-        justify="left"
-        alignItems="left"
+        justify="flex-start"
+        alignItems="flex-start"
         className={classes.list}
         onClick={toggleDrawer}
         onKeyDown={toggleDrawer}

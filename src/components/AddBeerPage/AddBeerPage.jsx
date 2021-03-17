@@ -132,11 +132,18 @@ function AddBeerPage() {
       <Header />
       <AddBeerForm 
         addBeerClick={addBeerClick}
+        beerDominantFlavor={beerDominantFlavor}
+        characteristicOne={characteristicOne}
+        characteristicTwo={characteristicTwo}
+        characteristicThree={characteristicThree}
         defineTypeCharacteristics={defineTypeCharacteristics}
         dislikeClick={dislikeClick}
         dominantFlavors={dominantFlavors}
-        handleTriedChange={handleChange}
+        handleTriedChange={handleTriedChange}
         likeClick={likeClick}
+        newBeerBrewery={newBeerBrewery}
+        newBeerName={newBeerName}
+        newBeerType={newBeerType}
         setBeerDominantFlavor={setBeerDominantFlavor}
         setCharacteristicOne={setCharacteristicOne}
         setCharacteristicTwo={setCharacteristicTwo}
@@ -147,6 +154,7 @@ function AddBeerPage() {
         testerFunction={testerFunction}
         thumbsDownColor={thumbsDownColor}
         thumbsUpColor={thumbsUpColor}
+        triedStatus={triedStatus}
         typeCharacteristics={typeCharacteristics}
         />
     </div>
