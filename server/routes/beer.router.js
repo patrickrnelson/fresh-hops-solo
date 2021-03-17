@@ -141,4 +141,23 @@ router.post('/addnew', rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.post('/savebeer', rejectUnauthenticated, (req, res) => {
+  console.log('req.body', req.body);
+
+  const queryText = `
+    INSERT INTO "user_beers" ("user_id", "beer_id", "has_tried")
+      VALUES ($1, $2, false);
+  `
+  pool
+    .query(queryText, [req.user.id, req.body.id])
+    .then((result) => {
+      console.log('Successful POST - save beer');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('ERROR in add beer POST', error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

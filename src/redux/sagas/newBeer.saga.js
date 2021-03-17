@@ -16,9 +16,13 @@ function* addNewBeer(action) {
   }
 }
 
+// if a user saves the displayed random beer
 function* saveBeer(action) {
   try {
     yield axios.post(`/api/beer/savebeer`, action.payload)
+  }
+  catch (error) {
+    console.log('ERROR in Save beer Saga', error);
   }
 }
 

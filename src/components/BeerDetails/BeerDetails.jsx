@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 
 function BeerDetails() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   // beer details from store
   const beerDetails = useSelector(store => store.beerDetails);
@@ -14,8 +15,10 @@ function BeerDetails() {
   const saveBeerClick = () => {
     console.log('Save Beer');
     dispatch({
-      type: 'SAVE_BEER'
+      type: 'SAVE_BEER',
+      payload: {id: beerDetails[0].beer_id}
     })
+    history.push('/mybeers')
   }
 
   return (
