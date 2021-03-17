@@ -6,6 +6,7 @@ import loginSaga from './login.saga';
 import randomBeerSaga from './randombeer.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
+import userBeersSaga from './userBeers.saga'
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     characteristicsSaga(),
     addNewBeerSaga(),
     beerDetails(),
+    userBeersSaga(),
   ]);
 }

@@ -6,8 +6,11 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * *
+ * GET routes
+ * *
  */
+// GET random beer to present to user on home page
 router.get('/random/:num', rejectUnauthenticated, (req, res) => {
   // res.sendStatus(200); // For testing only, can be removed
 
@@ -37,7 +40,7 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// GET characteristics
+// GET characteristics that are associated with beer types
 router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
   // res.sendStatus(200); // For testing only, can be removed
 
@@ -64,7 +67,7 @@ router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// GET characteristics
+// GETS the details of random beer that user clicked
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
   // res.sendStatus(200); // For testing only, can be removed
 
@@ -101,9 +104,42 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET user beers to list out
+router.get('/userbeers', rejectUnauthenticated, (req, res) => {
+  // res.sendStatus(200); // For testing only, can be removed
+
+  console.log('***Hit beer details endpoint***');
+  console.log('req.user.id', req.user.id);
+
+  let queryText = `
+  SELECT "beers".id as "beer_id", "beers".name as "beer",
+	  "user_beers".has_tried as "has_tried", "user_beers".is_liked as "is_liked",
+    "breweries".name as "brewery", "breweries".image_url as "image",
+    "styles".style_name
+  FROM "beers" 
+  JOIN "styles" ON "style_id" = "styles".id
+  JOIN "breweries" ON "brewery_id" = "breweries".id
+  JOIN "user_beers" ON "user_beers".beer_id = "beers".id
+  WHERE "user_beers".user_id = $1; 
+  `;
+
+  pool
+    .query(queryText, [req.user.id,])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 /**
- * POST route template
+ * *
+ * POST routes
+ * *
  */
+// POSTS new beer that user entered
 router.post('/addnew', rejectUnauthenticated, (req, res) => {
   const name = req.body.name;
   const style = req.body.style_name;
@@ -141,6 +177,7 @@ router.post('/addnew', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// POST when user saves a random beer presented to them
 router.post('/savebeer', rejectUnauthenticated, (req, res) => {
   console.log('req.body', req.body);
 

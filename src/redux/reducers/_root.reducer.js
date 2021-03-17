@@ -4,6 +4,7 @@ import characteristics from './characteristics.reducer'
 import dominantFlavors from './dominantFlavors.reducer'
 import errors from './errors.reducer';
 import user from './user.reducer';
+import userBeers from './userBeers.reducer'
 import randomBeer from './randomBeer.reducer';
 
 // rootReducer is the primary reducer for our entire project
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   randomBeer, // this gives us a random beer to display on the homepage
   characteristics, // gives us characteristics to select in drop down menu
   dominantFlavors, // gives us the list of dominant flavors
+  userBeers, // gives us the beers saved for the logged in user
 });
 
 export default rootReducer;
