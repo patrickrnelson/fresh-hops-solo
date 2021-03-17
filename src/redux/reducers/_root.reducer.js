@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import beerDetails from './beerDetails.reducer'
 import characteristics from './characteristics.reducer'
 import dominantFlavors from './dominantFlavors.reducer'
 import errors from './errors.reducer';
@@ -12,6 +13,7 @@ import randomBeer from './randomBeer.reducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
+  beerDetails, // contains all details about a specific beer that was clicked
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   randomBeer, // this gives us a random beer to display on the homepage

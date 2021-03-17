@@ -4,7 +4,7 @@ import axios from 'axios';
 function* addNewBeer(action) {
   try {
 
-    // gets the characteristics from the DB
+    // send post data to the server
     yield axios.post(`/api/beer/addnew`, action.payload);
     console.log('POST new beer - payload', action.payload);
 

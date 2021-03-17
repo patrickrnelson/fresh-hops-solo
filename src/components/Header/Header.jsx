@@ -62,7 +62,7 @@ function Header() {
           </IconButton>
         </Grid>
         <Grid item xs={6}>
-          <Link id="recommendationsLink" onClick={() => history.push('/')}>Recommendations</Link>
+          <Link id="recommendationsLink" onClick={() => history.push('/')}>Home</Link>
         </Grid>
         <Grid item xs={6}>
           <Link id="myBeersLink" onClick={() => history.push('/mybeers')}>My Beers</Link>

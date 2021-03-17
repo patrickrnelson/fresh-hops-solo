@@ -12,14 +12,14 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import HomePage from '../Homepage/HomePage';
 import AddBeerPage from '../AddBeerPage/AddBeerPage';
+import AboutPage from '../AboutPage/AboutPage';
+import BeerDetails from '../BeerDetails/BeerDetails'
+import HomePage from '../Homepage/HomePage';
+import LoginPage from '../LoginPage/LoginPage';
 import MyBeersPage from '../MyBeersPage/MyBeersPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
 import WantTroTryPage from '../WantToTryPage/WantToTryPage';
-import AutoCompleteData from '../AutoCompleteData/AutoCompleteData';
 
 import './App.css';
 
@@ -79,6 +79,16 @@ function App() {
             path="/home"
           >
             <HomePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // with authRedirect:
+            // - if logged in, redirects to "/home"
+            // - else shows LoginPage at /
+            exact
+            path="/details"
+          >
+            <BeerDetails />
           </ProtectedRoute>
 
           <ProtectedRoute
