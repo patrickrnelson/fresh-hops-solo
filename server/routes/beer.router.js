@@ -17,7 +17,7 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
   console.log('user is', req.user);
 
   let queryText = `
-    SELECT "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
+    SELECT "beers".id as "beer_id", "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
     JOIN "styles" ON "style_id" = "styles".id
     JOIN "breweries" ON "brewery_id" = "breweries".id
     WHERE "beers".id = $1;
@@ -64,6 +64,43 @@ router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET characteristics
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+  // res.sendStatus(200); // For testing only, can be removed
+
+  console.log('***Hit beer details endpoint***');
+
+  let queryText = `
+  SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".dominant_flavor_id as "dominant_flavor", 
+    "dominant_flavors".flavor_name,
+    "styles".style_name, 
+    "breweries".name as "brewery", "breweries".image_url as "image", 
+    ARRAY_AGG("characteristics".characteristic)
+  FROM "beers" 
+  JOIN "styles" ON "style_id" = "styles".id
+  JOIN "breweries" ON "brewery_id" = "breweries".id
+  JOIN "dominant_flavors" ON "dominant_flavors".id = "beers".dominant_flavor_id
+  JOIN "beer_characteristics" ON "beer_id" = "beers".id
+  JOIN "characteristics" ON "characteristics".id = "beer_characteristics".characteristic_id
+  WHERE "beers".id = $1
+  GROUP BY "beers".id,
+    "dominant_flavors".flavor_name,
+    "styles".style_name,
+    "breweries".name,
+    "breweries".image_url; 
+  `;
+
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 /**
  * POST route template
  */
@@ -96,6 +133,25 @@ router.post('/addnew', rejectUnauthenticated, (req, res) => {
     .query(queryText, [name, style, brewery, flavor, characteristicOne, characteristicTwo, characteristicThree, req.user.id, triedStatus, likeStatus])
     .then((result) => {
       console.log('Successful POST - add beer');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('ERROR in add beer POST', error);
+      res.sendStatus(500);
+    });
+});
+
+router.post('/savebeer', rejectUnauthenticated, (req, res) => {
+  console.log('req.body', req.body);
+
+  const queryText = `
+    INSERT INTO "user_beers" ("user_id", "beer_id", "has_tried")
+      VALUES ($1, $2, false);
+  `
+  pool
+    .query(queryText, [req.user.id, req.body.id])
+    .then((result) => {
+      console.log('Successful POST - save beer');
       res.sendStatus(201);
     })
     .catch((error) => {

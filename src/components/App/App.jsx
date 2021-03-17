@@ -12,14 +12,14 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import HomePage from '../Homepage/HomePage';
 import AddBeerPage from '../AddBeerPage/AddBeerPage';
+import AboutPage from '../AboutPage/AboutPage';
+import BeerDetails from '../BeerDetails/BeerDetails'
+import HomePage from '../Homepage/HomePage';
+import LoginPage from '../LoginPage/LoginPage';
 import MyBeersPage from '../MyBeersPage/MyBeersPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
 import WantTroTryPage from '../WantToTryPage/WantToTryPage';
-import AutoCompleteData from '../AutoCompleteData/AutoCompleteData';
 
 import './App.css';
 
@@ -82,6 +82,14 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
+            // logged in shows details Page else shows LoginPage
+            exact
+            path="/details"
+          >
+            <BeerDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
             // logged in shows My Beers Page else shows LoginPage
             exact
             path="/mybeers"
@@ -98,7 +106,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+            // logged in shows add beer page else shows LoginPage
             exact
             path="/addbeer"
           >

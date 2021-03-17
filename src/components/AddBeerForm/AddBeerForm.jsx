@@ -13,11 +13,18 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
 function AddBeerForm({
   addBeerClick,
+  beerDominantFlavor,
+  characteristicOne,
+  characteristicTwo,
+  characteristicThree,
   defineTypeCharacteristics,
   dislikeClick,
   dominantFlavors,
   handleTriedChange,
   likeClick,
+  newBeerBrewery,
+  newBeerName,
+  newBeerType,
   setBeerDominantFlavor,
   setCharacteristicOne,
   setCharacteristicTwo,
@@ -28,6 +35,7 @@ function AddBeerForm({
   testerFunction,
   thumbsDownColor,
   thumbsUpColor,
+  triedStatus,
   typeCharacteristics
 }) {
   

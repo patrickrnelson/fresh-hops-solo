@@ -6,9 +6,6 @@ import Header from '../Header/Header';
 
 import Button from '@material-ui/core/Button';
 
-
-
-
 function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,20 +13,28 @@ function HomePage() {
   const user = useSelector(store => store.user)
   // random beer from store
   const randomBeer = useSelector(store => store.randomBeer)
-  
 
   // On load, grab a random beer
   useEffect(() => {
     dispatch({
-      type: 'FETCH_RANDOM_BEER'
+      type: 'FETCH_RANDOM_BEER',
     })
   }, []);
-
-
 
   // ADD A BEER button
   const handleAdd = () => {
     history.push('/addbeer')
+  }
+
+  // Beer card Click
+  const handleBeerClick = (beerId) => {
+    console.log('beerId', beerId);
+    dispatch({
+      type: 'FETCH_BEER_DETAILS',
+      payload: beerId
+    })
+
+    history.push('/details')
   }
 
   return (
@@ -40,7 +45,7 @@ function HomePage() {
 
       <h2 id="secondaryText">Random Beer:</h2>
 
-      <div className='beerCards'>
+      <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
         <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='180'/>
         <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
         <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
