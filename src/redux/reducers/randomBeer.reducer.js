@@ -7,6 +7,6 @@ const randomBeerReducer = (state = {}, action) => {
   }
 };
 
-// user will be on the redux state at:
-// state.user
+// random beer will be on the redux state at:
+// store.randomBeer
 export default randomBeerReducer;
