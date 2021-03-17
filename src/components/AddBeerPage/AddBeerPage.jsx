@@ -5,8 +5,10 @@ import Header from '../Header/Header';
 // Material UI imports
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
@@ -14,11 +16,20 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 function AddBeerPage() {
   const dispatch = useDispatch();
 
-  const characteristics = useSelector(store => store.characteristics)
+  const characteristics = useSelector(store => store.characteristics);
+  const dominantFlavors = useSelector(store => store.dominantFlavors);
+
+  const [triedStatus, setTriedStatus] = useState(false);
+
+  const handleChange = (event) => {
+    setTriedStatus(!triedStatus);
+  };
 
   const [newBeerName, setNewBeerName] = useState('');
   const [newBeerType, setNewBeerType] = useState('');
   const [newBeerBrewery, setNewBeerBrewery] = useState('');
+
+  const [beerDominantFlavor, setBeerDominantFlavor] = useState('');
 
   const [characteristicOne, setCharacteristicOne] = useState('');
   const [characteristicTwo, setCharacteristicTwo] = useState('');
@@ -89,7 +100,26 @@ function AddBeerPage() {
     })
   }
 
-  const randomButtonClick = () => {
+  const addBeerClick = () => {
+    
+    dispatch({
+      type: 'ADD_NEW_BEER',
+      payload: {
+        name: newBeerName,
+        style_name: newBeerType,
+        brewery_name: newBeerBrewery,
+        flavor: beerDominantFlavor,
+        characteristicOne: characteristicOne,
+        characteristicTwo: characteristicTwo,
+        characteristicThree: characteristicThree,
+        triedStatus: triedStatus,
+        likeStatus: likeStatus
+      }
+    })
+  }
+
+  const testerFunction = () => {
+    console.log('Tried status', triedStatus);
     console.log('Beer', newBeerName);
     console.log('Type', newBeerType);
     console.log('Brewery', newBeerBrewery);
@@ -97,6 +127,7 @@ function AddBeerPage() {
     console.log('characteristicOne', characteristicOne);
     console.log('characteristicTwo', characteristicTwo);
     console.log('characteristicThree', characteristicThree);
+    console.log('dominantFlavor', beerDominantFlavor);
   }
 
   // Data for Autocomplete input
@@ -169,6 +200,18 @@ function AddBeerPage() {
       <form>
         <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Add A Beer</h2>
         <Grid container spacing={3} alignItems='center' justify='center' >
+          {/* Has Tried indicator */}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={triedStatus}
+                onChange={handleChange}
+                name="tried"
+                color="primary"
+              />
+            }
+            label="Tried It"
+          />
           {/* Beer Name input */}
           <Grid item xs={11}>
             <TextField 
@@ -217,6 +260,24 @@ function AddBeerPage() {
               <ThumbDownAltIcon color={thumbsDownColor}/>
             </IconButton>
           </Grid>
+
+          {/* Dominant Flavor input */}
+          <Grid item xs={10} >
+              <select
+                type="text" 
+                value={beerDominantFlavor}
+                onChange={(event) => {setBeerDominantFlavor(event.target.value)}}
+                onClick={defineTypeCharacteristics}
+              >
+              <option value="">--Select a Characteristic--</option>
+                {dominantFlavors.map((flavor) => {
+                    return (
+                      <option key={flavor.id}>{flavor.flavor_name}</option>
+                    )
+                  }
+                )}
+              </select>
+            </Grid>
 
           {/* Characteristic 1 dropdown */}
             <Grid item xs={10} >
@@ -270,7 +331,8 @@ function AddBeerPage() {
               </select>
             </Grid>
         </Grid>
-        <Button onClick={randomButtonClick}>Click Me!</Button>
+        <Button onClick={testerFunction}>TESTER</Button>
+        <Button onClick={addBeerClick} >Add Beer</Button>
       </form>
     </div>
   )

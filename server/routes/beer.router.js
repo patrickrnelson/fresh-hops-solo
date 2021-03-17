@@ -37,7 +37,7 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// get characteristics
+// GET characteristics
 router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
   // res.sendStatus(200); // For testing only, can be removed
 
@@ -67,8 +67,41 @@ router.get('/characteristics/', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-  // POST route code here
+router.post('/addnew', rejectUnauthenticated, (req, res) => {
+  const name = req.body.name;
+  const style = req.body.style_name;
+  const brewery = req.body.brewery_name;
+  const flavor = req.body.flavor;
+  const characteristicOne = req.body.characteristicOne;
+  const characteristicTwo = req.body.characteristicTwo;
+  const characteristicThree = req.body.characteristicThree;
+  const triedStatus = req.body.triedStatus;
+  const likeStatus = req.body.likeStatus;
+
+  const queryText = `
+    WITH ins AS (INSERT INTO "beers" ("name", "style_id", "dominant_flavor_id", "brewery_id")
+      VALUES ($1, (SELECT "id" FROM "styles" WHERE "style_name"=$2), 
+      (SELECT "id" FROM "dominant_flavors" WHERE "flavor_name"=$4),
+      (SELECT "id" FROM "breweries" WHERE "name"=$3)) RETURNING "id"),
+    
+    ins2 AS (INSERT INTO "beer_characteristics" ("beer_id", "characteristic_id")
+      VALUES ((SELECT "id" FROM "ins"), (SELECT "id" FROM "characteristics" WHERE "characteristic"=$5)),
+      ((SELECT "id" FROM "ins"), (SELECT "id" FROM "characteristics" WHERE "characteristic"=$6)),
+      ((SELECT "id" FROM "ins"), (SELECT "id" FROM "characteristics" WHERE "characteristic"=$7)) 
+    )
+    INSERT INTO "user_beers" ("user_id", "beer_id", "is_liked", "has_tried")
+      VALUES ($8, (SELECT "id" FROM "ins"), $10, $9);
+  `
+  pool
+    .query(queryText, [name, style, brewery, flavor, characteristicOne, characteristicTwo, characteristicThree, req.user.id, triedStatus, likeStatus])
+    .then((result) => {
+      console.log('Successful POST - add beer');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('ERROR in add beer POST', error);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
