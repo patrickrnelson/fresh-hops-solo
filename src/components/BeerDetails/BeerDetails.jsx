@@ -35,20 +35,6 @@ function BeerDetails() {
     }
   }, []); // end useEffect
 
-  // const setThumbColor = () => {
-  //   console.log('beerDetails', beerDetails);
-  //   if(beerDetails[0].is_liked === true) {
-  //     setThumbsUpColor('primary')
-  //     setThumbsDownColor('inherit')
-  //   } else if(beerDetails[0].is_liked === false) {
-  //     setThumbsUpColor('inherit')
-  //     setThumbsDownColor('secondary')
-  //   } else {
-  //     setThumbsUpColor('inherit')
-  //     setThumbsDownColor('inherit')
-  //   }
-  // }
-
   const buttonClick = () => {
     if(buttonText === 'Save Beer') {
       dispatch({
@@ -71,7 +57,7 @@ function BeerDetails() {
   return (
     <div>
       <button onClick={() => {history.goBack();}}>Back</button>
-      <button onClick={() => {history.push(EditBeer({state: {beerId}}));}}>Edit</button>
+      <button onClick={() => {history.push({pathname: '/editbeer', state: beerDetails[0].beer_id}) }}>Edit</button>
       <Header />
       
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails[0].beer}</h2>
