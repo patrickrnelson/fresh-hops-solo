@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 function WantToTryPage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -18,7 +20,7 @@ function WantToTryPage() {
         type: 'FETCH_USER_BEERS'
       })
       setRender(true);
-    }, 200);
+    }, 700);
     return () => clearTimeout(timer);
   }, []);
 
@@ -57,7 +59,7 @@ function WantToTryPage() {
         }
       })}
     </div>
-    : <p>loading... </p>}
+    : <CircularProgress />}
     </>
   )
 }
