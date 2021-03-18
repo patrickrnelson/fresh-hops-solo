@@ -24,10 +24,6 @@ function WantToTryPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const delayDispatch = () => {
-    
-  }
-
   const handleBeerClick = (beerId) => {
     console.log('beerId', beerId);
     dispatch({
@@ -39,7 +35,7 @@ function WantToTryPage() {
       pathname: '/details', 
       state: { from: 'want to try' }
     });
-  }
+  } // end handleBeerClick
 
   return(
     <>

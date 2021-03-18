@@ -27,7 +27,7 @@ function MyBeersPage() {
       pathname: '/details', 
       state: { from: 'my beers' }
     });
-  }
+  } // end handleBeerClick
 
   return(
     <>

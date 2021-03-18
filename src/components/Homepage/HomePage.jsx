@@ -21,11 +21,6 @@ function HomePage() {
     })
   }, []);
 
-  // ADD A BEER button
-  const handleAdd = () => {
-    history.push('/addbeer')
-  }
-
   // Beer card Click
   const handleBeerClick = (beerId) => {
     console.log('beerId', beerId);
@@ -38,7 +33,7 @@ function HomePage() {
       pathname: '/details', 
       state: { from: 'home' }
     });
-  }
+  } // end handleBeerClick
 
   return (
     <div id='pageContainer'>
@@ -55,7 +50,7 @@ function HomePage() {
         <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
       </div>
 
-      <Button onClick={handleAdd}> Add Beer </Button>
+      <Button onClick={() => {history.push('/addbeer')} }> Add Beer </Button>
       
     </div>
   )

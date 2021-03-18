@@ -54,7 +54,7 @@ function AddBeerPage() {
       setThumbsUpColor('inherit')
       setThumbsDownColor('inherit')
     }
-  }, [])
+  }, []) // end useEffect
 
   // If someone clicks 'Thumbs up', set likeStatus to true
   // and set the thumb button colors accordingly
@@ -68,8 +68,7 @@ function AddBeerPage() {
       setThumbsUpColor('inherit')
       setThumbsDownColor('inherit')
     }
-    
-  }
+  } // end likeClick
 
   // If someone clicks 'Thumbs down', set likeStatus to false
   // and set the thumb button colors accordingly
@@ -83,7 +82,7 @@ function AddBeerPage() {
       setThumbsUpColor('inherit')
       setThumbsDownColor('inherit')
     }
-  }
+  } // end dislikeClick
 
   // triggered on characteristic dropdown click
   // Sets the typeCharacteristics state to contain characs. 
@@ -113,7 +112,7 @@ function AddBeerPage() {
       }
     })
     history.push('/mybeers')
-  }
+  } // end addBeerClick
 
   // test function to make sure my state is capturing what I think it is
   const testerFunction = () => {
@@ -126,9 +125,7 @@ function AddBeerPage() {
     console.log('characteristicTwo', characteristicTwo);
     console.log('characteristicThree', characteristicThree);
     console.log('dominantFlavor', beerDominantFlavor);
-  }
-
-  
+  } // end tester function - can get rid of
 
   return (
     <div>

@@ -12,6 +12,7 @@ function BeerDetails() {
   // beer details from store
   const beerDetails = useSelector(store => store.beerDetails);
 
+  // defines what the button should say based on which page the user navigated from
   const [buttonText, setButtonText] = useState();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function BeerDetails() {
     else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
       setButtonText('Delete');
     }
-  }, []);
+  }, []); // end useEffect
 
   const buttonClick = () => {
     if(buttonText === 'Save Beer') {
@@ -40,7 +41,7 @@ function BeerDetails() {
       history.goBack();
     }
     
-  }
+  } // end buttonClick
 
   return (
     <div>

@@ -31,7 +31,6 @@ function LoginForm() {
 
   return (
     
-    
     <form className="formPanel" onSubmit={login}>
       <Grid container spacing={1} alignItems='center'>
           <img
