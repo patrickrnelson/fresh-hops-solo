@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header'
@@ -12,13 +12,34 @@ function BeerDetails() {
   // beer details from store
   const beerDetails = useSelector(store => store.beerDetails);
 
-  const saveBeerClick = () => {
-    console.log('Save Beer');
-    dispatch({
-      type: 'SAVE_BEER',
-      payload: {id: beerDetails[0].beer_id}
-    })
-    history.push('/mybeers')
+  const [buttonText, setButtonText] = useState();
+
+  useEffect(() => {
+    if(history.location.state.from === 'home') {
+      setButtonText('Save Beer');
+    }
+    else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
+      setButtonText('Delete');
+    }
+  }, []);
+
+  const buttonClick = () => {
+    if(buttonText === 'Save Beer') {
+      dispatch({
+        type: 'SAVE_BEER',
+        payload: {id: beerDetails[0].beer_id}
+      })
+      history.push('/wanttotry')
+    }
+    else if(buttonText === 'Delete') {
+      console.log('***DELETE***');
+      dispatch({
+        type: 'DELETE_A_BEER',
+        payload: beerDetails[0].beer_id
+      })
+      history.goBack();
+    }
+    
   }
 
   return (
@@ -26,7 +47,7 @@ function BeerDetails() {
       <button onClick={() => {history.goBack();}}>Back</button>
       <Header />
       
-      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails ? beerDetails[0].beer : ''}</h2>
+      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails[0].beer}</h2>
         <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
           <h3>Name</h3>
           <p>{beerDetails[0].beer}</p>
@@ -54,8 +75,7 @@ function BeerDetails() {
           </ul>
         </div>
         {/* Add Button */}
-        <Button onClick={saveBeerClick}>Save Beer</Button>
-      
+        <Button style={{ marginLeft: '140px'}} onClick={buttonClick}>{buttonText}</Button>
     </div>
   )
 }

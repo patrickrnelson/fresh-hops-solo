@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import AddBeerForm from '../AddBeerForm/AddBeerForm'
 import Header from '../Header/Header';
 
 function AddBeerPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // data from store for drop down menus
   const characteristics = useSelector(store => store.characteristics);
@@ -110,6 +112,7 @@ function AddBeerPage() {
         likeStatus: likeStatus
       }
     })
+    history.push('/mybeers')
   }
 
   // test function to make sure my state is capturing what I think it is

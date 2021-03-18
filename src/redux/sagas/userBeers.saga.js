@@ -14,8 +14,19 @@ function* fetchUserBeers() {
   }
 }
 
+function* deleteBeer(action) {
+  try {
+    yield axios.delete(`/api/beer/deleteBeer/${action.payload}`);
+
+  }
+  catch (error) {
+    console.log('Error Deleting Beer', error);
+  }
+}
+
 function* userBeersSaga() {
   yield takeLatest('FETCH_USER_BEERS', fetchUserBeers);
+  yield takeLatest('DELETE_A_BEER', deleteBeer);
 }
 
 export default userBeersSaga;

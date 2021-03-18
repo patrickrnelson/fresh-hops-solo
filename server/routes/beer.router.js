@@ -23,7 +23,9 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
     SELECT "beers".id as "beer_id", "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
     JOIN "styles" ON "style_id" = "styles".id
     JOIN "breweries" ON "brewery_id" = "breweries".id
-    WHERE "beers".id = $1;
+    WHERE "beers".id = $1 AND "user_id" != $2
+    ORDER BY RANDOM ()  
+    LIMIT 1 ;
   `;
 
   // get the id of the logged in user
@@ -120,7 +122,8 @@ router.get('/userbeers', rejectUnauthenticated, (req, res) => {
   JOIN "styles" ON "style_id" = "styles".id
   JOIN "breweries" ON "brewery_id" = "breweries".id
   JOIN "user_beers" ON "user_beers".beer_id = "beers".id
-  WHERE "user_beers".user_id = $1; 
+  WHERE "user_beers".user_id = $1
+  ORDER BY "beers".name; 
   `;
 
   pool
@@ -193,6 +196,29 @@ router.post('/savebeer', rejectUnauthenticated, (req, res) => {
     })
     .catch((error) => {
       console.log('ERROR in add beer POST', error);
+      res.sendStatus(500);
+    });
+});
+
+/**
+ * *
+ * DELETE routes
+ * *
+ */
+// Delete a beer
+router.delete('/deleteBeer/:id', rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    DELETE FROM "user_beers"
+    WHERE "beer_id"=$2 AND "user_id"=$1;
+  `
+  pool
+    .query(queryText, [req.user.id, req.params.id])
+    .then((result) => {
+      console.log('Successful DELETE');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('ERROR in DELETE', error);
       res.sendStatus(500);
     });
 });

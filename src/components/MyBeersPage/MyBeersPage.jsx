@@ -1,23 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Header from '../Header/Header';
 
 function MyBeersPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  useEffect(() => {
+  const userBeers = useSelector(store => store.userBeers)
+
+  useLayoutEffect(() => {
     dispatch({
       type: 'FETCH_USER_BEERS'
     })
+    console.log('userBeers', userBeers);
   }, []);
+
+  const handleBeerClick = (beerId) => {
+    console.log('beerId', beerId);
+    dispatch({
+      type: 'FETCH_BEER_DETAILS',
+      payload: beerId
+    })
+
+    history.push({
+      pathname: '/details', 
+      state: { from: 'my beers' }
+    });
+  }
 
   return(
     <>
-    {/* <div className='fancyBeerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
-      <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='180'/>
-      <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
-      <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
-      <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
-    </div> */}
+    <Header />
+    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>My Beers</h2>
+    <div className='listLayout'>
+      {userBeers.map((beer) => {
+        if(beer.has_tried === true) {
+          return (
+            <div key={beer.beer_id} className='fancyBeerCards' onClick={() => handleBeerClick(beer.beer_id)}>
+              <img className="randomImage" src={beer.image} height='180'/>
+              <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
+              <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
+              <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+            </div>
+          )
+        }
+      })}
+    </div>
     </>
   )
 }

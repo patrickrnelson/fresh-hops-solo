@@ -34,7 +34,10 @@ function HomePage() {
       payload: beerId
     })
 
-    history.push('/details')
+    history.push({
+      pathname: '/details', 
+      state: { from: 'home' }
+    });
   }
 
   return (
