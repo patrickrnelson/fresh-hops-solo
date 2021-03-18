@@ -11,7 +11,7 @@ const {
  * *
  */
 // GET random beer to present to user on home page
-router.get('/random/:num', rejectUnauthenticated, (req, res) => {
+router.get('/random/', rejectUnauthenticated, (req, res) => {
   // res.sendStatus(200); // For testing only, can be removed
 
   console.log('***Hit the random Beer endpoint***');
@@ -23,7 +23,6 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
     SELECT "beers".id as "beer_id", "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
     JOIN "styles" ON "style_id" = "styles".id
     JOIN "breweries" ON "brewery_id" = "breweries".id
-    WHERE "beers".id = $1 AND "user_id" != $2
     ORDER BY RANDOM ()  
     LIMIT 1 ;
   `;
@@ -32,7 +31,7 @@ router.get('/random/:num', rejectUnauthenticated, (req, res) => {
   // let userId = req.user.id;
 
   pool
-    .query(queryText, [req.params.num])
+    .query(queryText)
     .then((result) => {
       res.send(result.rows);
     })

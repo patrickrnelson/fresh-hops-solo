@@ -2,12 +2,11 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* fetchRandomBeer(action) {
-  let randomNumber = Math.floor(Math.random() * 119); 
 
   try {
 
     // gets a random beer from the DB
-    let beer = yield axios.get(`/api/beer/random/${randomNumber}`);
+    let beer = yield axios.get(`/api/beer/random/`);
 
     // automatically log a user in after registration
     yield put({ type: 'SET_RANDOM_BEER', payload: beer.data });
