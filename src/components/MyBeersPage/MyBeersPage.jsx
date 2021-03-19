@@ -10,10 +10,12 @@ function MyBeersPage() {
   const userBeers = useSelector(store => store.userBeers)
 
   useLayoutEffect(() => {
-    dispatch({
-      type: 'FETCH_USER_BEERS'
-    })
-    console.log('userBeers', userBeers);
+    const timer = setTimeout(function() { 
+      dispatch({
+        type: 'FETCH_USER_BEERS'
+      })
+    }, 300);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleBeerClick = (beerId) => {

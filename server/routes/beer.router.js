@@ -226,4 +226,34 @@ router.delete('/deleteBeer/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+/**
+ * *
+ * PUT route
+ * *
+ */
+router.put('/editBeerStatus', rejectUnauthenticated, (req, res) => {
+  const has_tried = req.body.tried_status;
+  const is_liked = req.body.like_status;
+  const beer_id = req.body.beer_id;
+  const user_id = req.user.id;
+  
+  console.log('*PUT* req.body', req.body);
+  const queryText = `
+    UPDATE "user_beers"
+    SET "has_tried" = $1, "is_liked" = $2
+    WHERE "beer_id"=$3 AND "user_id"=$4;
+  `
+  pool
+    .query(queryText, [has_tried, is_liked, beer_id, user_id])
+    .then((result) => {
+      console.log('Successful PUT');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('ERROR in PUT', error);
+      res.sendStatus(500);
+    });
+});
+
+
 module.exports = router;

@@ -23,7 +23,7 @@ function EditBeerPage() {
   const beerDetails = useSelector(store => store.beerDetails);
 
   // state to track the tried status
-  const [triedStatus, setTriedStatus] = useState(false);
+  const [triedStatus, setTriedStatus] = useState(beerDetails[0].has_tried);
 
   // switches the boolean when user toggles the tried switch
   const handleTriedChange = (event) => {
@@ -32,8 +32,8 @@ function EditBeerPage() {
 
   // tracks text inputs
   const [editBeerName, setEditBeerName] = useState(beerDetails[0].beer);
-  const [newBeerType, setNewBeerType] = useState(beerDetails[0].style_name);
-  const [newBeerBrewery, setNewBeerBrewery] = useState(beerDetails[0].brewery);
+  const [beerType, setBeerType] = useState(beerDetails[0].style_name);
+  const [beerBrewery, setBeerBrewery] = useState(beerDetails[0].brewery);
 
   // tracks the dropdowns for flavor/characteristics
   const [beerDominantFlavor, setBeerDominantFlavor] = useState(beerDetails[0].flavor_name);
@@ -41,18 +41,12 @@ function EditBeerPage() {
   const [characteristicTwo, setCharacteristicTwo] = useState(beerDetails[0].array_agg[1]);
   const [characteristicThree, setCharacteristicThree] = useState(beerDetails[0].array_agg[2]);
 
-  // Contains the characteristics associated with the current beer type that is selected
-  const [typeCharacteristics, setTypeCharacteristics] = useState([]);
-
   // defines the current like status and button colors
-  const [likeStatus, setLikeStatus] = useState(null)
+  const [likeStatus, setLikeStatus] = useState(beerDetails[0].is_liked)
   const [thumbsUpColor, setThumbsUpColor] = useState('inherit')
   const [thumbsDownColor, setThumbsDownColor] = useState('inherit')
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_CHARACTERISTICS'
-    })
     // correctly colors the thumb buttons on load
     if(likeStatus === true) {
       setThumbsUpColor('primary')
@@ -94,26 +88,24 @@ function EditBeerPage() {
     }
   } // end dislikeClick
 
-  // triggered on characteristic dropdown click
-  // Sets the typeCharacteristics state to contain characs. 
-  // associated with the current beer type that is selected
-  const defineTypeCharacteristics = () => {
-    characteristics.map((object) => {
-      if(object.type == newBeerType) {
-        setTypeCharacteristics(object.all_characteristics)
+  const saveChanges = () => {
+    console.log('In save changes');
+    dispatch({
+      type: 'EDIT_USER_BEER',
+      payload: {
+        beer_id: beerDetails[0].beer_id,
+        tried_status: triedStatus,
+        like_status: likeStatus,
+        beer_name: editBeerName
       }
     })
-  }
-
-  const saveChanges = () => {
-    console.log('save changes');
   }
 
   const testerFunction = () => {
     console.log('Tried status', triedStatus);
     console.log('Beer', editBeerName);
-    console.log('Type', newBeerType);
-    console.log('Brewery', newBeerBrewery);
+    console.log('Type', beerType);
+    console.log('Brewery', beerBrewery);
     console.log('Like Status', likeStatus);
     console.log('characteristicOne', characteristicOne);
     console.log('characteristicTwo', characteristicTwo);
@@ -172,75 +164,22 @@ function EditBeerPage() {
             </IconButton>
           </Grid>
 
-          {/* Dominant Flavor input */}
-          <Grid item xs={10} >
-              <select
-                type="text" 
-                value={beerDominantFlavor}
-                onChange={(event) => {setBeerDominantFlavor(event.target.value)}}
-                onClick={defineTypeCharacteristics}
-              >
-              <option value="">--Select a Characteristic--</option>
-                {dominantFlavors.map((flavor) => {
-                    return (
-                      <option key={flavor.id}>{flavor.flavor_name}</option>
-                    )
-                  }
-                )}
-              </select>
-            </Grid>
-
-          {/* Characteristic 1 dropdown */}
-            <Grid item xs={10} >
-              <select
-                type="text" 
-                value={characteristicOne}
-                onChange={(event) => {setCharacteristicOne(event.target.value)}}
-                onClick={defineTypeCharacteristics}
-              >
-              <option value="">--Select a Characteristic--</option>
-                {typeCharacteristics.map((items) => {
-                    return (
-                      <option>{items}</option>
-                    )
-                  }
-                )}
-              </select>
-            </Grid>
-            {/* Characteristic 2 dropdown */}
-            <Grid item xs={10} >
-              <select
-                type="text" 
-                value={characteristicTwo}
-                onChange={(event) => {setCharacteristicTwo(event.target.value)}}
-                onClick={defineTypeCharacteristics}
-              >
-              <option value="">--Select a Characteristic--</option>
-                {typeCharacteristics.map((items) => {
-                    return (
-                      <option>{items}</option>
-                    )
-                  }
-                )}
-              </select>
-            </Grid>
-            {/* Characteristic 3 dropdown */}
-            <Grid item xs={10} >
-              <select
-                type="text" 
-                value={characteristicThree}
-                onChange={(event) => {setCharacteristicThree(event.target.value)}}
-                onClick={defineTypeCharacteristics}
-              >
-              <option value="">--Select a Characteristic--</option>
-                {typeCharacteristics.map((items) => {
-                    return (
-                      <option>{items}</option>
-                    )
-                  }
-                )}
-              </select>
-            </Grid>
+          {/* Dominant Flavors */}
+          <div style={{ marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
+          <h4>Dominant Flavor</h4>
+          <p>{beerDetails[0].flavor_name}</p>
+          
+          <h4>Characteristics</h4>
+          <ul>
+            {beerDetails[0].array_agg.map((characters) => {
+              return (
+                <li>
+                  {characters}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
         </Grid>
         {/* Add Button */}
         <Button onClick={testerFunction}>TESTER</Button>

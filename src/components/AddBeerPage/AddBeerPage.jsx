@@ -15,11 +15,6 @@ function AddBeerPage() {
   // state to track the tried status
   const [triedStatus, setTriedStatus] = useState(false);
 
-  // switches the boolean when user toggles the tried switch
-  const handleTriedChange = (event) => {
-    setTriedStatus(!triedStatus);
-  };
-
   // tracks text inputs
   const [newBeerName, setNewBeerName] = useState('');
   const [newBeerType, setNewBeerType] = useState('');
@@ -55,6 +50,11 @@ function AddBeerPage() {
       setThumbsDownColor('inherit')
     }
   }, []) // end useEffect
+
+   // switches the boolean when user toggles the tried switch
+  const handleTriedChange = (event) => {
+    setTriedStatus(!triedStatus);
+  };
 
   // If someone clicks 'Thumbs up', set likeStatus to true
   // and set the thumb button colors accordingly

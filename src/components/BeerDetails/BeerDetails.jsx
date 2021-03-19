@@ -20,6 +20,11 @@ function BeerDetails() {
   // defines what the button should say based on which page the user navigated from
   const [buttonText, setButtonText] = useState();
 
+  // defines the current like status and button colors
+  const [likeStatus, setLikeStatus] = useState(beerDetails[0].is_liked)
+  const [thumbsUpColor, setThumbsUpColor] = useState(beerDetails[0].is_liked ? 'primary' : 'inherit')
+  const [thumbsDownColor, setThumbsDownColor] = useState(beerDetails[0].is_liked === false ? 'secondary' : 'inherit')
+
   const [renderAdditional, setRenderAdditional] = useState(false);
   const [triedStatus, setTriedStatus] = useState(false);
 
@@ -54,10 +59,54 @@ function BeerDetails() {
     
   } // end buttonClick
 
+  const changeTriedStatus = () => {
+    setTriedStatus(!triedStatus)
+  }
+
+  const likeClick = () => {
+    if(likeStatus === null || likeStatus === false) {
+      setLikeStatus(true)
+      setThumbsUpColor('primary')
+      setThumbsDownColor('inherit')
+    } else {
+      setLikeStatus(null)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+    }
+  } // end likeClick
+
+  const dislikeClick = () => {
+    if(likeStatus === null || likeStatus === true) {
+      setLikeStatus(false)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('secondary')
+    } else {
+      setLikeStatus(null)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+    }
+  } // end dislikeClick
+
+  // Will update beer status' in the DB if they change on this page
+  const updateBeer = () => {
+    dispatch({
+      type: 'EDIT_BEER_STATUS',
+      payload: {
+        beer_id: beerDetails[0].beer_id,
+        tried_status: triedStatus,
+        like_status: likeStatus
+      }
+    })
+    switchPages();
+  } // end update beer
+
+  const switchPages = () => {
+    triedStatus ? history.push('/mybeers') : history.push('/wanttotry')
+  }
+
   return (
     <div>
       <button onClick={() => {history.goBack();}}>Back</button>
-      <button onClick={() => {history.push({pathname: '/editbeer', state: beerDetails[0].beer_id}) }}>Edit</button>
       <Header />
       
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails[0].beer}</h2>
@@ -68,7 +117,7 @@ function BeerDetails() {
               control={
                 <Switch
                   checked={triedStatus}
-                  disabled
+                  onChange={changeTriedStatus}
                   name="tried"
                   color="primary"
                 label="Tried It"
@@ -89,11 +138,11 @@ function BeerDetails() {
         </div>
         {renderAdditional ?
           <div>
-            <IconButton >
-              <ThumbUpAltIcon color={beerDetails[0].is_liked ? 'primary' : 'inherit'}/>
+            <IconButton onClick={likeClick}>
+              <ThumbUpAltIcon color={thumbsUpColor}/>
             </IconButton>
-            <IconButton >
-              <ThumbDownAltIcon color={beerDetails[0].is_liked === false ? 'secondary' : 'inherit'}/>
+            <IconButton onClick={dislikeClick}>
+              <ThumbDownAltIcon color={thumbsDownColor}/>
             </IconButton>
           </div>
         : <div></div>
@@ -116,6 +165,7 @@ function BeerDetails() {
         </div>
         {/* Add Button */}
         <Button style={{ marginLeft: '140px'}} onClick={buttonClick}>{buttonText}</Button>
+        <Button onClick={updateBeer}>SAVE CHANGES</Button>
     </div>
   )
 }
