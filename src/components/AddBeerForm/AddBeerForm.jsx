@@ -114,11 +114,12 @@ function AddBeerForm({
               <Switch
                 checked={triedStatus}
                 onChange={handleTriedChange}
-                name="tried"
+                name="tried status"
                 color="primary"
               />
             }
-            label="Tried It"
+            labelPlacement="top"
+            label="Have you drank this beer?"
           />
           {/* Beer Name input */}
           <Grid item xs={11}>
@@ -160,6 +161,7 @@ function AddBeerForm({
             />
           </Grid>
           {/* Thumb Icons */}
+          {triedStatus ? 
           <Grid>
             <IconButton onClick={likeClick}>
               <ThumbUpAltIcon color={thumbsUpColor}/>
@@ -168,6 +170,7 @@ function AddBeerForm({
               <ThumbDownAltIcon color={thumbsDownColor}/>
             </IconButton>
           </Grid>
+          : <div></div>}
 
           {/* Dominant Flavor input */}
           <Grid item xs={10} >
