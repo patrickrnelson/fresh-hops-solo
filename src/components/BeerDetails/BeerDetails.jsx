@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header'
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
@@ -106,68 +107,75 @@ function BeerDetails() {
 
   return (
     <div>
-      <button onClick={() => {history.goBack();}}>Back</button>
-      <Header />
+      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+        <IconButton onClick={() => {history.goBack();}}>
+          <ArrowBackIcon /><p>Back</p>
+        </IconButton>
+        <Header />
+      </div>
+
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>{beerDetails[0].beer}</h2>
-        <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
-          
-          <h3>Name</h3>
-          <p>{beerDetails[0].beer}</p>
+      <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
+        
+        <h3>Name</h3>
+        <p>{beerDetails[0].beer}</p>
 
-          <h3>Type</h3>
-          <p>{beerDetails[0].style_name}</p>
+        <h3>Type</h3>
+        <p>{beerDetails[0].style_name}</p>
 
-          <h3>Brewery</h3>
-          <p>{beerDetails[0].brewery}</p>
-        </div>
-        {/* Tried Status Input */}
-        <div>
-          {renderAdditional ? 
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={triedStatus}
-                  onChange={changeTriedStatus}
-                  name="tried"
-                  color="primary"
-                label="Tried It"
-                />
-              }
-            />
-          : <div></div>
-          }
-        </div>
-        {/* Like Status Input */}
-        {renderAdditional ?
-          <div>
-            <IconButton onClick={likeClick}>
-              <ThumbUpAltIcon color={thumbsUpColor}/>
-            </IconButton>
-            <IconButton onClick={dislikeClick}>
-              <ThumbDownAltIcon color={thumbsDownColor}/>
-            </IconButton>
-          </div>
+        <h3>Brewery</h3>
+        <p>{beerDetails[0].brewery}</p>
+      </div>
+      {/* Tried Status Input */}
+      <div>
+        {renderAdditional ? 
+          <FormControlLabel
+            control={
+              <Switch
+                checked={triedStatus}
+                onChange={changeTriedStatus}
+                name="tried"
+                color="primary"
+              label="Tried It"
+              />
+            }
+          />
         : <div></div>
-        } 
-
-        <div style={{ marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
-          <h4>Dominant Flavor</h4>
-          <p>{beerDetails[0].flavor_name}</p>
-          
-          <h4>Characteristics</h4>
-          <ul>
-            {beerDetails[0].array_agg.map((characters) => {
-              return (
-                <li>
-                  {characters}
-                </li>
-              )
-            })}
-          </ul>
+        }
+      </div>
+      {/* Like Status Input */}
+      {renderAdditional ?
+        <div>
+          <IconButton onClick={likeClick}>
+            <ThumbUpAltIcon color={thumbsUpColor}/>
+          </IconButton>
+          <IconButton onClick={dislikeClick}>
+            <ThumbDownAltIcon color={thumbsDownColor}/>
+          </IconButton>
         </div>
-        {/* Add Button */}
-        <Button style={{ marginLeft: '140px'}} onClick={buttonClick}>{buttonText}</Button>
-        <Button onClick={updateBeer}>SAVE CHANGES</Button>
+      : <div></div>
+      } 
+
+      <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
+        <h4>Dominant Flavor</h4>
+        <p>{beerDetails[0].flavor_name}</p>
+        
+        <h4>Characteristics</h4>
+        <ul>
+          {beerDetails[0].array_agg.map((characters) => {
+            return (
+              <li>
+                {characters}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+      {/* Add Button */}
+      <div style={{ display: 'flex', flexDirection:'column', textAlign: 'center' }} >
+        {renderAdditional ? <Button onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
+        <Button onClick={buttonClick}>{buttonText}</Button>
+      </div>
     </div>
   )
 }
