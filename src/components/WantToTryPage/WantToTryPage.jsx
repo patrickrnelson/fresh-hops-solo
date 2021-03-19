@@ -4,8 +4,25 @@ import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(2),
+      width: theme.spacing(40),
+      height: theme.spacing(15),
+    },
+  },
+}));
 
 function WantToTryPage() {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -42,17 +59,19 @@ function WantToTryPage() {
   return(
     <>
     <Header />
-    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Want to Try</h2>
+    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>Want to Try</h2>
     { render ?
     <div className='listLayout'>
       { userBeers.map((beer) => {
         if(beer.has_tried === false) {
           return (
-            <div key={beer.beer_id} className='fancyBeerCards' onClick={() => handleBeerClick(beer.beer_id)}>
-              <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
-              <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
-              <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
-            </div>
+            <Grid key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)}>
+              <Paper elevation={2}>
+                <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
+                <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
+                <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+              </Paper>
+            </Grid>
           )
         }
       })}

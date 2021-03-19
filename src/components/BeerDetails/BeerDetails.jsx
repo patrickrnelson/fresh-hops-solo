@@ -108,10 +108,20 @@ function BeerDetails() {
     <div>
       <button onClick={() => {history.goBack();}}>Back</button>
       <Header />
-      
-      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails[0].beer}</h2>
+      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>{beerDetails[0].beer}</h2>
         <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
-          <div>
+          
+          <h3>Name</h3>
+          <p>{beerDetails[0].beer}</p>
+
+          <h3>Type</h3>
+          <p>{beerDetails[0].style_name}</p>
+
+          <h3>Brewery</h3>
+          <p>{beerDetails[0].brewery}</p>
+        </div>
+        {/* Tried Status Input */}
+        <div>
           {renderAdditional ? 
             <FormControlLabel
               control={
@@ -126,16 +136,8 @@ function BeerDetails() {
             />
           : <div></div>
           }
-          </div>
-          <h3>Name</h3>
-          <p>{beerDetails[0].beer}</p>
-
-          <h3>Type</h3>
-          <p>{beerDetails[0].style_name}</p>
-
-          <h3>Brewery</h3>
-          <p>{beerDetails[0].brewery}</p>
         </div>
+        {/* Like Status Input */}
         {renderAdditional ?
           <div>
             <IconButton onClick={likeClick}>

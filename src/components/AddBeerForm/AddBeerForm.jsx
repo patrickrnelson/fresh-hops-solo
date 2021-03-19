@@ -20,11 +20,13 @@ function AddBeerForm({
   defineTypeCharacteristics,
   dislikeClick,
   dominantFlavors,
-  handleTriedChange,
   likeClick,
+  haveTriedColor,
   newBeerBrewery,
   newBeerName,
   newBeerType,
+  notTriedClick,
+  notTriedColor,
   setBeerDominantFlavor,
   setCharacteristicOne,
   setCharacteristicTwo,
@@ -35,6 +37,7 @@ function AddBeerForm({
   testerFunction,
   thumbsDownColor,
   thumbsUpColor,
+  triedClick,
   triedStatus,
   typeCharacteristics
 }) {
@@ -96,33 +99,20 @@ function AddBeerForm({
     {name: 'Castle Danger Brewing'},
     {name: 'Inbound Brew Co.'},
     {name: 'Dangerous Man Brewing Co.'},
-    {name: 'Falling Knife'},
-    {name: 'Able'},
-    {name: 'Bauhaus'},
-    {name: 'Voyageur'},
+    {name: 'Falling Knife Brewing Co.'},
+    {name: 'Able Seedhouse + Brewery'},
+    {name: 'Bauhaus Brew Labs'},
+    {name: 'Voyageur Brewing Co.'},
+    {name: 'Fair State Brewing Cooperative'},
     {name: ''},
   ]);
 
   return (
     <div>
-      <form>
-        <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Add A Beer</h2>
+        <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>Add A Beer</h2>
         <Grid container spacing={3} alignItems='center' justify='center' >
-          {/* Has Tried indicator */}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={triedStatus}
-                onChange={handleTriedChange}
-                name="tried status"
-                color="primary"
-              />
-            }
-            labelPlacement="top"
-            label="Have you drank this beer?"
-          />
           {/* Beer Name input */}
-          <Grid item xs={11}>
+          <Grid item xs={10} style={{display: 'flex', justifyContent: 'center'}}>
             <TextField 
               label="Beer Name" 
               variant="filled" 
@@ -134,8 +124,9 @@ function AddBeerForm({
               />
           </Grid>
           {/* Beer Type Autocomplete input */}
-          <Grid item xs={11}>
+          <Grid item xs={11} style={{display: 'flex', justifyContent: 'center'}}>
             <Autocomplete
+              
               id="combo-box-demo"
               options={beerTypes}
               getOptionLabel={(option) => option.type}
@@ -147,7 +138,7 @@ function AddBeerForm({
             />
           </Grid>
           {/* Brewery Autocomplete Input */}
-          <Grid item xs={11}>
+          <Grid item xs={11} style={{display: 'flex', justifyContent: 'center'}}>
             <Autocomplete
               id="combo-box-demo"
               options={breweries}
@@ -160,27 +151,43 @@ function AddBeerForm({
             }
             />
           </Grid>
-          {/* Thumb Icons */}
-          {triedStatus ? 
-          <Grid>
-            <IconButton onClick={likeClick}>
-              <ThumbUpAltIcon color={thumbsUpColor}/>
-            </IconButton>
-            <IconButton onClick={dislikeClick}>
-              <ThumbDownAltIcon color={thumbsDownColor}/>
-            </IconButton>
+          {/* Has Tried indicator */}
+          <Grid container direction="column"  alignContent="center" style={{width: '60%'}}>
+            <Grid item>
+              <p>Have you drank this beer?</p>
+              <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
+                <Button onClick={triedClick} color={haveTriedColor}>YES</Button>
+              </div>
+            </Grid>
+            {/* Thumb Icons */}
+            {triedStatus ? 
+            <Grid item>
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <p>Did you like this beer?</p>
+              </div>
+              <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                <IconButton onClick={dislikeClick}>
+                  <ThumbDownAltIcon color={thumbsDownColor}/>
+                </IconButton>
+                <IconButton onClick={likeClick}>
+                  <ThumbUpAltIcon color={thumbsUpColor}/>
+                </IconButton>
+              </div>
+            </Grid>
+            : <div></div>}
           </Grid>
-          : <div></div>}
-
           {/* Dominant Flavor input */}
-          <Grid item xs={10} >
+          <Grid container direction="column" spacing={3} alignContent="center" style={{width: '60%', margin: '10px 0px'}}>
+            <Grid item xs={10} style={{ display: "flex", flexDirection: 'column', justifyContent: "center", textAlign: 'center'}}>
+              <p>Dominant Flavor:</p>
               <select
                 type="text" 
                 value={beerDominantFlavor}
                 onChange={(event) => {setBeerDominantFlavor(event.target.value)}}
                 onClick={defineTypeCharacteristics}
               >
-              <option value="">--Select a Characteristic--</option>
+              <option value="">--Select Flavor--</option>
                 {dominantFlavors.map((flavor) => {
                     return (
                       <option key={flavor.id}>{flavor.flavor_name}</option>
@@ -191,14 +198,15 @@ function AddBeerForm({
             </Grid>
 
           {/* Characteristic 1 dropdown */}
-            <Grid item xs={10} >
+            <Grid item xs={10} style={{ display: "flex", flexDirection: 'column', justifyContent: "center", textAlign: 'center'}}>
+              <p>Characteristics:</p>
               <select
                 type="text" 
                 value={characteristicOne}
                 onChange={(event) => {setCharacteristicOne(event.target.value)}}
                 onClick={defineTypeCharacteristics}
               >
-              <option value="">--Select a Characteristic--</option>
+              <option value="">--Characteristic 1--</option>
                 {typeCharacteristics.map((items) => {
                     return (
                       <option>{items}</option>
@@ -215,7 +223,7 @@ function AddBeerForm({
                 onChange={(event) => {setCharacteristicTwo(event.target.value)}}
                 onClick={defineTypeCharacteristics}
               >
-              <option value="">--Select a Characteristic--</option>
+              <option value="">--Characteristic 2--</option>
                 {typeCharacteristics.map((items) => {
                     return (
                       <option>{items}</option>
@@ -232,7 +240,7 @@ function AddBeerForm({
                 onChange={(event) => {setCharacteristicThree(event.target.value)}}
                 onClick={defineTypeCharacteristics}
               >
-              <option value="">--Select a Characteristic--</option>
+              <option value="">--Characteristic 3--</option>
                 {typeCharacteristics.map((items) => {
                     return (
                       <option>{items}</option>
@@ -241,11 +249,11 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
+          </Grid>
         </Grid>
         {/* Add Button */}
         <Button onClick={testerFunction}>TESTER</Button>
         <Button onClick={addBeerClick} >Add Beer</Button>
-      </form>
     </div>
   )
 }
