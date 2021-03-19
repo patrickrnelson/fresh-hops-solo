@@ -24,9 +24,21 @@ function* deleteBeer(action) {
   }
 }
 
+function* editBeerStatus(action) {
+  try {
+    yield axios.put(`api/beer/editBeerStatus`, action.payload);
+
+    yield put({ type: 'FETCH_USER_BEERS' });
+  }
+  catch (error) {
+    console.log('Error in Edit Tried Status', error);
+  }
+}
+
 function* userBeersSaga() {
   yield takeLatest('FETCH_USER_BEERS', fetchUserBeers);
   yield takeLatest('DELETE_A_BEER', deleteBeer);
+  yield takeLatest('EDIT_BEER_STATUS', editBeerStatus)
 }
 
 export default userBeersSaga;

@@ -30,11 +30,13 @@ function WantToTryPage() {
       type: 'FETCH_BEER_DETAILS',
       payload: beerId
     })
-
-    history.push({
-      pathname: '/details', 
-      state: { from: 'want to try' }
-    });
+    const timer = setTimeout(function() { 
+      history.push({
+        pathname: '/details', 
+        state: { from: 'want to try' }
+      });
+    }, 300);
+    return () => clearTimeout(timer);
   } // end handleBeerClick
 
   return(

@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header'
 
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import IconButton from '@material-ui/core/IconButton';
+import Switch from '@material-ui/core/Switch';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
 function BeerDetails() {
   const history = useHistory();
@@ -15,12 +20,23 @@ function BeerDetails() {
   // defines what the button should say based on which page the user navigated from
   const [buttonText, setButtonText] = useState();
 
+  // defines the current like status and button colors
+  const [likeStatus, setLikeStatus] = useState(beerDetails[0].is_liked)
+  const [thumbsUpColor, setThumbsUpColor] = useState(beerDetails[0].is_liked ? 'primary' : 'inherit')
+  const [thumbsDownColor, setThumbsDownColor] = useState(beerDetails[0].is_liked === false ? 'secondary' : 'inherit')
+
+  const [renderAdditional, setRenderAdditional] = useState(false);
+  const [triedStatus, setTriedStatus] = useState(false);
+
   useEffect(() => {
+    setRenderAdditional(false);
     if(history.location.state.from === 'home') {
       setButtonText('Save Beer');
     }
     else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
       setButtonText('Delete');
+      setRenderAdditional(true);
+      setTriedStatus(beerDetails[0].has_tried)
     }
   }, []); // end useEffect
 
@@ -43,6 +59,51 @@ function BeerDetails() {
     
   } // end buttonClick
 
+  const changeTriedStatus = () => {
+    setTriedStatus(!triedStatus)
+  }
+
+  const likeClick = () => {
+    if(likeStatus === null || likeStatus === false) {
+      setLikeStatus(true)
+      setThumbsUpColor('primary')
+      setThumbsDownColor('inherit')
+    } else {
+      setLikeStatus(null)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+    }
+  } // end likeClick
+
+  const dislikeClick = () => {
+    if(likeStatus === null || likeStatus === true) {
+      setLikeStatus(false)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('secondary')
+    } else {
+      setLikeStatus(null)
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+    }
+  } // end dislikeClick
+
+  // Will update beer status' in the DB if they change on this page
+  const updateBeer = () => {
+    dispatch({
+      type: 'EDIT_BEER_STATUS',
+      payload: {
+        beer_id: beerDetails[0].beer_id,
+        tried_status: triedStatus,
+        like_status: likeStatus
+      }
+    })
+    switchPages();
+  } // end update beer
+
+  const switchPages = () => {
+    triedStatus ? history.push('/mybeers') : history.push('/wanttotry')
+  }
+
   return (
     <div>
       <button onClick={() => {history.goBack();}}>Back</button>
@@ -50,6 +111,22 @@ function BeerDetails() {
       
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>{beerDetails[0].beer}</h2>
         <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
+          <div>
+          {renderAdditional ? 
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={triedStatus}
+                  onChange={changeTriedStatus}
+                  name="tried"
+                  color="primary"
+                label="Tried It"
+                />
+              }
+            />
+          : <div></div>
+          }
+          </div>
           <h3>Name</h3>
           <p>{beerDetails[0].beer}</p>
 
@@ -59,6 +136,17 @@ function BeerDetails() {
           <h3>Brewery</h3>
           <p>{beerDetails[0].brewery}</p>
         </div>
+        {renderAdditional ?
+          <div>
+            <IconButton onClick={likeClick}>
+              <ThumbUpAltIcon color={thumbsUpColor}/>
+            </IconButton>
+            <IconButton onClick={dislikeClick}>
+              <ThumbDownAltIcon color={thumbsDownColor}/>
+            </IconButton>
+          </div>
+        : <div></div>
+        } 
 
         <div style={{ marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
           <h4>Dominant Flavor</h4>
@@ -77,6 +165,7 @@ function BeerDetails() {
         </div>
         {/* Add Button */}
         <Button style={{ marginLeft: '140px'}} onClick={buttonClick}>{buttonText}</Button>
+        <Button onClick={updateBeer}>SAVE CHANGES</Button>
     </div>
   )
 }

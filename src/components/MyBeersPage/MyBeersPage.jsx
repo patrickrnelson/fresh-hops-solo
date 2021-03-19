@@ -10,10 +10,12 @@ function MyBeersPage() {
   const userBeers = useSelector(store => store.userBeers)
 
   useLayoutEffect(() => {
-    dispatch({
-      type: 'FETCH_USER_BEERS'
-    })
-    console.log('userBeers', userBeers);
+    const timer = setTimeout(function() { 
+      dispatch({
+        type: 'FETCH_USER_BEERS'
+      })
+    }, 300);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleBeerClick = (beerId) => {
@@ -22,11 +24,13 @@ function MyBeersPage() {
       type: 'FETCH_BEER_DETAILS',
       payload: beerId
     })
-
-    history.push({
-      pathname: '/details', 
-      state: { from: 'my beers' }
-    });
+    const timer = setTimeout(function() { 
+      history.push({
+        pathname: '/details', 
+        state: { from: 'my beers' }
+      });
+    }, 300);
+    return () => clearTimeout(timer);
   } // end handleBeerClick
 
   return(
