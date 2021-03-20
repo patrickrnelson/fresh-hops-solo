@@ -34,7 +34,6 @@ function AddBeerForm({
   setNewBeerBrewery,
   setNewBeerName,
   setNewBeerType,
-  testerFunction,
   thumbsDownColor,
   thumbsUpColor,
   triedClick,
@@ -106,6 +105,19 @@ function AddBeerForm({
     {name: 'Fair State Brewing Cooperative'},
     {name: ''},
   ]);
+
+   // test function to make sure my state is capturing what I think it is
+  // const testerFunction = () => {
+  //   console.log('Tried status', triedStatus);
+  //   console.log('Beer', newBeerName);
+  //   console.log('Type', newBeerType);
+  //   console.log('Brewery', newBeerBrewery);
+  //   console.log('Like Status', likeStatus);
+  //   console.log('characteristicOne', characteristicOne);
+  //   console.log('characteristicTwo', characteristicTwo);
+  //   console.log('characteristicThree', characteristicThree);
+  //   console.log('dominantFlavor', beerDominantFlavor);
+  // } // end tester function - can get rid of
 
   return (
     <div>
@@ -249,11 +261,10 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
+            {/* Add Button */}
+            <Button color='primary' variant='contained' onClick={addBeerClick} >Add Beer</Button>
           </Grid>
         </Grid>
-        {/* Add Button */}
-        <Button onClick={testerFunction}>TESTER</Button>
-        <Button onClick={addBeerClick} >Add Beer</Button>
     </div>
   )
 }

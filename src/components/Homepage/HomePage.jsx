@@ -42,6 +42,15 @@ function HomePage() {
       
       <h1 id="greetingText">Hi, {user.name}!</h1>
 
+      <Button 
+        style={{marginTop:'35px'}}
+        variant='contained' 
+        color='primary' 
+        onClick={() => {history.push('/addbeer')} }
+      > 
+        Add Beer 
+      </Button>
+
       <h2 id="secondaryText">Random Beer:</h2>
 
       <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
@@ -50,8 +59,6 @@ function HomePage() {
         <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
         <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
       </div>
-
-      <Button onClick={() => {history.push('/addbeer')} }> Add Beer </Button>
       
     </div>
   )

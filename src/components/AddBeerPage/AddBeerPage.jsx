@@ -149,18 +149,7 @@ function AddBeerPage() {
     history.push('/mybeers')
   } // end addBeerClick
 
-  // test function to make sure my state is capturing what I think it is
-  const testerFunction = () => {
-    console.log('Tried status', triedStatus);
-    console.log('Beer', newBeerName);
-    console.log('Type', newBeerType);
-    console.log('Brewery', newBeerBrewery);
-    console.log('Like Status', likeStatus);
-    console.log('characteristicOne', characteristicOne);
-    console.log('characteristicTwo', characteristicTwo);
-    console.log('characteristicThree', characteristicThree);
-    console.log('dominantFlavor', beerDominantFlavor);
-  } // end tester function - can get rid of
+ 
 
   return (
     <div>
@@ -190,7 +179,6 @@ function AddBeerPage() {
         setNewBeerName={setNewBeerName}
         setNewBeerType={setNewBeerType}
         setNotTriedColor={setNotTriedColor}
-        testerFunction={testerFunction}
         thumbsDownColor={thumbsDownColor}
         thumbsUpColor={thumbsUpColor}
         triedClick={triedClick}

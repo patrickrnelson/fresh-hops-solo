@@ -6,6 +6,7 @@ import Header from '../Header/Header'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
@@ -26,16 +27,28 @@ function BeerDetails() {
   const [thumbsUpColor, setThumbsUpColor] = useState(beerDetails[0].is_liked ? 'primary' : 'inherit')
   const [thumbsDownColor, setThumbsDownColor] = useState(beerDetails[0].is_liked === false ? 'secondary' : 'inherit')
 
+  // render additional will render the 'like status', 'tried status', 
+  // and 'save changes' button when true
   const [renderAdditional, setRenderAdditional] = useState(false);
+  // defines the current tried status and button colors
   const [triedStatus, setTriedStatus] = useState(false);
+  const [haveTriedColor, setHaveTriedColor] = useState(beerDetails[0].has_tried ? 'primary' : 'inherit');
+  const [notTriedColor, setNotTriedColor] = useState(beerDetails[0].has_tried === false ? 'secondary' : 'inherit');
+
+  const [saveChangesColor, setSaveChangesColor] = useState('inherit');
+  const [saveChangesBtnVariant, setSaveChangesBtnVariant] = useState('inherit');
+
+  const [buttonColor, setButtonColor] = useState('inherit');
 
   useEffect(() => {
     setRenderAdditional(false);
     if(history.location.state.from === 'home') {
       setButtonText('Save Beer');
+      setButtonColor('primary');
     }
     else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
       setButtonText('Delete');
+      setButtonColor('secondary');
       setRenderAdditional(true);
       setTriedStatus(beerDetails[0].has_tried)
     }
@@ -64,6 +77,50 @@ function BeerDetails() {
     setTriedStatus(!triedStatus)
   }
 
+  // handle tried status changes and colors of inputs
+  const triedClick = () => {
+    if(triedStatus === null || triedStatus === false) {
+      setTriedStatus(true);
+      setHaveTriedColor('primary')
+      setNotTriedColor('inherit')
+    }
+    else {
+      // reset like status and thumb colors
+      setLikeStatus(null);
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+      // set the correct tries status and colors
+      setTriedStatus(null)
+      setHaveTriedColor('inherit')
+      setNotTriedColor('inherit')
+    }
+    // if anything changes, change the save changes button to indicate that the user needs to save
+    setSaveChangesColor('primary')
+    setSaveChangesBtnVariant('contained')
+  } // end triedClick
+
+  // handle tried status changes and colors of inputs
+  const notTriedClick = () => {
+    if(triedStatus === null || triedStatus === true) {
+      // reset like status and thumb colors
+      setLikeStatus(null);
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+      // set the correct tries status and colors
+      setTriedStatus(false);
+      setHaveTriedColor('inherit')
+      setNotTriedColor('secondary')
+    }
+    else {
+      setTriedStatus(null)
+      setHaveTriedColor('inherit')
+      setNotTriedColor('inherit')
+    }
+    // if anything changes, change the save changes button to indicate that the user needs to save
+    setSaveChangesColor('primary')
+    setSaveChangesBtnVariant('contained')
+  } // end notTriedClick
+
   const likeClick = () => {
     if(likeStatus === null || likeStatus === false) {
       setLikeStatus(true)
@@ -74,6 +131,9 @@ function BeerDetails() {
       setThumbsUpColor('inherit')
       setThumbsDownColor('inherit')
     }
+    // if anything changes, change the save changes button to indicate that the user needs to save
+    setSaveChangesColor('primary')
+    setSaveChangesBtnVariant('contained')
   } // end likeClick
 
   const dislikeClick = () => {
@@ -86,6 +146,9 @@ function BeerDetails() {
       setThumbsUpColor('inherit')
       setThumbsDownColor('inherit')
     }
+    // if anything changes, change the save changes button to indicate that the user needs to save
+    setSaveChangesColor('primary')
+    setSaveChangesBtnVariant('contained')
   } // end dislikeClick
 
   // Will update beer status' in the DB if they change on this page
@@ -126,36 +189,37 @@ function BeerDetails() {
         <h3>Brewery</h3>
         <p>{beerDetails[0].brewery}</p>
       </div>
-      {/* Tried Status Input */}
-      <div>
+        {/* Tried Status Input */}
         {renderAdditional ? 
-          <FormControlLabel
-            control={
-              <Switch
-                checked={triedStatus}
-                onChange={changeTriedStatus}
-                name="tried"
-                color="primary"
-              label="Tried It"
-              />
-            }
-          />
+        <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
+        <Grid container direction="column"  alignContent="center" style={{width: '60%'}}>
+          <Grid item>
+            <p>Have you drank this beer?</p>
+            <div style={{display: 'flex', justifyContent: 'space-around'}}>
+              <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
+              <Button onClick={triedClick} color={haveTriedColor}>YES</Button>
+            </div>
+          </Grid>
+          {triedStatus ?
+          <Grid item>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <p>Did you like this beer?</p>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-around'}}>
+              <IconButton onClick={dislikeClick}>
+                <ThumbDownAltIcon color={thumbsDownColor}/>
+              </IconButton>
+              <IconButton onClick={likeClick}>
+                <ThumbUpAltIcon color={thumbsUpColor}/>
+              </IconButton>
+            </div>
+          </Grid>
+          : <div></div>}
+        </Grid>
+        </Grid>
         : <div></div>
         }
-      </div>
-      {/* Like Status Input */}
-      {renderAdditional ?
-        <div>
-          <IconButton onClick={likeClick}>
-            <ThumbUpAltIcon color={thumbsUpColor}/>
-          </IconButton>
-          <IconButton onClick={dislikeClick}>
-            <ThumbDownAltIcon color={thumbsDownColor}/>
-          </IconButton>
-        </div>
-      : <div></div>
-      } 
-
+        
       <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
         <p>{beerDetails[0].flavor_name}</p>
@@ -173,8 +237,8 @@ function BeerDetails() {
       </div>
       {/* Add Button */}
       <div style={{ display: 'flex', flexDirection:'column', textAlign: 'center' }} >
-        {renderAdditional ? <Button onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
-        <Button onClick={buttonClick}>{buttonText}</Button>
+        {renderAdditional ? <Button variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
+        <Button color={buttonColor} onClick={buttonClick}>{buttonText}</Button>
       </div>
     </div>
   )
