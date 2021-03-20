@@ -6,11 +6,7 @@ import StatusChangeInputs from '../StatusChangeInputs';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import IconButton from '@material-ui/core/IconButton';
-import Switch from '@material-ui/core/Switch';
-
 
 function BeerDetails() {
   const history = useHistory();
@@ -22,35 +18,38 @@ function BeerDetails() {
   // defines what the button should say based on which page the user navigated from
   const [buttonText, setButtonText] = useState();
 
-  // defines the current like status and button colors
+  // defines the current like status
   const [likeStatus, setLikeStatus] = useState(beerDetails[0].is_liked)
+  // defines the current tried status
+  const [triedStatus, setTriedStatus] = useState(beerDetails[0].has_tried);
 
   // render additional will render the 'like status', 'tried status', 
   // and 'save changes' button when true
   const [renderAdditional, setRenderAdditional] = useState(false);
-  // defines the current tried status and button colors
-  const [triedStatus, setTriedStatus] = useState(false);
   
-
+  // Used to change the look of the button when a user changes anything that needs to be saved
   const [saveChangesColor, setSaveChangesColor] = useState('inherit');
   const [saveChangesBtnVariant, setSaveChangesBtnVariant] = useState('inherit');
 
+  // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
   const [buttonColor, setButtonColor] = useState('inherit');
 
   useEffect(() => {
     setRenderAdditional(false);
+    // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
     if(history.location.state.from === 'home') {
       setButtonText('Save Beer');
       setButtonColor('primary');
     }
+    // if user navigates from a list view, render the tried status
     else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
       setButtonText('Delete');
       setButtonColor('secondary');
       setRenderAdditional(true);
-      setTriedStatus(beerDetails[0].has_tried)
     }
   }, []); // end useEffect
 
+  // Button changes, and depending on what button is, different dispatches occur
   const buttonClick = () => {
     if(buttonText === 'Save Beer') {
       dispatch({
@@ -70,11 +69,7 @@ function BeerDetails() {
     
   } // end buttonClick
 
-  // const changeTriedStatus = () => {
-  //   setTriedStatus(!triedStatus)
-  // }
-
-  // Will update beer status' in the DB if they change on this page
+  // Will update beer status' in the DB if they click Save Changes on this page
   const updateBeer = () => {
     dispatch({
       type: 'EDIT_BEER_STATUS',
@@ -87,12 +82,15 @@ function BeerDetails() {
     switchPages();
   } // end update beer
 
+  // After user clicks 'Save Changes' we navigate them to either the my beers page or the want to try page
+  // depending on if they have tried the beer or not
   const switchPages = () => {
     triedStatus ? history.push('/mybeers') : history.push('/wanttotry')
   }
 
   return (
     <div>
+      {/* Back button & Hamburger menu */}
       <div style={{ display: 'flex', justifyContent: 'space-between'}}>
         <IconButton onClick={() => {history.goBack();}}>
           <ArrowBackIcon /><p>Back</p>
@@ -100,9 +98,11 @@ function BeerDetails() {
         <Header />
       </div>
 
+      {/* Page Title */}
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>{beerDetails[0].beer}</h2>
+
+      {/* Beer Information */}
       <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
-        
         <h3>Name</h3>
         <p>{beerDetails[0].beer}</p>
 
@@ -112,14 +112,18 @@ function BeerDetails() {
         <h3>Brewery</h3>
         <p>{beerDetails[0].brewery}</p>
       </div>
-        {/* Tried Status Input */}
-        {renderAdditional ? 
-          <StatusChangeInputs 
-            likeStatus={likeStatus}
-            setLikeStatus={setLikeStatus} />
-        : <div></div>
-        }
-        
+      {/* if renderAdditional === true, render the status inputs  */}
+      {renderAdditional ? 
+        <StatusChangeInputs 
+          likeStatus={likeStatus}
+          setLikeStatus={setLikeStatus}
+          triedStatus={triedStatus}
+          setTriedStatus={setTriedStatus}
+          setSaveChangesColor={setSaveChangesColor}
+          setSaveChangesBtnVariant={setSaveChangesBtnVariant} />
+      : <div></div>
+      }
+      {/* Beer Flavors & Characteristics */}
       <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
         <p>{beerDetails[0].flavor_name}</p>
@@ -135,9 +139,11 @@ function BeerDetails() {
           })}
         </ul>
       </div>
-      {/* Add Button */}
+      {/* Buttons */}
       <div style={{ display: 'flex', flexDirection:'column', textAlign: 'center' }} >
+        {/* If renderAdditional === true, render the Save Changes Button */}
         {renderAdditional ? <Button variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
+        {/* Button will change depending on where user navigated from */}
         <Button color={buttonColor} onClick={buttonClick}>{buttonText}</Button>
       </div>
     </div>
