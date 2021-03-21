@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,11 +62,18 @@ function MyBeersPage() {
         if(beer.has_tried === true) {
           return (
             <Grid container key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)} >
-              <Paper elevation={3}>
+              <Paper elevation={3} style={{paddingTop:'5px'}}>
                 <img className="randomImage" src={beer.image} height='180'/>
-                <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
-                <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
-                <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+                <div style={{display: 'flex', flexDirection:'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                  <div style={{width: '80%'}}>
+                    <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
+                    <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
+                    <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p> 
+                  </div>
+                  <div style={{paddingRight: '25px', paddingTop: '20px'}}>
+                    {beer.is_liked === true || beer.is_liked === null ? <ThumbUpAltIcon color={beer.is_liked ? 'primary' : 'initial'}/> : <ThumbDownAltIcon color='secondary'/>}
+                  </div>  
+                </div>
               </Paper>
             </Grid>
           )
