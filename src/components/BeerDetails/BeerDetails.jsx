@@ -89,11 +89,6 @@ function BeerDetails() {
     triedStatus ? history.push('/mybeers') : history.push('/wanttotry')
   }
 
-  const testerFunction = () => {
-    console.log('likeStatus', likeStatus);
-    console.log('triedStatus', triedStatus);
-  }
-
   return (
     <div>
       {/* Back button & Hamburger menu */}
@@ -153,7 +148,6 @@ function BeerDetails() {
         {renderAdditional ? <Button variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
         <Button color={buttonColor} onClick={buttonClick}>{buttonText}</Button>
-        <Button onClick={testerFunction}>TESTER</Button>
       </div>
     </div>
   )
