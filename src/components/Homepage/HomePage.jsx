@@ -12,17 +12,27 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   // user from store
-  const user = useSelector(store => store.user)
+  const user = useSelector(store => store.user);
   // random beer from store
-  const randomBeer = useSelector(store => store.randomBeer)
-  const userBeers = useSelector(store => store.userBeers)
+  const randomBeer = useSelector(store => store.randomBeer);
+  const userBeers = useSelector(store => store.userBeers);
+  const allBeers = useSelector(store => store.allBeers);
+
+  const recommendedBeers 
 
   // On load, grab a random beer
   useEffect(() => {
+    // fetchRecommendations();
     fetchRandomBeer();
+    fetchAllBeers();
     fetchUserBeers();
-    console.log('userBeers', userBeers);
   }, []);
+
+  const fetchAllBeers = () => {
+    dispatch ({
+      type: 'FETCH_ALL_BEERS'
+    })
+  }
 
   const fetchRandomBeer = () => {
     dispatch({
@@ -76,7 +86,7 @@ function HomePage() {
         </Paper>
       </div>
 
-      <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
+      {/* <Button onClick={fetchRandomBeer}>Refresh Beer</Button> */}
       
     </div>
   )

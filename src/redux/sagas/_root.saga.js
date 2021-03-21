@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects';
 import addNewBeerSaga from './newBeer.saga';
+import allBeers from './allBeers.saga'
 import beerDetails from './beerDetails.saga';
 import characteristicsSaga from './characteristics.saga';
 import loginSaga from './login.saga';
@@ -25,5 +26,6 @@ export default function* rootSaga() {
     addNewBeerSaga(),
     beerDetails(),
     userBeersSaga(),
+    allBeers(),
   ]);
 }
