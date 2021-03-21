@@ -27,10 +27,12 @@ function WantToTryPage() {
   const history = useHistory();
 
   const userBeers = useSelector(store => store.userBeers)
-
+  // on load, don't render
   const [render, setRender] = useState(true)
 
   useEffect(() => {
+    // set a timeout to wait for POST before fetching
+    // after timeout, fetch and start render
     setRender(false);
     const timer = setTimeout(function() { 
       dispatch({
@@ -67,9 +69,14 @@ function WantToTryPage() {
           return (
             <Grid key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)}>
               <Paper elevation={2}>
-                <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
-                <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
-                <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+                <div style={{display: 'flex', alignContent: 'center', alignItems: 'center'}}>
+                  <img src={beer.image} height='70' style={{padding: '15px 10px'}}/>
+                  <div style={{width: '80%'}}>
+                    <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
+                    <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
+                    <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+                  </div>
+                </div>
               </Paper>
             </Grid>
           )
