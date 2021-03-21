@@ -14,6 +14,8 @@ function AddBeerPage() {
 
   // state to track the tried status
   const [triedStatus, setTriedStatus] = useState(false);
+  const [haveTriedColor, setHaveTriedColor] = useState('inherit');
+  const [notTriedColor, setNotTriedColor] = useState('inherit');
 
   // tracks text inputs
   const [newBeerName, setNewBeerName] = useState('');
@@ -51,10 +53,43 @@ function AddBeerPage() {
     }
   }, []) // end useEffect
 
-   // switches the boolean when user toggles the tried switch
-  const handleTriedChange = (event) => {
-    setTriedStatus(!triedStatus);
-  };
+  // handle tried status changes and colors of inputs
+  const triedClick = () => {
+    if(triedStatus === null || triedStatus === false) {
+      setTriedStatus(true);
+      setHaveTriedColor('primary')
+      setNotTriedColor('inherit')
+    }
+    else {
+      // reset like status and thumb colors
+      setLikeStatus(null);
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+      // set the correct tries status and colors
+      setTriedStatus(null)
+      setHaveTriedColor('inherit')
+      setNotTriedColor('inherit')
+    }
+  } // end triedClick
+
+  // handle tried status changes and colors of inputs
+  const notTriedClick = () => {
+    if(triedStatus === null || triedStatus === true) {
+      // reset like status and thumb colors
+      setLikeStatus(null);
+      setThumbsUpColor('inherit')
+      setThumbsDownColor('inherit')
+      // set the correct tries status and colors
+      setTriedStatus(false);
+      setHaveTriedColor('inherit')
+      setNotTriedColor('secondary')
+    }
+    else {
+      setTriedStatus(null)
+      setHaveTriedColor('inherit')
+      setNotTriedColor('inherit')
+    }
+  } // end notTriedClick
 
   // If someone clicks 'Thumbs up', set likeStatus to true
   // and set the thumb button colors accordingly
@@ -114,18 +149,7 @@ function AddBeerPage() {
     history.push('/mybeers')
   } // end addBeerClick
 
-  // test function to make sure my state is capturing what I think it is
-  const testerFunction = () => {
-    console.log('Tried status', triedStatus);
-    console.log('Beer', newBeerName);
-    console.log('Type', newBeerType);
-    console.log('Brewery', newBeerBrewery);
-    console.log('Like Status', likeStatus);
-    console.log('characteristicOne', characteristicOne);
-    console.log('characteristicTwo', characteristicTwo);
-    console.log('characteristicThree', characteristicThree);
-    console.log('dominantFlavor', beerDominantFlavor);
-  } // end tester function - can get rid of
+ 
 
   return (
     <div>
@@ -139,21 +163,25 @@ function AddBeerPage() {
         defineTypeCharacteristics={defineTypeCharacteristics}
         dislikeClick={dislikeClick}
         dominantFlavors={dominantFlavors}
-        handleTriedChange={handleTriedChange}
+        haveTriedColor={haveTriedColor}
         likeClick={likeClick}
         newBeerBrewery={newBeerBrewery}
         newBeerName={newBeerName}
         newBeerType={newBeerType}
+        notTriedColor={notTriedColor}
+        notTriedClick={notTriedClick}
         setBeerDominantFlavor={setBeerDominantFlavor}
         setCharacteristicOne={setCharacteristicOne}
         setCharacteristicTwo={setCharacteristicTwo}
         setCharacteristicThree={setCharacteristicThree}
+        setHaveTriedColor={setHaveTriedColor}
         setNewBeerBrewery={setNewBeerBrewery}
         setNewBeerName={setNewBeerName}
         setNewBeerType={setNewBeerType}
-        testerFunction={testerFunction}
+        setNotTriedColor={setNotTriedColor}
         thumbsDownColor={thumbsDownColor}
         thumbsUpColor={thumbsUpColor}
+        triedClick={triedClick}
         triedStatus={triedStatus}
         typeCharacteristics={typeCharacteristics}
         />
