@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
@@ -98,33 +99,31 @@ function StatusChangeInputs({
   } // end dislikeClick
 
   return (
-    <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
-      <Grid container direction="column"  alignContent="center" style={{width: '60%'}}>
-        {/* Tried Status Inputs */}
-        <Grid item>
-          <p>Have you drank this beer?</p>
-          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
-            <Button onClick={triedClick} color={haveTriedColor}>YES</Button>
-          </div>
-        </Grid>
-        {/* If the user has tried the beer, allow them to say if they liked it */}
-        {triedStatus ?
-        <Grid item>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <p>Did you like this beer?</p>
-          </div>
-          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <IconButton onClick={dislikeClick}>
-              <ThumbDownAltIcon color={thumbsDownColor}/>
-            </IconButton>
-            <IconButton onClick={likeClick}>
-              <ThumbUpAltIcon color={thumbsUpColor}/>
-            </IconButton>
-          </div>
-        </Grid>
-        : <div></div> }
+    <Grid container direction="column"  alignContent="center" style={{width: '60%'}}>
+      {/* Tried Status Inputs */}
+      <Grid item>
+        <p>Have you drank this beer?</p>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
+          <Button onClick={triedClick} color={haveTriedColor}>YES</Button>
+        </div>
       </Grid>
+      {/* If the user has tried the beer, allow them to say if they liked it */}
+      {triedStatus ?
+      <Grid item>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <p>Did you like this beer?</p>
+        </div>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <IconButton onClick={dislikeClick}>
+            <ThumbDownAltIcon color={thumbsDownColor}/>
+          </IconButton>
+          <IconButton onClick={likeClick}>
+            <ThumbUpAltIcon color={thumbsUpColor}/>
+          </IconButton>
+        </div>
+      </Grid>
+      : <div></div> }
     </Grid>
   )
 }

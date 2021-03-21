@@ -59,7 +59,7 @@ function MyBeersPage() {
       {userBeers.map((beer) => {
         if(beer.has_tried === true) {
           return (
-            <Grid key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)} >
+            <Grid container key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)} >
               <Paper elevation={3}>
                 <img className="randomImage" src={beer.image} height='180'/>
                 <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>

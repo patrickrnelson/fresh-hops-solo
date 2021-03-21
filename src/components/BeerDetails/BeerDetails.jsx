@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header';
-import StatusChangeInputs from '../StatusChangeInputs';
+import StatusChangeInputs from '../StatusChangeInputs/StatusChangeInputs';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 
 function BeerDetails() {
@@ -88,6 +89,11 @@ function BeerDetails() {
     triedStatus ? history.push('/mybeers') : history.push('/wanttotry')
   }
 
+  const testerFunction = () => {
+    console.log('likeStatus', likeStatus);
+    console.log('triedStatus', triedStatus);
+  }
+
   return (
     <div>
       {/* Back button & Hamburger menu */}
@@ -114,6 +120,7 @@ function BeerDetails() {
       </div>
       {/* if renderAdditional === true, render the status inputs  */}
       {renderAdditional ? 
+      <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
         <StatusChangeInputs 
           likeStatus={likeStatus}
           setLikeStatus={setLikeStatus}
@@ -121,6 +128,7 @@ function BeerDetails() {
           setTriedStatus={setTriedStatus}
           setSaveChangesColor={setSaveChangesColor}
           setSaveChangesBtnVariant={setSaveChangesBtnVariant} />
+      </Grid>
       : <div></div>
       }
       {/* Beer Flavors & Characteristics */}
@@ -145,6 +153,7 @@ function BeerDetails() {
         {renderAdditional ? <Button variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
         <Button color={buttonColor} onClick={buttonClick}>{buttonText}</Button>
+        <Button onClick={testerFunction}>TESTER</Button>
       </div>
     </div>
   )
