@@ -78,7 +78,7 @@ function Header() {
   return (
     <div>
 
-      <header style={{ textAlign: 'right', paddingRight: '17px' }}>
+      <header style={{ textAlign: 'right', paddingRight: '22px', paddingTop: '10px'}}>
         
         {/* This section handles the hamburger menu and drawer */}
         <IconButton onClick={toggleDrawer} >
