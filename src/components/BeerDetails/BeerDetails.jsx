@@ -39,12 +39,12 @@ function BeerDetails() {
     setRenderAdditional(false);
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
     if(history.location.state.from === 'home') {
-      setButtonText('Save Beer');
+      setButtonText("Add to 'Want to Try'");
       setButtonColor('primary');
     }
     // if user navigates from a list view, render the tried status
     else if(history.location.state.from === 'my beers' || history.location.state.from === 'want to try') {
-      setButtonText('Delete');
+      setButtonText('Delete Beer');
       setButtonColor('secondary');
       setRenderAdditional(true);
     }
@@ -52,14 +52,14 @@ function BeerDetails() {
 
   // Button changes, and depending on what button is, different dispatches occur
   const buttonClick = () => {
-    if(buttonText === 'Save Beer') {
+    if(buttonText === "Add to 'Want to Try'") {
       dispatch({
         type: 'SAVE_BEER',
         payload: {id: beerDetails[0].beer_id}
       })
       history.push('/wanttotry')
     }
-    else if(buttonText === 'Delete') {
+    else if(buttonText === 'Delete Beer') {
       console.log('***DELETE***');
       dispatch({
         type: 'DELETE_A_BEER',
@@ -143,11 +143,11 @@ function BeerDetails() {
         </ul>
       </div>
       {/* Buttons */}
-      <div style={{ display: 'flex', flexDirection:'column', textAlign: 'center' }} >
+      <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} >
         {/* If renderAdditional === true, render the Save Changes Button */}
-        {renderAdditional ? <Button variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
+        {renderAdditional ? <Button style={{width: '55%'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
-        <Button color={buttonColor} onClick={buttonClick}>{buttonText}</Button>
+        <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>
       </div>
     </div>
   )

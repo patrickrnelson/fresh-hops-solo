@@ -10,6 +10,8 @@ const userBeersReducer = (state = [{
   switch (action.type) {
     case 'SET_USER_BEERS':
       return action.payload;
+    case 'CLEAR_USER_BEERS':
+      return state;
     default:
       return state;
   }
