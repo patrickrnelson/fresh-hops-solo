@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import Button from '@material-ui/core/Button';
+
 // This is one of our simplest components
 // It doesn't have local state,
 // It doesn't dispatch any redux actions or display any part of redux state
@@ -10,13 +12,13 @@ function AboutPage() {
   const history = useHistory();
 
   return (
-    <div className="container">
+    <div className="container" style={{justifyContent: 'center', alignItems: 'center', textAlign:'center', marginTop: '20px'}}>
       <div>
-        <p>Fresh Hops helps you find yummy local beers that fit your taste!</p>
+        <p> Fresh Hops helps you find yummy local beers that fit your taste. You love beer, Fresh Hops loves beer, this is where the magic happens.</p>
       </div>
-      <button onClick={() => {history.goBack();}}>
-        Back
-      </button>
+      <Button style={{marginTop: '20px'}} onClick={() => {history.goBack();}}>
+        Back to Login
+      </Button>
     </div>
   );
 }
