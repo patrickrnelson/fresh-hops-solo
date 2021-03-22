@@ -31,6 +31,7 @@ function HomePage() {
     dispatch ({
       type: 'FETCH_ALL_BEERS'
     })
+    loadRecommendations();
   }
 
   const fetchRandomBeer = () => {
@@ -58,23 +59,29 @@ function HomePage() {
       for(let myBeer of userBeers) {
         // IF user's beer is liked 
         // Then check to see if user's beer style and dom flavor matches beer in the beer DB
-        if(myBeer.is_liked === true) {
-          if(myBeer.beer_style === beer.style_id) {
-            // if style matches, add 2 to the score for the beer in the DB
-            score += 2;
+          if(myBeer.is_liked === true) {
+            if(myBeer.beer_style === beer.style_id) {
+              // if style matches, add 2 to the score for the beer in the DB
+              score += 2;
+            }
+            if(myBeer.dominant_flavor === beer.dominant_flavor_id) {
+              // if dom flavor matches, add 3 to the score for the beer in the DB
+              score += 3
+            }
           }
-          if(myBeer.dominant_flavor === beer.dominant_flavor_id) {
-            // if dom flavor matches, add 3 to the score for the beer in the DB
-            score += 3
-          }
-        }
         
       }
       // we now have a score for all of the beers in the DB based on what the user likes
       console.log('Beer score', beer.name, score);
       // only add beers that have a score > 2 to the recommendations list
       if(score > 2) {
-        recommendations.push({name: beer.beer, score: score, brewery: beer.brewery, style: beer.style_name});
+        recommendations.push({
+          id: beer.beer_id,
+          name: beer.beer, 
+          score: score, 
+          brewery: beer.brewery, 
+          style: beer.style_name, 
+          image: beer.image});
       }
     }
     console.log('recommendations', recommendations);
@@ -138,19 +145,52 @@ function HomePage() {
         Add Beer 
       </Button>
 
-      <h2 id="secondaryText">Random Beer:</h2>
-      <Button onClick={loadRecommendations}>Get some Rec's!</Button>
+      {userBeers.length > 0 ?
+        <h2 id="secondaryText">Recommendations:</h2>
+      : <div></div>}
+      {userBeers.length > 0 && recommendedBeers.length === 0 ?
+        <Button 
+          style={{marginTop:'15px'}}
+          variant='contained' 
+          onClick={loadRecommendations}>Click to Get some Rec's!</Button>
+      : <div></div>}
       
-      <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
-        <Paper elevation={3} style={{paddingTop:'5px'}}>
-          <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='170'/>
-          <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
-          <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
-          <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
-        </Paper>
-      </div>
+      {/* 
+        IF the user has added beers, then show them recommendations 
+        ELSE if the user has no beers, show them a random beer*/}
+      {userBeers.length > 0 ? recommendedBeers.map((oneRecommendation) => {
+        return (
+          <>
+          <div key={oneRecommendation.id} className='beerCards' onClick={() => handleBeerClick(oneRecommendation.id)}>
+            <Paper elevation={3} style={{paddingTop:'5px'}}>
+              <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} height='170'/>
+              <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{oneRecommendation ? oneRecommendation.name : ''}</h3>
+              <p style={{ paddingLeft: '10px' }}>{oneRecommendation ? oneRecommendation.style : ''}</p>
+              <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{oneRecommendation ? oneRecommendation.brewery : ''}</p>  
+            </Paper>
+          </div>
+          
+          </>
+        )
+      }) 
+      : <>
+        <div style={{marginTop:'10px'}}>Add Beers that you like to see Recommendations</div>
+        <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
+        <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
+          <Paper elevation={3} style={{paddingTop:'5px'}}>
+            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='170'/>
+            <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
+            <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
+            <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
+          </Paper>
+        </div>
+        <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
+        </>}
 
-      <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
+
+      {recommendedBeers.length > 0 ?
+        <Button style={{marginTop:'15px'}} onClick={fetchAllBeers}>Refresh Beer</Button>  
+      : <div></div> }
       
     </div>
   )
