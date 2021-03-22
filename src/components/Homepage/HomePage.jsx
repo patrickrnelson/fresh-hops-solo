@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './HomePage.css';
 import Header from '../Header/Header';
 
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import { Button, Paper } from '@material-ui/core';
 
 
 function HomePage() {
@@ -18,7 +17,7 @@ function HomePage() {
   const userBeers = useSelector(store => store.userBeers);
   const allBeers = useSelector(store => store.allBeers);
 
-  const recommendedBeers 
+  const [recommendedBeers, setRecommendedBeers] = useState([]);
 
   // On load, grab a random beer
   useEffect(() => {
@@ -38,12 +37,68 @@ function HomePage() {
     dispatch({
       type: 'FETCH_RANDOM_BEER',
     })
+    console.log('recommendedBeers', recommendedBeers);
   }
 
   const fetchUserBeers = () => {
     dispatch ({
       type: 'FETCH_USER_BEERS'
     })
+  }
+
+  const loadRecommendations = () => {
+    let recommendations = [];
+    console.log('Get Recs');
+    console.log('userBeers', userBeers);
+    console.log('allBeers', allBeers);
+    // start by looping through all beers
+    for(let beer of allBeers) {
+      let score = 0;
+      // then loop through user beers
+      for(let myBeer of userBeers) {
+        // IF user's beer is liked 
+        // Then check to see if user's beer style and dom flavor matches beer in the beer DB
+        if(myBeer.is_liked === true) {
+          if(myBeer.beer_style === beer.style_id) {
+            // if style matches, add 2 to the score for the beer in the DB
+            score += 2;
+          }
+          if(myBeer.dominant_flavor === beer.dominant_flavor_id) {
+            // if dom flavor matches, add 3 to the score for the beer in the DB
+            score += 3
+          }
+        }
+        
+      }
+      // we now have a score for all of the beers in the DB based on what the user likes
+      console.log('Beer score', beer.name, score);
+      // only add beers that have a score > 2 to the recommendations list
+      if(score > 2) {
+        // Limit the amount of beers in the list to 5
+        if(recommendations.length < 5) {
+          recommendations.push({name: beer.name, score: score});
+        }
+        // Once there are 5 beers in the list, we find the lowest score in the list
+        else if(recommendations.length >= 5) {
+          let lowestScore = recommendations[0].score;
+          for(let i = 1; i < recommendations.length; i++) {
+            if (recommendations[i].score < lowestScore) {
+              lowestScore = recommendations[i].score;
+            }
+          }
+          console.log('lowest score', lowestScore);
+          for(let i = 1; i < recommendations.length; i++) {
+            if(recommendations[i].score === lowestScore) {
+              recommendations.splice(i, 1);
+            }
+            if(beer.score > lowestScore) {
+              recommendations.push({name: beer.name, score: score});
+            }
+          }
+        }
+      }
+    }
+    setRecommendedBeers(recommendations)
   }
 
   // Beer card Click
@@ -76,6 +131,7 @@ function HomePage() {
       </Button>
 
       <h2 id="secondaryText">Random Beer:</h2>
+      <Button onClick={loadRecommendations}>Get some Rec's!</Button>
       
       <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
         <Paper elevation={3} style={{paddingTop:'5px'}}>
@@ -86,7 +142,7 @@ function HomePage() {
         </Paper>
       </div>
 
-      {/* <Button onClick={fetchRandomBeer}>Refresh Beer</Button> */}
+      <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
       
     </div>
   )

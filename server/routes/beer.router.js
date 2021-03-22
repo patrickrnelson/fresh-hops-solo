@@ -117,7 +117,7 @@ router.get('/userbeers', rejectUnauthenticated, (req, res) => {
   console.log('req.user.id', req.user.id);
 
   let queryText = `
-  SELECT "beers".id as "beer_id", "beers".name as "beer",
+  SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "beer_style", "beers".dominant_flavor_id as "dominant_flavor",
 	  "user_beers".has_tried as "has_tried", "user_beers".is_liked as "is_liked",
     "breweries".name as "brewery", "breweries".image_url as "image",
     "styles".style_name
@@ -146,6 +146,7 @@ router.get('/allbeers', rejectUnauthenticated, (req, res) => {
 
   let queryText = `
   SELECT * FROM "beers"
+  LIMIT 25;
   `;
 
   pool
