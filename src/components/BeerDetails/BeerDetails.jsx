@@ -27,7 +27,7 @@ function BeerDetails() {
   // render additional will render the 'like status', 'tried status', 
   // and 'save changes' button when true
   const [renderAdditional, setRenderAdditional] = useState(false);
-  
+
   // Used to change the look of the button when a user changes anything that needs to be saved
   const [saveChangesColor, setSaveChangesColor] = useState('inherit');
   const [saveChangesBtnVariant, setSaveChangesBtnVariant] = useState('inherit');
@@ -127,7 +127,8 @@ function BeerDetails() {
       : <div></div>
       }
       {/* Beer Flavors & Characteristics */}
-      <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', marginBottom: '50px', textAlign: 'center' }}>
+      {triedStatus ?
+      <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
         <p>{beerDetails[0].flavor_name}</p>
         
@@ -140,12 +141,13 @@ function BeerDetails() {
               </li>
             )
           })}
-        </ul>
+        </ul> 
       </div>
+      : <div></div>}
       {/* Buttons */}
       <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} >
         {/* If renderAdditional === true, render the Save Changes Button */}
-        {renderAdditional ? <Button style={{width: '55%'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
+        {renderAdditional ? <Button style={{width: '55%', marginTop: '50px'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
         <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>
       </div>

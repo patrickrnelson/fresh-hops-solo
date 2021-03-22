@@ -191,6 +191,7 @@ function AddBeerForm({
           </Grid>
           {/* Dominant Flavor input */}
           <Grid container direction="column" spacing={3} alignContent="center" style={{width: '60%', margin: '10px 0px'}}>
+          {triedStatus ? 
             <Grid item xs={10} style={{ display: "flex", flexDirection: 'column', justifyContent: "center", textAlign: 'center'}}>
               <p>Dominant Flavor:</p>
               <select
@@ -208,8 +209,9 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
-
+            : <div></div>}
           {/* Characteristic 1 dropdown */}
+            {triedStatus ?
             <Grid item xs={10} style={{ display: "flex", flexDirection: 'column', justifyContent: "center", textAlign: 'center'}}>
               <p>Characteristics:</p>
               <select
@@ -218,7 +220,7 @@ function AddBeerForm({
                 onChange={(event) => {setCharacteristicOne(event.target.value)}}
                 onClick={defineTypeCharacteristics}
               >
-              <option value="">--Characteristic 1--</option>
+              <option value="none">--Characteristic 1--</option>
                 {typeCharacteristics.map((items) => {
                     return (
                       <option>{items}</option>
@@ -227,7 +229,9 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
+            : <div></div>}
             {/* Characteristic 2 dropdown */}
+            {triedStatus ?
             <Grid item xs={10} >
               <select
                 type="text" 
@@ -244,7 +248,9 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
+            : <div></div>}
             {/* Characteristic 3 dropdown */}
+            {triedStatus ?
             <Grid item xs={10} >
               <select
                 type="text" 
@@ -261,6 +267,7 @@ function AddBeerForm({
                 )}
               </select>
             </Grid>
+            : <div></div>}
             {/* Add Button */}
             <Button color='primary' variant='contained' onClick={addBeerClick} >Add Beer</Button>
           </Grid>

@@ -23,6 +23,7 @@ router.get('/random/', rejectUnauthenticated, (req, res) => {
     SELECT "beers".id as "beer_id", "beers".name as "beer", "styles".style_name, "breweries".name as "brewery", "breweries".image_url as "image" FROM "beers" 
     JOIN "styles" ON "style_id" = "styles".id
     JOIN "breweries" ON "brewery_id" = "breweries".id
+    WHERE "beers".user_added = false
     ORDER BY RANDOM ()  
     LIMIT 1 ;
   `;

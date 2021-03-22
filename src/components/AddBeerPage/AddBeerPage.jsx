@@ -23,10 +23,10 @@ function AddBeerPage() {
   const [newBeerBrewery, setNewBeerBrewery] = useState('');
 
   // tracks the dropdowns for flavor/characteristics
-  const [beerDominantFlavor, setBeerDominantFlavor] = useState('');
-  const [characteristicOne, setCharacteristicOne] = useState('');
-  const [characteristicTwo, setCharacteristicTwo] = useState('');
-  const [characteristicThree, setCharacteristicThree] = useState('');
+  const [beerDominantFlavor, setBeerDominantFlavor] = useState('none');
+  const [characteristicOne, setCharacteristicOne] = useState('none');
+  const [characteristicTwo, setCharacteristicTwo] = useState('none');
+  const [characteristicThree, setCharacteristicThree] = useState('none');
 
   // Contains the characteristics associated with the current beer type that is selected
   const [typeCharacteristics, setTypeCharacteristics] = useState([]);
