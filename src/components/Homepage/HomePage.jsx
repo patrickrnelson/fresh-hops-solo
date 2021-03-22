@@ -74,31 +74,39 @@ function HomePage() {
       console.log('Beer score', beer.name, score);
       // only add beers that have a score > 2 to the recommendations list
       if(score > 2) {
-        // Limit the amount of beers in the list to 5
-        if(recommendations.length < 5) {
-          recommendations.push({name: beer.name, score: score});
+        recommendations.push({name: beer.beer, score: score, brewery: beer.brewery, style: beer.style_name});
+      }
+    }
+    console.log('recommendations', recommendations);
+    // if the recommendations list is 5 or less, 
+    // then set the local state to include those beers
+    const sixRecommendations = () => {
+      if(recommendations.length <= 6) {
+        return setRecommendedBeers(recommendations)
+      }
+      // ELSE if the list is larger than 5
+      // loop through the list to determine the lowest score...
+      else if(recommendations.length > 6) {
+        let lowestScore = recommendations[0].score;
+        for(let i = 1; i < recommendations.length; i++) {
+          if (recommendations[i].score < lowestScore) {
+            lowestScore = recommendations[i].score;
+          }
         }
-        // Once there are 5 beers in the list, we find the lowest score in the list
-        else if(recommendations.length >= 5) {
-          let lowestScore = recommendations[0].score;
-          for(let i = 1; i < recommendations.length; i++) {
-            if (recommendations[i].score < lowestScore) {
-              lowestScore = recommendations[i].score;
-            }
+        console.log('lowest score', lowestScore);
+        // ... and remove any items that have that low score.
+        for(let i = 0; i < recommendations.length; i++) {
+          if(recommendations[i].score === lowestScore) {
+            recommendations.splice(i, 1);
+            // recursive function to repeat the process
+            // until recommendations list is 5 or less
+            return sixRecommendations();
           }
-          console.log('lowest score', lowestScore);
-          for(let i = 1; i < recommendations.length; i++) {
-            if(recommendations[i].score === lowestScore) {
-              recommendations.splice(i, 1);
-            }
-            if(beer.score > lowestScore) {
-              recommendations.push({name: beer.name, score: score});
-            }
-          }
+          
         }
       }
     }
-    setRecommendedBeers(recommendations)
+    sixRecommendations();
   }
 
   // Beer card Click

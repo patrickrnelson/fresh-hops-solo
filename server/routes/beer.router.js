@@ -145,8 +145,16 @@ router.get('/allbeers', rejectUnauthenticated, (req, res) => {
   console.log('***Hit all beers endpoint***');
 
   let queryText = `
-  SELECT * FROM "beers"
-  LIMIT 25;
+    SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "style_id", 
+          "beers".dominant_flavor_id as "dominant_flavor_id",
+      "styles".style_name, 
+      "breweries".name as "brewery", 
+      "breweries".image_url as "image" 
+    FROM "beers" 
+    JOIN "styles" ON "style_id" = "styles".id
+    JOIN "breweries" ON "brewery_id" = "breweries".id
+    ORDER BY RANDOM ()
+    LIMIT 20;
   `;
 
   pool
