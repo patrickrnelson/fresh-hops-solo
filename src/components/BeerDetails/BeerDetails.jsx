@@ -38,7 +38,7 @@ function BeerDetails() {
   useEffect(() => {
     setRenderAdditional(false);
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
-    if(history.location.state.from === 'home') {
+    if(history.location.state.from === 'home' || history.location.state.from === 'search beers') {
       setButtonText("Add to 'Want to Try'");
       setButtonColor('primary');
     }
@@ -113,7 +113,6 @@ function BeerDetails() {
         <h3>Brewery</h3>
         <p>{beerDetails[0].brewery}</p>
       </div>
-      {/* if renderAdditional === true, render the status inputs  */}
       {renderAdditional ? 
       <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
         <StatusChangeInputs 
@@ -124,10 +123,8 @@ function BeerDetails() {
           setSaveChangesColor={setSaveChangesColor}
           setSaveChangesBtnVariant={setSaveChangesBtnVariant} />
       </Grid>
-      : <div></div>
-      }
+      : <div></div>}
       {/* Beer Flavors & Characteristics */}
-      {triedStatus ?
       <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
         <p>{beerDetails[0].flavor_name}</p>
@@ -143,7 +140,6 @@ function BeerDetails() {
           })}
         </ul> 
       </div>
-      : <div></div>}
       {/* Buttons */}
       <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} >
         {/* If renderAdditional === true, render the Save Changes Button */}

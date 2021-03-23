@@ -47,8 +47,22 @@ function HomePage() {
     })
   }
 
+  // loop through the allBeers list & the userBeers list
+  const removeDuplicates = () => {
+    for(let myBeer of userBeers) {
+      for(let i=0; i < allBeers.length; i++) {
+        // if a beer in the allBeers list matches a beer in the users list
+        // remove it
+        if(allBeers[i].beer_id == myBeer.beer_id) {
+          allBeers.splice(i, 1)
+        }
+      }
+    }
+  }
+
   const loadRecommendations = () => {
     let recommendations = [];
+    removeDuplicates();
     console.log('Get Recs');
     console.log('userBeers', userBeers);
     console.log('allBeers', allBeers);
@@ -85,7 +99,6 @@ function HomePage() {
                 score += 1
               }
           }
-        
       }
       // we now have a score for all of the beers in the DB based on what the user likes
       // only add beers that have a score > 2 to the recommendations list
@@ -99,7 +112,7 @@ function HomePage() {
           image: beer.image});
       }
     }
-    console.log('recommendations', recommendations);
+    
     // if the recommendations list is 5 or less, 
     // then set the local state to include those beers
     const sixRecommendations = () => {
@@ -154,9 +167,9 @@ function HomePage() {
         style={{marginTop:'35px'}}
         variant='contained' 
         color='primary' 
-        onClick={() => {history.push('/addbeer')} }
+        onClick={() => {history.push('/searchbeers')} }
       > 
-        Add Beer 
+        See All Beers
       </Button>
 
       {userBeers.length > 0 ?
@@ -177,7 +190,7 @@ function HomePage() {
           <>
           <div key={oneRecommendation.id} className='beerCards' onClick={() => handleBeerClick(oneRecommendation.id)}>
             <Paper elevation={3} style={{paddingTop:'5px'}}>
-              <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} height='170'/>
+              <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} height='160'/>
               <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{oneRecommendation ? oneRecommendation.name : ''}</h3>
               <p style={{ paddingLeft: '10px' }}>{oneRecommendation ? oneRecommendation.style : ''}</p>
               <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{oneRecommendation ? oneRecommendation.brewery : ''}</p>  

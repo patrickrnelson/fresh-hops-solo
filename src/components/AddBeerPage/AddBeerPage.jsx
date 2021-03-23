@@ -149,8 +149,6 @@ function AddBeerPage() {
     history.push('/mybeers')
   } // end addBeerClick
 
- 
-
   return (
     <div>
       <Header />

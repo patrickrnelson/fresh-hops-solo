@@ -64,14 +64,17 @@ function Header() {
             <CloseIcon />
           </IconButton>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={9}>
           <Link id="recommendationsLink" onClick={() => history.push('/')}>Home</Link>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={9}>
+          <Link id="recommendationsLink" onClick={() => history.push('/searchbeers')}>Search all Beers</Link>
+        </Grid>
+        <Grid item xs={9}>
           <Link id="myBeersLink" onClick={() => history.push('/mybeers')}>My Beers</Link>
         </Grid>
-        <Grid item xs={6}>
-          <Link id="wantToTryLink" onClick={() => history.push('/wanttotry')}>Want to Try</Link>
+        <Grid item xs={9}>
+          <Link id="wantToTryLink" onClick={() => history.push('/wanttotry')}>I Want to Try</Link>
         </Grid>
         <Button onClick={handleLogout} className={classes.logOut}>Log Out</Button>
       </Grid>
