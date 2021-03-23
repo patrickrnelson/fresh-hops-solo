@@ -41,6 +41,9 @@ function AddBeerForm({
   typeCharacteristics
 }) {
   
+  const [beerTypeInputValue, setBeerTypeInputValue] = useState('');
+  const [breweryInputValue, setBreweryInputValue] = useState('');
+
   // Data for Autocomplete input
   // Move to reducer if there's time
   const [beerTypes, setBeerTypes] = useState([
@@ -143,10 +146,14 @@ function AddBeerForm({
               options={beerTypes}
               getOptionLabel={(option) => option.type}
               style={{ width: 300 }}
-              inputValue={newBeerType}
-              onChange={(event,value) => setNewBeerType(value.type)}
+              inputValue={beerTypeInputValue}
+              onInputChange={(event, newInputValue) => {
+                setBeerTypeInputValue(newInputValue);
+              }}
+              value={newBeerType}
+              onChange={(event, newValue) => {setNewBeerType(newValue)}}
               renderInput={(params) => 
-                <TextField {...params} label="Beer Type" variant="filled" fullWidth onChange={({ target }) => setNewBeerType(target.value)} />}
+                <TextField {...params} label="Beer Type" variant="filled" fullWidth />}
             />
           </Grid>
           {/* Brewery Autocomplete Input */}
@@ -154,12 +161,17 @@ function AddBeerForm({
             <Autocomplete
               id="combo-box-demo"
               options={breweries}
+              getOptionSelected={(option, value) => option.name === value.name}
               getOptionLabel={(option) => option.name}
               style={{ width: 300 }}
-              inputValue={newBeerBrewery}
-              onChange={(e,v) => setNewBeerBrewery(v.name)}
+              inputValue={breweryInputValue}
+              onInputChange={(event, newInputValue) => {
+                setBreweryInputValue(newInputValue);
+              }}
+              value={newBeerBrewery}
+              onChange={(event, newValue) => {setNewBeerBrewery(newValue)}}
               renderInput={(params) => 
-                <TextField {...params} label="Brewery"  variant="filled" fullWidth onChange={({ target }) => setNewBeerBrewery(target.value)} />
+                <TextField {...params} label="Brewery" variant="filled" fullWidth />
             }
             />
           </Grid>

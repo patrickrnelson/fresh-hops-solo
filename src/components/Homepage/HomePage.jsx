@@ -68,11 +68,26 @@ function HomePage() {
               // if dom flavor matches, add 3 to the score for the beer in the DB
               score += 3
             }
+            // if flavors match, plus 1 to the score
+            if(myBeer.flavor_array[0] === beer.flavor_array[0] || 
+              myBeer.flavor_array[0] === beer.flavor_array[1] || 
+              myBeer.flavor_array[0] === beer.flavor_array[2]) {
+                score += 1
+            }
+            if(myBeer.flavor_array[1] === beer.flavor_array[0] || 
+              myBeer.flavor_array[1] === beer.flavor_array[1] || 
+              myBeer.flavor_array[1] === beer.flavor_array[2]) {
+                score += 1
+            }
+            if(myBeer.flavor_array[2] === beer.flavor_array[0] || 
+              myBeer.flavor_array[2] === beer.flavor_array[1] || 
+              myBeer.flavor_array[2] === beer.flavor_array[2]) {
+                score += 1
+              }
           }
         
       }
       // we now have a score for all of the beers in the DB based on what the user likes
-      console.log('Beer score', beer.name, score);
       // only add beers that have a score > 2 to the recommendations list
       if(score > 2) {
         recommendations.push({
@@ -100,13 +115,12 @@ function HomePage() {
             lowestScore = recommendations[i].score;
           }
         }
-        console.log('lowest score', lowestScore);
         // ... and remove any items that have that low score.
         for(let i = 0; i < recommendations.length; i++) {
           if(recommendations[i].score === lowestScore) {
             recommendations.splice(i, 1);
             // recursive function to repeat the process
-            // until recommendations list is 5 or less
+            // until recommendations list is 6 or less
             return sixRecommendations();
           }
           
@@ -146,7 +160,7 @@ function HomePage() {
       </Button>
 
       {userBeers.length > 0 ?
-        <h2 id="secondaryText">Recommendations:</h2>
+        <h2 id="secondaryText">Personalized Recommendations:</h2>
       : <div></div>}
       {userBeers.length > 0 && recommendedBeers.length === 0 ?
         <Button 

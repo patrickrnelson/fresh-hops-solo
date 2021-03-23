@@ -118,15 +118,19 @@ router.get('/userbeers', rejectUnauthenticated, (req, res) => {
   console.log('req.user.id', req.user.id);
 
   let queryText = `
-  SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "beer_style", "beers".dominant_flavor_id as "dominant_flavor",
-	  "user_beers".has_tried as "has_tried", "user_beers".is_liked as "is_liked",
+  SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "beer_style", "beers".dominant_flavor_id as 	"dominant_flavor",
+	"user_beers".has_tried as "has_tried", "user_beers".is_liked as "is_liked",
     "breweries".name as "brewery", "breweries".image_url as "image",
-    "styles".style_name
+    "styles".style_name,
+    ARRAY_AGG("characteristics".characteristic) as "flavor_array"
   FROM "beers" 
   JOIN "styles" ON "style_id" = "styles".id
   JOIN "breweries" ON "brewery_id" = "breweries".id
   JOIN "user_beers" ON "user_beers".beer_id = "beers".id
+  JOIN "beer_characteristics" ON "beer_characteristics".beer_id = "beers".id
+  JOIN "characteristics" ON "characteristics".id = "beer_characteristics".characteristic_id
   WHERE "user_beers".user_id = $1
+  GROUP BY "beers".id, "user_beers".has_tried, "user_beers".is_liked, "breweries".name, "breweries".image_url, 	"styles".style_name
   ORDER BY "beers".name; 
   `;
 
@@ -146,16 +150,20 @@ router.get('/allbeers', rejectUnauthenticated, (req, res) => {
   console.log('***Hit all beers endpoint***');
 
   let queryText = `
-    SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "style_id", 
-      "beers".dominant_flavor_id as "dominant_flavor_id",
-      "styles".style_name, 
-      "breweries".name as "brewery", 
-      "breweries".image_url as "image" 
-    FROM "beers" 
-    JOIN "styles" ON "style_id" = "styles".id
-    JOIN "breweries" ON "brewery_id" = "breweries".id
-    WHERE "beers".user_added = false 
-    ORDER BY RANDOM ();
+  SELECT "beers".id as "beer_id", "beers".name as "beer", "beers".style_id as "style_id", 
+    "beers".dominant_flavor_id as "dominant_flavor_id",
+    "styles".style_name, 
+    "breweries".name as "brewery", 
+    "breweries".image_url as "image",
+    ARRAY_AGG("characteristics".characteristic) as "flavor_array"
+  FROM "beers" 
+  JOIN "styles" ON "style_id" = "styles".id
+  JOIN "breweries" ON "brewery_id" = "breweries".id
+  JOIN "beer_characteristics" ON "beer_characteristics".beer_id = "beers".id
+  JOIN "characteristics" ON "characteristics".id = "beer_characteristics".characteristic_id
+  WHERE "beers".user_added = false 
+  GROUP BY "beers".id, "breweries".name, "breweries".image_url, 	"styles".style_name
+  ORDER BY RANDOM ();
   `;
 
   pool
