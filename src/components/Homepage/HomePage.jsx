@@ -4,36 +4,130 @@ import { useHistory } from 'react-router-dom';
 import './HomePage.css';
 import Header from '../Header/Header';
 
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import { Button, Paper } from '@material-ui/core';
 
 
 function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   // user from store
-  const user = useSelector(store => store.user)
+  const user = useSelector(store => store.user);
   // random beer from store
-  const randomBeer = useSelector(store => store.randomBeer)
-  const userBeers = useSelector(store => store.userBeers)
+  const randomBeer = useSelector(store => store.randomBeer);
+  const userBeers = useSelector(store => store.userBeers);
+  const allBeers = useSelector(store => store.allBeers);
+
+  const [recommendedBeers, setRecommendedBeers] = useState([]);
 
   // On load, grab a random beer
   useEffect(() => {
+    // fetchRecommendations();
     fetchRandomBeer();
+    fetchAllBeers();
     fetchUserBeers();
-    console.log('userBeers', userBeers);
   }, []);
+
+  const fetchAllBeers = () => {
+    dispatch ({
+      type: 'FETCH_ALL_BEERS'
+    })
+    loadRecommendations();
+  }
 
   const fetchRandomBeer = () => {
     dispatch({
       type: 'FETCH_RANDOM_BEER',
     })
+    console.log('recommendedBeers', recommendedBeers);
   }
 
   const fetchUserBeers = () => {
     dispatch ({
       type: 'FETCH_USER_BEERS'
     })
+  }
+
+  const loadRecommendations = () => {
+    let recommendations = [];
+    console.log('Get Recs');
+    console.log('userBeers', userBeers);
+    console.log('allBeers', allBeers);
+    // start by looping through all beers
+    for(let beer of allBeers) {
+      let score = 0;
+      // then loop through user beers
+      for(let myBeer of userBeers) {
+        // IF user's beer is liked 
+        // Then check to see if user's beer style and dom flavor matches beer in the beer DB
+          if(myBeer.is_liked === true) {
+            if(myBeer.beer_style === beer.style_id) {
+              // if style matches, add 2 to the score for the beer in the DB
+              score += 2;
+            }
+            if(myBeer.dominant_flavor === beer.dominant_flavor_id) {
+              // if dom flavor matches, add 3 to the score for the beer in the DB
+              score += 3
+            }
+            // if flavors match, plus 1 to the score
+            if(myBeer.flavor_array[0] === beer.flavor_array[0] || 
+              myBeer.flavor_array[0] === beer.flavor_array[1] || 
+              myBeer.flavor_array[0] === beer.flavor_array[2]) {
+                score += 1
+            }
+            if(myBeer.flavor_array[1] === beer.flavor_array[0] || 
+              myBeer.flavor_array[1] === beer.flavor_array[1] || 
+              myBeer.flavor_array[1] === beer.flavor_array[2]) {
+                score += 1
+            }
+            if(myBeer.flavor_array[2] === beer.flavor_array[0] || 
+              myBeer.flavor_array[2] === beer.flavor_array[1] || 
+              myBeer.flavor_array[2] === beer.flavor_array[2]) {
+                score += 1
+              }
+          }
+        
+      }
+      // we now have a score for all of the beers in the DB based on what the user likes
+      // only add beers that have a score > 2 to the recommendations list
+      if(score > 2) {
+        recommendations.push({
+          id: beer.beer_id,
+          name: beer.beer, 
+          score: score, 
+          brewery: beer.brewery, 
+          style: beer.style_name, 
+          image: beer.image});
+      }
+    }
+    console.log('recommendations', recommendations);
+    // if the recommendations list is 5 or less, 
+    // then set the local state to include those beers
+    const sixRecommendations = () => {
+      if(recommendations.length <= 6) {
+        return setRecommendedBeers(recommendations)
+      }
+      // ELSE if the list is larger than 5
+      // loop through the list to determine the lowest score...
+      else if(recommendations.length > 6) {
+        let lowestScore = recommendations[0].score;
+        for(let i = 1; i < recommendations.length; i++) {
+          if (recommendations[i].score < lowestScore) {
+            lowestScore = recommendations[i].score;
+          }
+        }
+        // ... and remove any items that have that low score.
+        for(let i = 0; i < recommendations.length; i++) {
+          if(recommendations[i].score === lowestScore) {
+            recommendations.splice(i, 1);
+            // recursive function to repeat the process
+            // until recommendations list is 6 or less
+            return sixRecommendations();
+          }
+          
+        }
+      }
+    }
+    sixRecommendations();
   }
 
   // Beer card Click
@@ -65,18 +159,52 @@ function HomePage() {
         Add Beer 
       </Button>
 
-      <h2 id="secondaryText">Random Beer:</h2>
+      {userBeers.length > 0 ?
+        <h2 id="secondaryText">Personalized Recommendations:</h2>
+      : <div></div>}
+      {userBeers.length > 0 && recommendedBeers.length === 0 ?
+        <Button 
+          style={{marginTop:'15px'}}
+          variant='contained' 
+          onClick={loadRecommendations}>Click to Get some Rec's!</Button>
+      : <div></div>}
       
-      <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
-        <Paper elevation={3} style={{paddingTop:'5px'}}>
-          <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='170'/>
-          <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
-          <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
-          <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
-        </Paper>
-      </div>
+      {/* 
+        IF the user has added beers, then show them recommendations 
+        ELSE if the user has no beers, show them a random beer*/}
+      {userBeers.length > 0 ? recommendedBeers.map((oneRecommendation) => {
+        return (
+          <>
+          <div key={oneRecommendation.id} className='beerCards' onClick={() => handleBeerClick(oneRecommendation.id)}>
+            <Paper elevation={3} style={{paddingTop:'5px'}}>
+              <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} height='170'/>
+              <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{oneRecommendation ? oneRecommendation.name : ''}</h3>
+              <p style={{ paddingLeft: '10px' }}>{oneRecommendation ? oneRecommendation.style : ''}</p>
+              <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{oneRecommendation ? oneRecommendation.brewery : ''}</p>  
+            </Paper>
+          </div>
+          
+          </>
+        )
+      }) 
+      : <>
+        <div style={{marginTop:'10px'}}>Add Beers that you like to see Recommendations</div>
+        <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
+        <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
+          <Paper elevation={3} style={{paddingTop:'5px'}}>
+            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='170'/>
+            <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
+            <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
+            <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
+          </Paper>
+        </div>
+        <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
+        </>}
 
-      <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
+
+      {recommendedBeers.length > 0 ?
+        <Button style={{marginTop:'15px'}} onClick={fetchAllBeers}>Refresh Beer</Button>  
+      : <div></div> }
       
     </div>
   )

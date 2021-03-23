@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import allBeers from './allBeers.reducer'
 import beerDetails from './beerDetails.reducer'
 import characteristics from './characteristics.reducer'
 import dominantFlavors from './dominantFlavors.reducer'
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   characteristics, // gives us characteristics to select in drop down menu
   dominantFlavors, // gives us the list of dominant flavors
   userBeers, // gives us the beers saved for the logged in user
+  allBeers // gives us all of the beers in the database
 });
 
 export default rootReducer;
