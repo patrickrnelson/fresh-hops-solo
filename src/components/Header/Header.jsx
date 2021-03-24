@@ -38,9 +38,20 @@ function Header() {
 
    // LOGOUT on button click
   const handleLogout = () => {
+    dispatch({
+      type: 'CLEAR_USER_BEERS'
+    })
+    dispatchLogout();
+  }
+
+  const dispatchLogout = () => {
     dispatch ({
       type: 'LOGOUT'
     })
+  }
+
+  const clearUserBeers = () => {
+    
   }
 
   // list that appears when hamburger menu is clicked

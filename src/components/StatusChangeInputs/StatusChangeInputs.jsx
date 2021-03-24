@@ -11,6 +11,7 @@ function StatusChangeInputs({
   likeStatus, 
   setLikeStatus, 
   triedStatus, 
+  setButtonText,
   setTriedStatus, 
   setSaveChangesColor, 
   setSaveChangesBtnVariant}) {
@@ -30,6 +31,7 @@ function StatusChangeInputs({
       setTriedStatus(true);
       setHaveTriedColor('primary')
       setNotTriedColor('inherit')
+      setButtonText("Add to 'My Beers'")
     }
     else {
       // reset like status and thumb colors
@@ -40,6 +42,9 @@ function StatusChangeInputs({
       setTriedStatus(null)
       setHaveTriedColor('inherit')
       setNotTriedColor('inherit')
+
+      setButtonText("Add to 'I Want to Try'");
+
     }
     // if anything changes, change the save changes button to indicate that the user needs to save
     setSaveChangesColor('primary')

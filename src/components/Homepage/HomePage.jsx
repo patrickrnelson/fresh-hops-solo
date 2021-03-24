@@ -22,9 +22,9 @@ function HomePage() {
   // On load, grab a random beer
   useEffect(() => {
     // fetchRecommendations();
-    fetchRandomBeer();
-    fetchAllBeers();
     fetchUserBeers();
+    fetchAllBeers();
+    fetchRandomBeer();
   }, []);
 
   const fetchAllBeers = () => {

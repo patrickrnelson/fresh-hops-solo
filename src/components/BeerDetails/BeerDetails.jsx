@@ -42,7 +42,7 @@ function BeerDetails() {
     setRenderAdditional(false);
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
     if(history.location.state.from === 'home' || history.location.state.from === 'search beers') {
-      setButtonText("Add to 'Want to Try'");
+      setButtonText("Add to 'I Want to Try'");
       setButtonColor('primary');
     }
     // if user navigates from a list view, render the tried status
@@ -117,17 +117,16 @@ function BeerDetails() {
         <h3>Brewery</h3>
         <p>{beerDetails[0].brewery}</p>
       </div>
-      {renderAdditional ? 
       <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
         <StatusChangeInputs 
           likeStatus={likeStatus}
           setLikeStatus={setLikeStatus}
           triedStatus={triedStatus}
+          setButtonText={setButtonText}
           setTriedStatus={setTriedStatus}
           setSaveChangesColor={setSaveChangesColor}
           setSaveChangesBtnVariant={setSaveChangesBtnVariant} />
       </Grid>
-      : <div></div>}
       {/* Beer Flavors & Characteristics */}
       <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
