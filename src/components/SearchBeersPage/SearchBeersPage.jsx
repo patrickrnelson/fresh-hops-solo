@@ -5,9 +5,11 @@ import { useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 
@@ -33,6 +35,8 @@ function SearchBeersPage() {
   const userBeers = useSelector(store => store.userBeers);
 
   const handleBeerClick = (beerId) => {
+    // defines how the details page will render
+    let path = 'search beers'
     console.log('beerId', beerId);
     // dispatch to set the beer details reducer
     dispatch({
@@ -42,23 +46,20 @@ function SearchBeersPage() {
     // set a timer to wait to history.push until reducer is set
     const timer = setTimeout(function() { 
       // loop through to see if the clicked beer is one the user already has
-      for(let myBeer of userBeers) {
-        // The beer details page renders differently depending on if the user
-        // has the clicked beer already in one of their lists
-        if(myBeer.beer_id === beerId) {
-          history.push({
-            pathname: '/details', 
-            state: { from: 'my beers' }
-          });
-        }
-        else {
-          history.push({
-            pathname: '/details', 
-            state: { from: 'search beers' }
-          });
+      if(userBeers.length > 0) {
+        for(let myBeer of userBeers) {
+          // The beer details page renders differently depending on if the user
+          // has the clicked beer already in one of their lists
+          if(myBeer.beer_id == beerId) {
+            path = 'my beers'
+          }
         }
       }
-    }, 300);
+      history.push({
+        pathname: '/details', 
+        state: { from: path }
+      });
+    }, 400);
     return () => clearTimeout(timer);
   } // end handleBeerClick
 
@@ -148,8 +149,13 @@ function SearchBeersPage() {
 
   return (
     <>
-    <Header />
-    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h2>
+    <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+      <IconButton onClick={() => {history.goBack();}}>
+        <ArrowBackIcon /><p>Back</p>
+      </IconButton>
+      <Header />
+    </div>
+    <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h2>
 
     <Grid container spacing={3} alignItems='center' justify='center' >
       {/* Beer Name input */}

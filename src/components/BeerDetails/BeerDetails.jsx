@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import BackDialog from '../BackDialog/BackDialog'
 import Header from '../Header/Header';
+import DeleteDialog from '../DeleteDialog/DeleteDialog';
 import StatusChangeInputs from '../StatusChangeInputs/StatusChangeInputs';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -36,6 +38,7 @@ function BeerDetails() {
   const [buttonColor, setButtonColor] = useState('inherit');
 
   useEffect(() => {
+    console.log('**History**', history.location.state.from);
     setRenderAdditional(false);
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
     if(history.location.state.from === 'home' || history.location.state.from === 'search beers') {
@@ -93,9 +96,10 @@ function BeerDetails() {
     <div>
       {/* Back button & Hamburger menu */}
       <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <IconButton onClick={() => {history.goBack();}}>
-          <ArrowBackIcon /><p>Back</p>
-        </IconButton>
+        {saveChangesColor == 'primary' ? <BackDialog /> 
+        : <IconButton onClick={() => {history.goBack();}}>
+            <ArrowBackIcon /><p>Back</p>
+          </IconButton>}
         <Header />
       </div>
 
@@ -145,7 +149,8 @@ function BeerDetails() {
         {/* If renderAdditional === true, render the Save Changes Button */}
         {renderAdditional ? <Button style={{width: '55%', marginTop: '50px'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
-        <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>
+        {buttonText === 'Delete Beer' ? <DeleteDialog buttonClick={buttonClick}/>
+        : <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>}
       </div>
     </div>
   )

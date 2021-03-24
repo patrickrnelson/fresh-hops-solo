@@ -41,9 +41,6 @@ function Header() {
     dispatch ({
       type: 'LOGOUT'
     })
-    dispatch ({
-      type: 'CLEAR_USER_BEERS'
-    })
   }
 
   // list that appears when hamburger menu is clicked

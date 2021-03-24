@@ -47,22 +47,8 @@ function HomePage() {
     })
   }
 
-  // loop through the allBeers list & the userBeers list
-  const removeDuplicates = () => {
-    for(let myBeer of userBeers) {
-      for(let i=0; i < allBeers.length; i++) {
-        // if a beer in the allBeers list matches a beer in the users list
-        // remove it
-        if(allBeers[i].beer_id == myBeer.beer_id) {
-          allBeers.splice(i, 1)
-        }
-      }
-    }
-  }
-
   const loadRecommendations = () => {
     let recommendations = [];
-    removeDuplicates();
     console.log('Get Recs');
     console.log('userBeers', userBeers);
     console.log('allBeers', allBeers);
@@ -112,6 +98,21 @@ function HomePage() {
           image: beer.image});
       }
     }
+    // loop through the recommendations list & the userBeers list
+    const removeDuplicates = () => {
+      for(let myBeer of userBeers) {
+        for(let i=0; i < recommendations.length; i++) {
+          // if a beer in the recs list matches a beer in the users list
+          // remove it
+          if(recommendations[i].id == myBeer.beer_id) {
+            recommendations.splice(i, 1)
+          }
+        }
+      }
+      return console.log('recommendations after userBeers', recommendations);
+    }
+    removeDuplicates();
+
     
     // if the recommendations list is 5 or less, 
     // then set the local state to include those beers
@@ -162,14 +163,23 @@ function HomePage() {
       <Header />
       
       <h1 id="greetingText">Hi, {user.name}!</h1>
+      {userBeers.length < 1 ?
+      <div style={{textAlign: 'left'}}>
+        <p style={{marginTop: '20px', padding: '2px 25px'}}>To get started, search through our list of beers to find one that you like.</p>
+        <p style={{marginTop: '5px', padding: '2px 25px'}}>Add beers that you like to get personalized recommendations</p>
+      </div>
+      :<div style={{textAlign: 'center'}}>
+        <p style={{marginTop: '20px', padding: '2px 25px'}}>Add more beers that you like to get different recommendations</p>
+        
+      </div>}
 
       <Button 
-        style={{marginTop:'35px'}}
+        style={{marginTop:'20px'}}
         variant='contained' 
         color='primary' 
         onClick={() => {history.push('/searchbeers')} }
       > 
-        See All Beers
+        Search Beers
       </Button>
 
       {userBeers.length > 0 ?
@@ -179,7 +189,7 @@ function HomePage() {
         <Button 
           style={{marginTop:'15px'}}
           variant='contained' 
-          onClick={loadRecommendations}>Click to Get some Rec's!</Button>
+          onClick={loadRecommendations}>Click for Recommendations!</Button>
       : <div></div>}
       
       {/* 
@@ -201,7 +211,6 @@ function HomePage() {
         )
       }) 
       : <>
-        <div style={{marginTop:'10px'}}>Add Beers that you like to see Recommendations</div>
         <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
         <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
           <Paper elevation={3} style={{paddingTop:'5px'}}>

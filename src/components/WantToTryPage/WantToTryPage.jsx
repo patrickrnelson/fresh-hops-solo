@@ -61,7 +61,7 @@ function WantToTryPage() {
   return(
     <>
     <Header />
-    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>I Want to Try</h2>
+    <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>I Want to Try</h2>
     { render ?
     <div className='listLayout'>
       { userBeers.map((beer) => {

@@ -124,7 +124,7 @@ function AddBeerForm({
 
   return (
     <div>
-        <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>Add A Beer</h2>
+        <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Add A Beer</h2>
         <Grid container spacing={3} alignItems='center' justify='center' >
           {/* Beer Name input */}
           <Grid item xs={10} style={{display: 'flex', justifyContent: 'center'}}>

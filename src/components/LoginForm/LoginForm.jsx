@@ -32,7 +32,7 @@ function LoginForm() {
   return (
     
     <form className="formPanel" onSubmit={login}>
-      <Grid container spacing={1} alignItems='center'>
+      <Grid container spacing={0} alignItems='center' style={{display:'flex', flexDirection:'column'}}>
           <img
             style={{
               display: 'block', 
@@ -41,6 +41,7 @@ function LoginForm() {
             src="https://images.creativemarket.com/0.1.0/ps/2889213/600/400/m1/fpnw/wm0/zdqaf6hi0uarrkccaer5wiyxufqblvcuc6lmh8sahffmftdybuzexhckyrvtuts8-.jpg?1498334639&s=29d6a93972e8d8e8cc3f2175c01f42c0" 
             height="110px"
           />
+          <h1 id='appName'>Fresh Hops</h1>
       </Grid>
       <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Login</h2>
       {errors.loginMessage && (
