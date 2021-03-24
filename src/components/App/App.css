@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans&family=Pinyon+Script&display=swap');
+
 html,
 body,
 #react-root {
@@ -103,4 +105,25 @@ Form Treatment
 input {
   margin: 15px;
   margin-bottom: 10px;
+}
+
+#appName {
+  font-family: 'Pinyon Script', cursive;;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
 }

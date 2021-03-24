@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import BackDialog from '../BackDialog/BackDialog'
 import Header from '../Header/Header';
+import DeleteDialog from '../DeleteDialog/DeleteDialog';
 import StatusChangeInputs from '../StatusChangeInputs/StatusChangeInputs';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -36,10 +38,11 @@ function BeerDetails() {
   const [buttonColor, setButtonColor] = useState('inherit');
 
   useEffect(() => {
+    console.log('**History**', history.location.state.from);
     setRenderAdditional(false);
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
-    if(history.location.state.from === 'home') {
-      setButtonText("Add to 'Want to Try'");
+    if(history.location.state.from === 'home' || history.location.state.from === 'search beers') {
+      setButtonText("Add to 'I Want to Try'");
       setButtonColor('primary');
     }
     // if user navigates from a list view, render the tried status
@@ -93,9 +96,10 @@ function BeerDetails() {
     <div>
       {/* Back button & Hamburger menu */}
       <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <IconButton onClick={() => {history.goBack();}}>
-          <ArrowBackIcon /><p>Back</p>
-        </IconButton>
+        {saveChangesColor == 'primary' ? <BackDialog /> 
+        : <IconButton onClick={() => {history.goBack();}}>
+            <ArrowBackIcon /><p>Back</p>
+          </IconButton>}
         <Header />
       </div>
 
@@ -113,21 +117,17 @@ function BeerDetails() {
         <h3>Brewery</h3>
         <p>{beerDetails[0].brewery}</p>
       </div>
-      {/* if renderAdditional === true, render the status inputs  */}
-      {renderAdditional ? 
       <Grid container spacing={3} alignItems='center' justify='center' style={{marginTop: '35px'}}>
         <StatusChangeInputs 
           likeStatus={likeStatus}
           setLikeStatus={setLikeStatus}
           triedStatus={triedStatus}
+          setButtonText={setButtonText}
           setTriedStatus={setTriedStatus}
           setSaveChangesColor={setSaveChangesColor}
           setSaveChangesBtnVariant={setSaveChangesBtnVariant} />
       </Grid>
-      : <div></div>
-      }
       {/* Beer Flavors & Characteristics */}
-      {triedStatus ?
       <div style={{ display: 'flex', flexDirection:'column', marginTop: '30px', textAlign: 'center' }}>
         <h4>Dominant Flavor</h4>
         <p>{beerDetails[0].flavor_name}</p>
@@ -143,13 +143,13 @@ function BeerDetails() {
           })}
         </ul> 
       </div>
-      : <div></div>}
       {/* Buttons */}
       <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} >
         {/* If renderAdditional === true, render the Save Changes Button */}
         {renderAdditional ? <Button style={{width: '55%', marginTop: '50px'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
         {/* Button will change depending on where user navigated from */}
-        <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>
+        {buttonText === 'Delete Beer' ? <DeleteDialog buttonClick={buttonClick}/>
+        : <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>}
       </div>
     </div>
   )

@@ -161,9 +161,10 @@ router.get('/allbeers', rejectUnauthenticated, (req, res) => {
   JOIN "breweries" ON "brewery_id" = "breweries".id
   JOIN "beer_characteristics" ON "beer_characteristics".beer_id = "beers".id
   JOIN "characteristics" ON "characteristics".id = "beer_characteristics".characteristic_id
-  WHERE "beers".user_added = false 
-  GROUP BY "beers".id, "breweries".name, "breweries".image_url, 	"styles".style_name
-  ORDER BY RANDOM ();
+  FULL OUTER JOIN "user_beers" ON "user_beers".beer_id = "beers".id
+  WHERE ("beers".user_added = false)
+  GROUP BY "beers".id, "breweries".name, "breweries".image_url, "styles".style_name
+  ORDER BY "beers".name;
   `;
 
   pool

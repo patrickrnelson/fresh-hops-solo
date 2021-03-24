@@ -11,7 +11,15 @@ const userBeersReducer = (state = [{
     case 'SET_USER_BEERS':
       return action.payload;
     case 'CLEAR_USER_BEERS':
-      return state;
+      return [{
+        beer: '',
+        beer_id: 0,
+        brewery: '',
+        has_tried: false,
+        image: '',
+        is_liked: false,
+        style_name: ''
+      }];
     default:
       return state;
   }

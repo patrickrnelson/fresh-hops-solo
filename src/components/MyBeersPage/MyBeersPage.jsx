@@ -35,6 +35,7 @@ function MyBeersPage() {
         type: 'FETCH_USER_BEERS'
       })
     }, 300);
+    
     return () => clearTimeout(timer);
   }, []);
 
@@ -56,7 +57,7 @@ function MyBeersPage() {
   return(
     <>
     <Header />
-    <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>My Beers</h2>
+    <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>My Beers</h2>
     <div className='listLayout'>
       {userBeers.map((beer) => {
         if(beer.has_tried === true) {
