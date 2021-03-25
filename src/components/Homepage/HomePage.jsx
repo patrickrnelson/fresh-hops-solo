@@ -171,7 +171,7 @@ function HomePage() {
     <div id='pageContainer'>
       <Header />
       
-      <h1 id="greetingText">Hi, {user.name}!</h1>
+      <h1 id="greetingText">Welcome, {user.name}!</h1>
       {userBeers.length < 1 ?
       <div style={{textAlign: 'left'}}>
         <p style={{marginTop: '20px', padding: '2px 25px'}}>To get started, search through our list of beers to find one that you like.</p>

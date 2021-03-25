@@ -144,7 +144,7 @@ function SearchBeersPage() {
   return (
     <>
     <Header />
-    <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h2>
+    <h1 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h1>
 
     <Grid container spacing={3} alignItems='center' justify='center' >
       {/* Beer Name input */}

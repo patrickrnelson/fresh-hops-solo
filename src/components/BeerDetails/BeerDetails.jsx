@@ -112,7 +112,7 @@ function BeerDetails() {
       </div>
 
       {/* Page Title */}
-      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>{beerDetails[0].beer}</h2>
+      <h1 style={{ display: 'block', marginTop: '60px', marginBottom: '20px', marginLeft: '20px'}}>{beerDetails[0].beer}</h1>
 
       {/* Beer Information */}
       <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>

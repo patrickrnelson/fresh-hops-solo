@@ -57,7 +57,7 @@ function MyBeersPage() {
   return(
     <>
     <Header />
-    <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>My Beers</h2>
+    <h1 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>My Beers</h1>
     <div className='listLayout'>
       {userBeers.map((beer) => {
         if(beer.has_tried === true) {
