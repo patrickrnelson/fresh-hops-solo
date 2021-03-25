@@ -64,7 +64,11 @@ function BeerDetails() {
           is_liked: likeStatus
         }
       })
+      if(buttonText === "Add to 'I Want to Try'") {
       history.push('/wanttotry')
+      } else {
+        history.push('/mybeers')
+      }
     }
     else if(buttonText === 'Delete Beer') {
       console.log('***DELETE***');
@@ -151,7 +155,7 @@ function BeerDetails() {
       <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} >
         {/* If renderAdditional === true, render the Save Changes Button */}
         {renderAdditional ? <Button style={{width: '55%', marginTop: '50px'}} variant={saveChangesBtnVariant} color={saveChangesColor} onClick={updateBeer}>SAVE CHANGES</Button> : <div></div>}
-        {/* Button will change depending on where user navigated from */}
+        {/* Button could be 'Delete' OR 'Add to...' depending on where user navigated from */}
         {buttonText === 'Delete Beer' ? <DeleteDialog buttonClick={buttonClick}/>
         : <Button style={{width: '55%', marginTop: '10px'}} color={buttonColor} variant='contained' onClick={buttonClick}>{buttonText}</Button>}
       </div>

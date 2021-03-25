@@ -226,7 +226,7 @@ function HomePage() {
         <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
         <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
           <Paper elevation={3} style={{paddingTop:'5px'}}>
-            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} alt={randomBeer[0].image_desc} height='170'/>
+            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} alt={randomBeer[0] ? randomBeer[0].image_desc : ''} height='170'/>
             <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
             <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
             <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
