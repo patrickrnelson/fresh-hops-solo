@@ -12,8 +12,9 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AddBeerPage from '../AddBeerPage/AddBeerPage';
 import AboutPage from '../AboutPage/AboutPage';
+import AddBeerPage from '../AddBeerPage/AddBeerPage';
+import Admin from '../Admin/Admin'
 import BeerDetails from '../BeerDetails/BeerDetails'
 import HomePage from '../Homepage/HomePage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -115,11 +116,18 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows add beer page else shows LoginPage
+            // logged in shows search beer page else shows LoginPage
             exact
             path="/searchbeers"
           >
             <SearchBeersPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/admin"
+          >
+            <Admin />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

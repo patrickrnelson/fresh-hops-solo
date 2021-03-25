@@ -108,7 +108,8 @@ input {
 }
 
 #appName {
-  font-family: 'Pinyon Script', cursive;;
+  font-size: 46px;
+  font-family: 'Pinyon Script', cursive;
 }
 
 h1 {

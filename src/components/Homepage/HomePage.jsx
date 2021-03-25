@@ -18,6 +18,7 @@ function HomePage() {
   const allBeers = useSelector(store => store.allBeers);
 
   const [recommendedBeers, setRecommendedBeers] = useState([]);
+  const [recommendationsNumber, setRecommendationsNumber] = useState(5)
 
   // On load, grab a random beer
   useEffect(() => {
@@ -25,6 +26,7 @@ function HomePage() {
     fetchUserBeers();
     fetchAllBeers();
     fetchRandomBeer();
+    fetchBreweries();
   }, []);
 
   const fetchAllBeers = () => {
@@ -46,6 +48,13 @@ function HomePage() {
       type: 'FETCH_USER_BEERS'
     })
   }
+
+  const fetchBreweries = () => {
+    dispatch ({
+      type: 'FETCH_BREWERIES'
+    })
+  }
+
 
   const loadRecommendations = () => {
     let recommendations = [];
@@ -114,15 +123,15 @@ function HomePage() {
     removeDuplicates();
 
     
-    // if the recommendations list is 5 or less, 
+    // if the recommendations list is 10 or less, 
     // then set the local state to include those beers
     const sixRecommendations = () => {
-      if(recommendations.length <= 6) {
+      if(recommendations.length <= 10) {
         return setRecommendedBeers(recommendations)
       }
       // ELSE if the list is larger than 5
       // loop through the list to determine the lowest score...
-      else if(recommendations.length > 6) {
+      else if(recommendations.length > 10) {
         let lowestScore = recommendations[0].score;
         for(let i = 1; i < recommendations.length; i++) {
           if (recommendations[i].score < lowestScore) {
@@ -134,7 +143,7 @@ function HomePage() {
           if(recommendations[i].score === lowestScore) {
             recommendations.splice(i, 1);
             // recursive function to repeat the process
-            // until recommendations list is 6 or less
+            // until recommendations list is 10 or less
             return sixRecommendations();
           }
           
@@ -195,12 +204,15 @@ function HomePage() {
       {/* 
         IF the user has added beers, then show them recommendations 
         ELSE if the user has no beers, show them a random beer*/}
-      {userBeers.length > 0 ? recommendedBeers.map((oneRecommendation) => {
+      {userBeers.length > 0 ? (recommendedBeers.slice(0, recommendationsNumber)).map((oneRecommendation) => {
         return (
           <>
           <div key={oneRecommendation.id} className='beerCards' onClick={() => handleBeerClick(oneRecommendation.id)}>
             <Paper elevation={3} style={{paddingTop:'5px'}}>
-              <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} height='160'/>
+              <div style={{minHeight: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} 
+                    alt={oneRecommendation.image_desc} style={{maxHeight: '160px', maxWidth: '160px'}}/>
+              </div>
               <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{oneRecommendation ? oneRecommendation.name : ''}</h3>
               <p style={{ paddingLeft: '10px' }}>{oneRecommendation ? oneRecommendation.style : ''}</p>
               <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{oneRecommendation ? oneRecommendation.brewery : ''}</p>  
@@ -214,7 +226,7 @@ function HomePage() {
         <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
         <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
           <Paper elevation={3} style={{paddingTop:'5px'}}>
-            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} height='170'/>
+            <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} alt={randomBeer[0].image_desc} height='170'/>
             <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
             <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
             <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
@@ -224,8 +236,8 @@ function HomePage() {
         </>}
 
 
-      {recommendedBeers.length > 0 ?
-        <Button style={{marginTop:'15px'}} onClick={fetchAllBeers}>Refresh Beer</Button>  
+      {recommendationsNumber === 5  && recommendedBeers.length > 0 ?
+        <Button style={{marginTop:'15px'}} onClick={() => setRecommendationsNumber(10)}>Show More Beers</Button>  
       : <div></div> }
       
     </div>

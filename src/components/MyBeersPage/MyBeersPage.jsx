@@ -64,9 +64,11 @@ function MyBeersPage() {
           return (
             <Grid container key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)} >
               <Paper elevation={3} style={{paddingTop:'5px'}}>
-                <img className="randomImage" src={beer.image} height='180'/>
+                <div style={{minHeight: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                  <img className="randomImage" src={beer.image} alt={beer.image_desc} style={{maxHeight: '180px', maxWidth: '210px'}}/>
+                </div>
                 <div style={{display: 'flex', flexDirection:'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <div style={{width: '80%'}}>
+                  <div style={{width: '80%', display: 'flex', flexDirection:'column'}}>
                     <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
                     <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
                     <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p> 

@@ -70,7 +70,7 @@ function WantToTryPage() {
             <Grid key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)}>
               <Paper elevation={2}>
                 <div style={{display: 'flex', alignContent: 'center', alignItems: 'center'}}>
-                  <img src={beer.image} width='80' style={{padding: '15px 10px'}}/>
+                  <img src={beer.image} alt={beer.image_desc} style={{padding: '15px 10px', maxHeight: '80px', maxWidth: '80px'}}/>
                   <div style={{width: '80%'}}>
                     <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
                     <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>

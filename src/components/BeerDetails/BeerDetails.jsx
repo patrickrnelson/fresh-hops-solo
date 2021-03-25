@@ -55,10 +55,14 @@ function BeerDetails() {
 
   // Button changes, and depending on what button is, different dispatches occur
   const buttonClick = () => {
-    if(buttonText === "Add to 'Want to Try'") {
+    if(buttonText === "Add to 'I Want to Try'" || buttonText === "Add to 'My Beers'") {
       dispatch({
         type: 'SAVE_BEER',
-        payload: {id: beerDetails[0].beer_id}
+        payload: {
+          id: beerDetails[0].beer_id,
+          has_tried: triedStatus,
+          is_liked: likeStatus
+        }
       })
       history.push('/wanttotry')
     }

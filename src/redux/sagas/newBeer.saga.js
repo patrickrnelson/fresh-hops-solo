@@ -3,17 +3,24 @@ import axios from 'axios';
 
 function* addNewBeer(action) {
   try {
-
     // send post data to the server
     yield axios.post(`/api/beer/addnew`, action.payload);
     console.log('POST new beer - payload', action.payload);
 
-    // Will eventually need to SET user beers
-    // yield put({ type: 'SET_USER_BEERS', payload: characteristics.data });
-
   } catch (error) {
     console.log('Error posting new beer', error);
   }
+}
+
+function* adminAddBeer(action) {
+  try {
+    yield axios.post(`/api/beer/adminaddbeer`, action.payload);
+    console.log('POST admin add beer');
+  } 
+  catch (error) {
+    console.log('Error adding new beer - admin', error);
+  }
+
 }
 
 // if a user saves the displayed random beer
@@ -28,7 +35,8 @@ function* saveBeer(action) {
 
 function* addNewBeerSaga() {
   yield takeLatest('ADD_NEW_BEER', addNewBeer);
-  yield takeLatest('SAVE_BEER', saveBeer)
+  yield takeLatest('SAVE_BEER', saveBeer);
+  yield takeLatest('ADMIN_ADD_BEER', adminAddBeer)
 }
 
 export default addNewBeerSaga;
