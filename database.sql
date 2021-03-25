@@ -22,7 +22,7 @@ CREATE TABLE "breweries" (
 
 CREATE TABLE "characteristics" (
 	"id" SERIAL PRIMARY KEY,
-	"characteristic" VARCHAR (30) NOT NULL
+	"characteristic" VARCHAR (30) UNIQUE NOT NULL
 
 
 CREATE TABLE "beers" (

@@ -43,8 +43,6 @@ function StatusChangeInputs({
       setHaveTriedColor('inherit')
       setNotTriedColor('inherit')
 
-      setButtonText("Add to 'I Want to Try'");
-
     }
     // if anything changes, change the save changes button to indicate that the user needs to save
     setSaveChangesColor('primary')
@@ -62,6 +60,8 @@ function StatusChangeInputs({
       setTriedStatus(false);
       setHaveTriedColor('inherit')
       setNotTriedColor('secondary')
+
+      setButtonText("Add to 'I Want to Try'");
     }
     else {
       setTriedStatus(null)

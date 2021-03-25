@@ -33,6 +33,17 @@ function SearchBeersPage() {
 
   const allBeers = useSelector(store => store.allBeers);
   const userBeers = useSelector(store => store.userBeers);
+  const breweries = useSelector(store => store.breweries);
+
+  useEffect(() => {
+    fetchUserBeers();
+  }, []);
+
+  const fetchUserBeers = () => {
+    dispatch ({
+      type: 'FETCH_USER_BEERS'
+    })
+  }
 
   const handleBeerClick = (beerId) => {
     // defines how the details page will render
@@ -130,37 +141,25 @@ function SearchBeersPage() {
     {type: 'Pale Ale'},
   ]);
 
-  // Data for Autocomplete input
-  const [breweries, setBreweries] = useState([ 
-    {name: 'Pryes Brewing Co.'},
-    {name: 'Indeed Brewing Co.'},
-    {name: 'Modist Brewing Co.'},
-    {name: 'Fulton Beer'},
-    {name: 'Castle Danger Brewing'},
-    {name: 'Inbound Brew Co.'},
-    {name: 'Dangerous Man Brewing Co.'},
-    {name: 'Falling Knife Brewing Co.'},
-    {name: 'Able Seedhouse + Brewery'},
-    {name: 'Bauhaus Brew Labs'},
-    {name: 'Voyageur Brewing Co.'},
-    {name: 'Fair State Brewing Cooperative'},
-    {name: ''},
-  ]);
-
   return (
     <>
-    <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-      <IconButton onClick={() => {history.goBack();}}>
-        <ArrowBackIcon /><p>Back</p>
-      </IconButton>
-      <Header />
-    </div>
+    <Header />
     <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h2>
 
     <Grid container spacing={3} alignItems='center' justify='center' >
       {/* Beer Name input */}
-      <Grid item xs={11} style={{display: 'flex', justifyContent: 'center'}}>
-        <Autocomplete
+      <Grid item xs={10} style={{display: 'flex', justifyContent: 'center'}}>
+      <TextField 
+        label="Beer Name" 
+        variant="filled" 
+        id="beer name" 
+        required
+        autoComplete="off"
+        fullWidth
+        value={beerName}
+        onChange={(event) => setBeerName(event.target.value)}
+        />
+        {/* <Autocomplete
           value={beerName}
           onChange={(event, newValue) => {setBeerName(newValue)}}
           inputValue={beerNameInputValue}
@@ -173,7 +172,7 @@ function SearchBeersPage() {
           style={{ width: 300 }}
           renderInput={(params) => 
             <TextField {...params} label="Beer Name" variant="filled" fullWidth />}
-        />
+        /> */}
       </Grid>
       
       {/* Brewery Autocomplete Input */}
@@ -222,17 +221,17 @@ function SearchBeersPage() {
         if(
           beer.style_name.toLowerCase().includes(beerTypeInputValue.toLowerCase()) && 
           beer.brewery.toLowerCase().includes(breweryInputValue.toLowerCase()) && 
-          beer.beer.toLowerCase().includes(beerNameInputValue.toLowerCase()))
+          beer.beer.toLowerCase().includes(beerName.toLowerCase()))
         {
           return (
             <Grid key={beer.beer_id} className={classes.root} justify='center' onClick={() => handleBeerClick(beer.beer_id)}>
-              <Paper elevation={2}>
+              <Paper elevation={2} height='100%'>
                 <div style={{display: 'flex', alignContent: 'center', alignItems: 'center'}}>
-                  <img src={beer.image} width='80' style={{padding: '15px 10px'}}/>
+                  <img src={beer.image} alt={beer.image_desc} style={{padding: '15px 10px', maxHeight: '80px', maxWidth: '80px'}}/>
                   <div style={{width: '80%'}}>
-                    <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
-                    <p style={{ paddingLeft: '10px' }}>{beer.style_name}</p>
-                    <p style={{ paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
+                    <h3 style={{ fontSize: '19px', paddingLeft: '10px', paddingTop: '10px'}}>{beer.beer}</h3>
+                    <p style={{ fontSize: '15px', paddingLeft: '10px' }}>{beer.style_name}</p>
+                    <p style={{ fontSize: '14px', paddingLeft: '10px', fontStyle: 'italic'}}>{beer.brewery}</p>  
                   </div>
                 </div>
               </Paper>
