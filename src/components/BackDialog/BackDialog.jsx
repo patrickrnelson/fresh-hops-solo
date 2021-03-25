@@ -20,12 +20,12 @@ export default function BackDialog({buttonClick}) {
     setOpen(true);
   };
 
-  const handleConfirm = () => {
-    history.goBack();
+  const handleStayOnPage = () => {
     setOpen(false);
   }
 
-  const handleCancel = () => {
+  const handleGoBack = () => {
+    history.goBack();
     setOpen(false);
   };
 
@@ -36,7 +36,7 @@ export default function BackDialog({buttonClick}) {
       </IconButton>
       <Dialog
         open={open}
-        onClose={handleCancel}
+        onClose={handleStayOnPage}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">{"Abandon Changes?"}</DialogTitle>
@@ -46,11 +46,11 @@ export default function BackDialog({buttonClick}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCancel} color="primary">
-            Stay
+          <Button autoFocus onClick={handleGoBack} color="primary">
+            Previous Page
           </Button>
-          <Button onClick={handleConfirm} color="primary" variant='contained' autoFocus>
-            Go Back
+          <Button onClick={handleStayOnPage} color="primary" variant='contained' autoFocus>
+            Stay on Page
           </Button>
         </DialogActions>
       </Dialog>

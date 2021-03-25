@@ -109,8 +109,8 @@ function StatusChangeInputs({
       <Grid item>
         <p>Have you drank this beer?</p>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
-          <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
           <Button onClick={triedClick} color={haveTriedColor}>YES</Button>
+          <Button onClick={notTriedClick} color={notTriedColor}>NO</Button>
         </div>
       </Grid>
       {/* If the user has tried the beer, allow them to say if they liked it */}
@@ -120,11 +120,11 @@ function StatusChangeInputs({
           <p>Did you like this beer?</p>
         </div>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
-          <IconButton onClick={dislikeClick}>
-            <ThumbDownAltIcon color={thumbsDownColor}/>
-          </IconButton>
           <IconButton onClick={likeClick}>
             <ThumbUpAltIcon color={thumbsUpColor}/>
+          </IconButton>
+          <IconButton onClick={dislikeClick}>
+            <ThumbDownAltIcon color={thumbsDownColor}/>
           </IconButton>
         </div>
       </Grid>
