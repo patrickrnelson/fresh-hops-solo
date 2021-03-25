@@ -55,7 +55,6 @@ function HomePage() {
     })
   }
 
-
   const loadRecommendations = () => {
     let recommendations = [];
     console.log('Get Recs');
@@ -107,6 +106,7 @@ function HomePage() {
           image: beer.image});
       }
     }
+    // Remove beers from the recommendations array that are also in userBeers list
     // loop through the recommendations list & the userBeers list
     const removeDuplicates = () => {
       for(let myBeer of userBeers) {
@@ -129,7 +129,7 @@ function HomePage() {
       if(recommendations.length <= 10) {
         return setRecommendedBeers(recommendations)
       }
-      // ELSE if the list is larger than 5
+      // ELSE if the list is larger than 10
       // loop through the list to determine the lowest score...
       else if(recommendations.length > 10) {
         let lowestScore = recommendations[0].score;
