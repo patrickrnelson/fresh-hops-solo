@@ -2,7 +2,8 @@ CREATE TABLE "users" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
-    "name" varchar(255) NOT NULL
+    "name" varchar(256) NOT NULL,
+    "authLevel" VARCHAR(30) DEFAULT 'USER'
 );
 
 CREATE TABLE "styles" (
@@ -17,7 +18,9 @@ CREATE TABLE "dominant_flavors" (
 
 CREATE TABLE "breweries" (
 	"id" SERIAL PRIMARY KEY,
-	"name" VARCHAR (100) NOT NULL
+	"name" VARCHAR (100) NOT NULL,
+  "image_url" VARCHAR (1000),
+  "image_desc" VARCHAR (256)
 );
 
 CREATE TABLE "characteristics" (
@@ -49,7 +52,9 @@ CREATE TABLE "beer_characteristics" (
 CREATE TABLE "user_beers" (
   "id" SERIAL PRIMARY KEY,
   "user_id" INT REFERENCES "users",
-  "beer_id" INT REFERENCES "beers"
+  "beer_id" INT REFERENCES "beers",
+  "is_liked" boolean,
+  "has_tried" DEFAULT false
 );
 
 INSERT INTO "dominant_flavors" ("flavor_name")
@@ -99,15 +104,15 @@ VALUES ('IPA'),
 ('Saison'),
 ('Pale Ale');
 
-INSERT INTO "breweries" ("name", "image_url")
-VALUES ('Pryes', 'https://lh3.ggpht.com/9mxyCSyWYzSl1YecJaHQ5CyvYtsvEZq3y2k1fJwwVjhudsZbJYS1c0gVWBHm9USAtgs-Et9kqkAU13FF_BQFwQBnp8YwuA=s750'), 
-  ('Modist', 'https://swag.modistbrewing.com/uploads/b/919d6d60-67bc-11ea-8f20-bfa72d20fbcf/store%20logo.jpg'), 
-  ('Dangerous Man', 'https://i.pinimg.com/originals/99/79/85/99798521204a334461a5f95a52e87198.jpg'), 
-  ('Indeed', 'https://www.indeedbrewing.com/uploads/press-kit/Indeed_Brewing_Co__Logo_Badge_RGB.png'), 
-  ('Inbound', 'https://d2pxm94gkd1wuq.cloudfront.net/BreweryLogos/Standard/225213172.pint.glass.black.png'), 
-  ('Castle Danger', 'https://www.castledangerbrewery.com/wp-content/uploads/Castle-Danger-Brewery-Full-Color-Logo-e1447365135126.png'), 
-  ('Fulton', 'https://www.mnbeer.com/wp-content/uploads/fulton-brewing-logo-200x200.png'), 
-  ('Fair State', 'https://craftpeak-cooler-images.imgix.net/fair-state-brewing-cooperative/FS-logo-color_2x.png?auto=compress%2Cformat&ixlib=php-1.2.1');
+INSERT INTO "breweries" ("name", "image_url", "image_desc")
+VALUES ('Pryes', 'https://lh3.ggpht.com/9mxyCSyWYzSl1YecJaHQ5CyvYtsvEZq3y2k1fJwwVjhudsZbJYS1c0gVWBHm9USAtgs-Et9kqkAU13FF_BQFwQBnp8YwuA=s750', 'Pryes Brewing Logo'), 
+  ('Modist', 'https://swag.modistbrewing.com/uploads/b/919d6d60-67bc-11ea-8f20-bfa72d20fbcf/store%20logo.jpg', 'Modist Brewing Logo'), 
+  ('Dangerous Man', 'https://i.pinimg.com/originals/99/79/85/99798521204a334461a5f95a52e87198.jpg', 'Dangerous Man Brewing Logo'), 
+  ('Indeed', 'https://www.indeedbrewing.com/uploads/press-kit/Indeed_Brewing_Co__Logo_Badge_RGB.png', 'Indeed Brewing Logo'), 
+  ('Inbound', 'https://d2pxm94gkd1wuq.cloudfront.net/BreweryLogos/Standard/225213172.pint.glass.black.png', 'Inbound Brew Company Logo'), 
+  ('Castle Danger', 'https://www.castledangerbrewery.com/wp-content/uploads/Castle-Danger-Brewery-Full-Color-Logo-e1447365135126.png', 'Castle Danger Brewing Logo'), 
+  ('Fulton', 'https://www.mnbeer.com/wp-content/uploads/fulton-brewing-logo-200x200.png', 'Fulton Beer Logo'), 
+  ('Fair State', 'https://craftpeak-cooler-images.imgix.net/fair-state-brewing-cooperative/FS-logo-color_2x.png?auto=compress%2Cformat&ixlib=php-1.2.1', 'Fair State Brewing Cooperative Logo');
 
 INSERT INTO "beers" ("name", "style_id", "dominant_flavor_id", "brewery_id", "user_added")
 VALUES 
