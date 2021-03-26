@@ -208,7 +208,7 @@ function HomePage() {
         return (
           <>
           <Grid container key={oneRecommendation.id} justify='center' className='beerCards' minWidth='250px' onClick={() => handleBeerClick(oneRecommendation.id)}>
-            <Grid item lg={3} xs={9} justify='center'>
+            <Grid item lg={2} xs={9} justify='center'>
             <Paper elevation={3} style={{paddingTop:'5px'}}>
               <div style={{minHeight: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} 
