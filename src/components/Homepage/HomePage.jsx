@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './HomePage.css';
 import Header from '../Header/Header';
 
-import { Button, Paper } from '@material-ui/core';
+import { Button, Paper, Grid } from '@material-ui/core';
 
 
 function HomePage() {
@@ -207,7 +207,8 @@ function HomePage() {
       {userBeers.length > 0 ? (recommendedBeers.slice(0, recommendationsNumber)).map((oneRecommendation) => {
         return (
           <>
-          <div key={oneRecommendation.id} className='beerCards' onClick={() => handleBeerClick(oneRecommendation.id)}>
+          <Grid container key={oneRecommendation.id} justify='center' className='beerCards' minWidth='250px' onClick={() => handleBeerClick(oneRecommendation.id)}>
+            <Grid item lg={3} xs={9} justify='center'>
             <Paper elevation={3} style={{paddingTop:'5px'}}>
               <div style={{minHeight: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} 
@@ -217,21 +218,24 @@ function HomePage() {
               <p style={{ paddingLeft: '10px' }}>{oneRecommendation ? oneRecommendation.style : ''}</p>
               <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{oneRecommendation ? oneRecommendation.brewery : ''}</p>  
             </Paper>
-          </div>
+            </Grid>
+          </Grid>
           
           </>
         )
       }) 
       : <>
         <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
-        <div className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
+        <Grid container justify='center' className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
+          <Grid item lg={3} xs={9} justify='center'>
           <Paper elevation={3} style={{paddingTop:'5px'}}>
             <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} alt={randomBeer[0] ? randomBeer[0].image_desc : ''} height='170'/>
             <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>
             <p style={{ paddingLeft: '10px' }}>{randomBeer[0] ? randomBeer[0].style_name : ''}</p>
             <p style={{ paddingLeft: '10px', paddingBottom: '10px', fontStyle: 'italic'}}>{randomBeer[0] ? randomBeer[0].brewery : ''}</p>  
           </Paper>
-        </div>
+          </Grid>
+        </Grid>
         <Button onClick={fetchRandomBeer}>Refresh Beer</Button>
         </>}
 

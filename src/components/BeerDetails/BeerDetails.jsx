@@ -17,14 +17,33 @@ function BeerDetails() {
 
   // beer details from store
   const beerDetails = useSelector(store => store.beerDetails);
+  const user = useSelector(store => store.user)
 
   // defines what the button should say based on which page the user navigated from
   const [buttonText, setButtonText] = useState();
 
   // defines the current like status
-  const [likeStatus, setLikeStatus] = useState(beerDetails[0].is_liked)
+  const [likeStatus, setLikeStatus] = useState(null)
+  // On load, determine if the user has this beer in their beer list
+  // and set the like status accordingly
+  const determineLikeStatus = () => {
+    for(let i=0; i < beerDetails; i++) {
+      if(beerDetails[i].user_id === user.id) {
+        setLikeStatus(beerDetails[i].is_liked)
+      }
+    }
+  }
   // defines the current tried status
-  const [triedStatus, setTriedStatus] = useState(beerDetails[0].has_tried);
+  const [triedStatus, setTriedStatus] = useState(null);
+  // On load, determine if the user has this beer in their beer list
+  // and set the like status accordingly
+  const determineTriedStatus = () => {
+    for(let i=0; i < beerDetails; i++) {
+      if(beerDetails[i].user_id === user.id) {
+        setTriedStatus(beerDetails[i].has_tried)
+      }
+    }
+  }
 
   // render additional will render the 'like status', 'tried status', 
   // and 'save changes' button when true
@@ -40,6 +59,8 @@ function BeerDetails() {
   useEffect(() => {
     console.log('**History**', history.location.state.from);
     setRenderAdditional(false);
+    determineLikeStatus();
+    determineTriedStatus();
     // button can be 'Delete' or 'Save Beer' depending on where the user navigates from
     if(history.location.state.from === 'home' || history.location.state.from === 'search beers') {
       setButtonText("Add to 'I Want to Try'");

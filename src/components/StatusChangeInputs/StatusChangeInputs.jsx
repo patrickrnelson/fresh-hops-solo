@@ -20,10 +20,10 @@ function StatusChangeInputs({
   const beerDetails = useSelector(store => store.beerDetails);
 
   // Changes colors of buttons depending on the beerDetails
-  const [thumbsUpColor, setThumbsUpColor] = useState(beerDetails[0].is_liked ? 'primary' : 'inherit')
-  const [thumbsDownColor, setThumbsDownColor] = useState(beerDetails[0].is_liked === false ? 'secondary' : 'inherit')
-  const [haveTriedColor, setHaveTriedColor] = useState(beerDetails[0].has_tried ? 'primary' : 'inherit');
-  const [notTriedColor, setNotTriedColor] = useState(beerDetails[0].has_tried === false ? 'secondary' : 'inherit');
+  const [thumbsUpColor, setThumbsUpColor] = useState(likeStatus ? 'primary' : 'inherit')
+  const [thumbsDownColor, setThumbsDownColor] = useState(likeStatus === false ? 'secondary' : 'inherit')
+  const [haveTriedColor, setHaveTriedColor] = useState(triedStatus ? 'primary' : 'inherit');
+  const [notTriedColor, setNotTriedColor] = useState(triedStatus === false ? 'secondary' : 'inherit');
 
   // handle tried status changes and colors of inputs
   const triedClick = () => {

@@ -82,7 +82,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
       "dominant_flavors".flavor_name,
       "styles".style_name, 
       "breweries".name as "brewery", "breweries".image_url as "image", "breweries".image_desc as "image_desc",
-      "user_beers".has_tried, "user_beers".is_liked,
+      "user_beers".has_tried, "user_beers".is_liked, "user_beers".user_id,
       ARRAY_AGG("characteristics".characteristic)
     FROM "beers" 
     JOIN "styles" ON "style_id" = "styles".id
@@ -99,7 +99,8 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
       "breweries".image_url,
       "breweries".image_desc,
       "user_beers".has_tried,
-      "user_beers".is_liked; 
+      "user_beers".is_liked,
+      "user_beers".user_id; 
     `;
 
   pool
