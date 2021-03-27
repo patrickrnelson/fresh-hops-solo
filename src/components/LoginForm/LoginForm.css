@@ -1,0 +1,14 @@
+#appName {
+  font-size: 46px;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2.5px 2.5px #00CEE0;
+}
+
+.loginRegisterTitle {
+  font-weight: bolder;
+  font-size: 28px;
+  display: block;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  text-shadow: 1.5px 1.5px #00CEE0;
+}

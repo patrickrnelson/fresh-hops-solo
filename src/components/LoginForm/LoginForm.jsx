@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+import './LoginForm.css'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid';
@@ -43,7 +44,7 @@ function LoginForm() {
           />
           <h1 id='appName'>Fresh Hops</h1>
       </Grid>
-      <h2 style={{ display: 'block', marginTop: '60px', marginBottom: '15px'}}>Login</h2>
+      <h2 className='loginRegisterTitle'>Login</h2>
       {errors.loginMessage && (
         <h3 className="alert" role="alert">
           {errors.loginMessage}
@@ -57,6 +58,7 @@ function LoginForm() {
             id="username" 
             fullWidth 
             required
+            autoComplete="off"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             />

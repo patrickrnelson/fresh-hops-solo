@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 
 import { Button, Paper, Grid } from '@material-ui/core';
 
-
 function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -241,7 +240,7 @@ function HomePage() {
 
 
       {recommendationsNumber === 5  && recommendedBeers.length > 0 ?
-        <Button style={{marginTop:'15px'}} onClick={() => setRecommendationsNumber(10)}>Show More Beers</Button>  
+        <Button variant='outlined' style={{marginTop:'15px'}} onClick={() => setRecommendationsNumber(10)}>Show More Beers</Button>  
       : <div></div> }
       
     </div>
