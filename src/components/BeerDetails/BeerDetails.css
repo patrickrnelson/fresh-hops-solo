@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans&family=Pinyon+Script&display=swap');
+
+.beerTitle {
+  text-shadow: 1.5px 1.5px #00CEE0;
+  display: block;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.detailsText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: large;
+  margin: 4px 0;
+}
+
+.triedButtons {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-around;
+}

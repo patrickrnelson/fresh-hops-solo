@@ -169,7 +169,7 @@ router.get('/allbeers', rejectUnauthenticated, (req, res) => {
   FULL OUTER JOIN "user_beers" ON "user_beers".beer_id = "beers".id
   WHERE ("beers".user_added = false)
   GROUP BY "beers".id, "breweries".name, "breweries".image_url, "breweries".image_desc, "styles".style_name
-  ORDER BY "beers".name;
+  ORDER BY "beers".name, "breweries".name;
   `;
 
   pool

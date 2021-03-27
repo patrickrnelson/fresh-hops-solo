@@ -22,6 +22,10 @@ export default function DeleteDialog({buttonClick}) {
     setOpen(false);
   };
 
+  const handleDontDelete = () => {
+    setOpen(false);
+  }
+
   return (
     <div style={{width: '55%', marginTop: '10px'}} >
       <Button variant="contained" color="secondary" onClick={handleDeleteDialogue}>
@@ -39,7 +43,7 @@ export default function DeleteDialog({buttonClick}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={handleDontDelete} color="primary">
             Don't Delete
           </Button>
           <Button onClick={handleClose} color="secondary" variant='contained' autoFocus>
