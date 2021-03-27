@@ -125,6 +125,13 @@ function BeerDetails() {
     switchPages();
   } // end update beer
 
+  const handleBackClick = () => {
+    dispatch({
+      type: 'CLEAR_BEER_DETAILS'
+    })
+    history.goBack();
+  }
+
   // After user clicks 'Save Changes' we navigate them to either the my beers page or the want to try page
   // depending on if they have tried the beer or not
   const switchPages = () => {
@@ -136,7 +143,7 @@ function BeerDetails() {
       {/* Back button & Hamburger menu */}
       <div style={{ display: 'flex', justifyContent: 'space-between'}}>
         {saveChangesColor == 'primary' ? <BackDialog /> 
-        : <IconButton onClick={() => {history.goBack();}}>
+        : <IconButton onClick={handleBackClick}>
             <ArrowBackIcon /><p>Back</p>
           </IconButton>}
         <Header />

@@ -2,6 +2,8 @@ const beerDetailsReducer = (state = [{array_agg: [], beer: '', brewery: '', flav
   switch (action.type) {
     case 'SET_BEER_DETAILS':
       return action.payload;
+    case 'CLEAR_BEER_DETAILS':
+      return state;
     default:
       return state;
   }
