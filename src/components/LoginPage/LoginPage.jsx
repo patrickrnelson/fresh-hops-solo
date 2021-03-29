@@ -12,12 +12,12 @@ function LoginPage() {
   }
 
   return (
-    <div style={{justifyContent: 'center'}}>
+    <div>
       
       
       <LoginForm />
 
-      <center>
+      <center style={{alignItems='center', justifyContent: 'center'}}>
         <Button
           variant="contained"
           type="button"
