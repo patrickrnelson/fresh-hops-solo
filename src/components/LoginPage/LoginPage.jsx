@@ -12,7 +12,7 @@ function LoginPage() {
   }
 
   return (
-    <div>
+    <div style={{justifyContent: 'center'}}>
       
       
       <LoginForm />
