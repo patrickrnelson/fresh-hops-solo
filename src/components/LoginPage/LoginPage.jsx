@@ -17,7 +17,7 @@ function LoginPage() {
       
       <LoginForm />
 
-      <center style={{alignItems='center', justifyContent: 'center'}}>
+      <center style={{alignItems:'center', justifyContent: 'center'}}>
         <Button
           variant="contained"
           type="button"
