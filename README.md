@@ -1,121 +1,70 @@
+# Fresh Hops - Solo Project
 
-# EDA Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+## Description
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+See the [Fresh Hops app](http://fresh-hops.herokuapp.com/#/home) in action. Hosted on Heroku
 
-## Use the Template for This Repository (Don't Clone)
+_Duration: Three Week Sprint_
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+Fresh Hops is my solo project built for Prime Digital Academy. The app allows users to track beers that they drink, designate whether or not they liked a beer, and receive recommendations for new beers to try based on their liked beers. The recommendations are served using a custom algorithm that I developed. 
 
+## Screen Shots
 
-## Prerequisites
+Login Page  
 
-Before you get started, make sure you have the following software installed on your computer:
+<img src="./public/images/login-page.png" alt="Login Page image" width="300"/>  
 
+Searching and Finding a Beer  
+
+<img src="./public/images/searching_beers.gif" alt="Searching beers gif" width="300"/>  
+
+Adding a beer to 'My Beers' list  
+
+<img src="./public/images/adding_beer.gif" alt="Adding a beer to 'My Beers' list gif" width="300"/>  
+
+Custom Recommendations  
+
+<img src="./public/images/custom_recs.gif" alt="Custom recommendations gif" width="300"/>  
+
+Changing the status of a beer
+
+<img src="./public/images/change_tried_status.gif" alt="Changing the status of a beer gif" width="300"/>
+
+### Prerequisites
+
+- [React.js](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
 - [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
+- [Postico](https://eggerapps.at/postico/)
+- [PostgreSQL](https://www.postgresql.org/download/)
 
-## Create database and table
+## Installation
 
-Create a new database called `prime_app` and create a `user` table:
+1. Download the code from GitHub and open in an editor of your choice.
+2. Create a database named `fresh-hops`.
+3. The queries in the `database.sql` file are set up to create all the necessary tables and populate the needed data to allow the application to run correctly. This project is built on [Postgres](https://www.postgresql.org/download/), so you will need to make sure to have that installed. We recommend using Postico to run those queries as that was used to create the queries.
+4. Open up your editor of choice and run `npm install` in your terminal. 
+5. Run `npm run server` in your terminal.
+6. Run `npm run client` in your terminal, which will open a new browser tab for you.
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+## Usage
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+1. Open the fresh hops app in a browser of your choice. Keep in mind, the app is optimized for mobile views.
+2. Register for an account or Login if you have an existing account.
+3. Click 'Search Beers' Button on the homepage, or open the menu on the right and click 'Search all Beers.'
+4. On the Search Beers page use the search bars to find a beer that you like in Minneapolis.
+5. Click on a beer card to see more information about the beer. 
+6. If you have tried the selected beer, click 'Yes' under the 'Have you tried this beer?' section.
+7. When you click 'Yes', a thumbs up and thumbs down icon will appear and you can designate whether or not you like the beer.
+8. Once those fields are filled out, you can click the 'Add' button, and the app will add the beer to the appropriate list - 'My Beers' if you have tried the beer, or 'I Want to Try' if you have not tried the beer.
+9. If you indicated that you have tried AND liked the beer, then fresh hops will find similar beers and you can find those recommendations when you go back to the home page. 
+10. As a user, you are able to delete beers out of your 'My Beers' list and/or out of your 'I Want to Try' list. 
+11. You are also able to switch whether or not you have tried a beer, or whether or not you liked a beer by clicking on the beer card to see the details of that beer.
 
-## Development Setup Instructions
+## Built With
 
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
+This application is built with HTML, CSS, Javascript, Axios, React, Redux, Redux Sagas, Express, PostgreSQL, and MaterialUI.
 
-## Debugging
+## Acknowledgement
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. [Import the sample routes JSON file](./PostmanPrimeSoloRoutes.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+Thanks to [Prime Digital Academy](www.primeacademy.io), and specifically Edan Schwartz, and Chad Smith who equipped me with the knowledge that helped me to make this application a reality.
