@@ -13,6 +13,23 @@ function RegisterForm() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
+
+  function randomNumber(maxInt) {
+    return Math.floor(Math.random() * maxInt);
+  }
+
+  let transactionId = randomNumber(9999);
+  let registrationId = randomNumber(99999);
+  let identityId = randomNumber(999999);
+  
+  var event_and_custom_data = {
+    "transaction_id": `tras_Id_${transactionId}`,
+    "description": "Successful Register",
+    "registration_id": registrationId
+  };
+
+  var customer_event_alias = "Thanks for Registering";
+
   const registerUser = (event) => {
     event.preventDefault();
 
@@ -24,7 +41,23 @@ function RegisterForm() {
         name: name
       },
     });
+
+    console.log('transactionId', transactionId);
+    console.log('registrationId', registrationId);
+
+    branch.setIdentity(identityId, function (err, data) {
+      console.log(err, data);
+    });
+
+    branch.logEvent(
+      "COMPLETE_REGISTRATION",
+      event_and_custom_data,
+      customer_event_alias,
+      function(err) { console.log(err); }
+    );
   }; // end registerUser
+
+  
 
   return (
     <form className="formPanel" onSubmit={registerUser} style={{marginTop: '80px'}}>
