@@ -13,6 +13,16 @@ function RegisterForm() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
+  var event_and_custom_data = {
+    "transaction_id": "tras_Id_1234",
+    "description": "Successful Register",
+    "registration_id": "12345"
+  };
+
+  var customer_event_alias = "Custom Alias";
+
+ 
+
   const registerUser = (event) => {
     event.preventDefault();
 
@@ -24,7 +34,16 @@ function RegisterForm() {
         name: name
       },
     });
+
+    branch.logEvent(
+      "COMPLETE_REGISTRATION",
+      event_and_custom_data,
+      customer_event_alias,
+      function(err) { console.log(err); }
+    );
   }; // end registerUser
+
+  
 
   return (
     <form className="formPanel" onSubmit={registerUser} style={{marginTop: '80px'}}>

@@ -25,6 +25,9 @@ function LoginForm() {
           password: password,
         },
       });
+      branch.setIdentity('123456', function (err, data) {
+        console.log(err, data);
+      });
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
