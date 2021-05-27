@@ -13,7 +13,6 @@ function RegisterForm() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
-
   function randomNumber(maxInt) {
     return Math.floor(Math.random() * maxInt);
   }
@@ -22,13 +21,14 @@ function RegisterForm() {
   let registrationId = randomNumber(99999);
   let identityId = randomNumber(999999);
   
-  var event_and_custom_data = {
+  /* -- Data for Branch tracking -- */
+  let event_and_custom_data = {
     "transaction_id": `tras_Id_${transactionId}`,
     "description": "Successful Register",
     "registration_id": registrationId
   };
 
-  var customer_event_alias = "Thanks for Registering";
+  let customer_event_alias = "Thanks for Registering";
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -49,6 +49,7 @@ function RegisterForm() {
       console.log(err, data);
     });
 
+    /* -- Branch tracking successful registrations -- */
     branch.logEvent(
       "COMPLETE_REGISTRATION",
       event_and_custom_data,
