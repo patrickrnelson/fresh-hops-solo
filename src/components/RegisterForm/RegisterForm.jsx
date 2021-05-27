@@ -20,6 +20,7 @@ function RegisterForm() {
 
   let transactionId = randomNumber(9999);
   let registrationId = randomNumber(99999);
+  let identityId = randomNumber(999999);
   
   var event_and_custom_data = {
     "transaction_id": `tras_Id_${transactionId}`,
@@ -43,6 +44,10 @@ function RegisterForm() {
 
     console.log('transactionId', transactionId);
     console.log('registrationId', registrationId);
+
+    branch.setIdentity(identityId, function (err, data) {
+      console.log(err, data);
+    });
 
     branch.logEvent(
       "COMPLETE_REGISTRATION",

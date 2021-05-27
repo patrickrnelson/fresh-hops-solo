@@ -1,6 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+const handleLogOut = () => {
+  dispatch({ type: 'LOGOUT' })
+
+  branch.logout();
+}
+
 function LogOutButton(props) {
   const dispatch = useDispatch();
   return (
@@ -9,7 +15,7 @@ function LogOutButton(props) {
       // because it's styled differently depending on where it is used, the className
       // is passed to it from it's parents through React props
       className={props.className}
-      onClick={() => dispatch({ type: 'LOGOUT' })}
+      onClick={() => handleLogOut}
     >
       Log Out
     </button>
