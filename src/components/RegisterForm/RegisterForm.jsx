@@ -13,15 +13,21 @@ function RegisterForm() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
+
+  function randomNumber(maxInt) {
+    return Math.floor(Math.random() * maxInt);
+  }
+
+  let transactionId = randomNumber(9999);
+  let registrationId = randomNumber(99999);
+  
   var event_and_custom_data = {
-    "transaction_id": "tras_Id_1234",
+    "transaction_id": `tras_Id_${transactionId}`,
     "description": "Successful Register",
-    "registration_id": "12345"
+    "registration_id": registrationId
   };
 
-  var customer_event_alias = "Custom Alias";
-
- 
+  var customer_event_alias = "Thanks for Registering";
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -34,6 +40,9 @@ function RegisterForm() {
         name: name
       },
     });
+
+    console.log('transactionId', transactionId);
+    console.log('registrationId', registrationId);
 
     branch.logEvent(
       "COMPLETE_REGISTRATION",
