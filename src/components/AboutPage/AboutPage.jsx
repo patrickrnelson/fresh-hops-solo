@@ -13,12 +13,12 @@ function AboutPage() {
 
   return (
     <>
-      <h1 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>My Beers</h1>
+      <h1 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>About</h1>
       <div className="container" style={{justifyContent: 'center', alignItems: 'center', textAlign:'center', marginTop: '20px'}}>
         <div>
           <p> Fresh Hops helps you find yummy local beers that fit your taste. You love beer, Fresh Hops loves beer, this is where the magic happens.</p>
         </div>
-        <Button style={{marginTop: '20px'}} onClick={() => {history.goBack();}}>
+        <Button color='secondary' style={{marginTop: '20px'}} onClick={() => {history.goBack();}}>
           Back to Login
         </Button>
       </div>
