@@ -207,7 +207,7 @@ function HomePage() {
         return (
           <>
           <Grid container key={oneRecommendation.id} justify='center' className='beerCards' minWidth='250px' onClick={() => handleBeerClick(oneRecommendation.id)}>
-            <Grid item lg={2} xs={9} justify='center'>
+            <Grid item lg={3} xs={9} justify='center'>
             <Paper elevation={3} style={{paddingTop:'5px'}}>
               <div style={{minHeight: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <img className="randomImage" src ={oneRecommendation ? oneRecommendation.image : ''} 
@@ -226,7 +226,7 @@ function HomePage() {
       : <>
         <h2 style={{marginTop:'20px'}}>Random Beer:</h2>
         <Grid container justify='center' className='beerCards' onClick={() => handleBeerClick(randomBeer[0].beer_id)}>
-          <Grid item lg={3} xs={9} justify='center'>
+          <Grid item lg={4} xs={9} justify='center'>
           <Paper elevation={3} style={{paddingTop:'5px'}}>
             <img className="randomImage" src ={randomBeer[0] ? randomBeer[0].image : ''} alt={randomBeer[0] ? randomBeer[0].image_desc : ''} height='170'/>
             <h3 style={{ paddingLeft: '10px', paddingTop: '10px'}}>{randomBeer[0] ? randomBeer[0].beer : ''}</h3>

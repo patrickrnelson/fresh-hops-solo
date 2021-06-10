@@ -12,3 +12,10 @@
   margin-bottom: 15px;
   text-shadow: 1.5px 1.5px #00CEE0;
 }
+
+.alert {
+  font-size: 16px;
+  color: rgb(255, 81, 81);
+  font-weight: bold;
+  margin-bottom: 20px;
+}

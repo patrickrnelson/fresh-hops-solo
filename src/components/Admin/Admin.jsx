@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import './Admin.css'
+
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 function Admin() {
   const dispatch = useDispatch();
@@ -33,78 +37,92 @@ function Admin() {
 
   return (
     <>
-    <div>
-      <h2 style={{ display: 'block', marginTop: '45px', marginBottom: '40px', marginLeft: '20px'}}>Admin</h2>
-    </div>
-    <div style={{textAlign: 'center'}}>
-      <h3>Add A New Beer</h3>
-      <div style={{width: '80%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Beer Name
+      <div className='pageTitle'>
+        <h2>Admin</h2>
+      </div>
+
+      {/* -- Beer Name Input -- */}
+      <div className='formContainer'>
+        <h3>Add A New Beer</h3>
+        <div className='formField'>
+          <label for='beerName'> Beer Name </label>
           <input 
             type='text'
+            id='beerName'
             value={newBeerName}
             onChange={(event) =>  setNewBeerName(event.target.value)} />
-        </label>
-      </div>
-      <div style={{width: '80%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Brewery
+        </div>
+
+        {/* Brewery name Input */}
+        <div className='formField'>
+          <label for='breweryName'> Brewery </label>
           <input 
             type='text'
+            id='breweryName'
             value={newBeerBrewery}
             onChange={(event) =>  setNewBeerBrewery(event.target.value)} />
-        </label>
-      </div>
-      <div style={{width: '80%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Beer Style
+        </div>
+
+        {/* Beer Style Input */}
+        <div className='formField'>
+          <label for='beerStyle'> Beer Style </label>
           <input 
             type='text'
+            id='beerStyle'
             value={newBeerType}
             onChange={(event) =>  setNewBeerType(event.target.value)} />
-        </label>
-      </div>
-      <div style={{width: '80%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Dominant Flavor
+        </div>
+
+        {/* -- Dominant Flavor Dropdown -- */}
+        <div className='formField'>
+          <label for='dominantFlavor'> Dominant Flavor </label>
           <select
-            type="text" 
+            type="text"
+            id='dominantFlavor' 
             value={beerDominantFlavor}
             onChange={(event) => {setBeerDominantFlavor(event.target.value)}}
           >
-          <option value="">--Select Flavor--</option>
-            {dominantFlavors.map((flavor) => {
-                return (
-                  <option key={flavor.id}>{flavor.flavor_name}</option>
-                )
-              }
-            )}
+            <option value="">--Select Flavor--</option>
+              {dominantFlavors.map((flavor) => {
+                  return (
+                    <option key={flavor.id}>{flavor.flavor_name}</option>
+                  )
+                }
+              )}
           </select>
-        </label>
-      </div>  
-      <div style={{width: '90%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Characteristic One
+        </div>  
+
+        {/* -- Characteristic One Input -- */}
+        <div className='formField'>
+          <label for='characteristicOne'> Characteristic One </label>
           <input 
             type='text'
+            id='characteristicOne'
             value={characteristicOne}
             onChange={(event) =>  setCharacteristicOne(event.target.value)} />
-        </label>
-      </div>
-      <div style={{width: '90%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Characteristic Two
+        </div>
+
+        {/* -- Characteristic Two Input-- */}
+        <div className='formField'>
+          <label for='characteristicTwo'>Characteristic Two</label> 
           <input 
             type='text'
+            id='characteristicTwo'
             value={characteristicTwo}
             onChange={(event) =>  setCharacteristicTwo(event.target.value)} />
-        </label>
-      </div>
-      <div style={{width: '90%', textAlign: 'center', display: 'flex', flexDirection: 'column'}}>
-        <label> Characteristic Three
+        </div>
+
+        {/* -- Characteristic Three Input -- */}
+        <div className='formField'>
+          <label for='characteristicThree'> Characteristic Three </label>
           <input 
             type='text'
+            id='characteristicThree'
             value={characteristicThree}
             onChange={(event) =>  setCharacteristicThree(event.target.value)} />
-        </label>
+        </div>
+        <Button variant='outlined' type="submit" style={{marginTop: 20}} onClick={handleSubmit}>Add Beer</Button>
       </div>
-      <button type="submit" onClick={handleSubmit}>Add Beer</button>
-    </div>
     </>
   )
 }
