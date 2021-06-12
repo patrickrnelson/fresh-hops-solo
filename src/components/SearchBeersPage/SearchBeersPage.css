@@ -1,0 +1,15 @@
+.pageTitle {
+  margin-left: 400px;
+  font-size: 24px;
+  display: block;
+  margin-top: 45px; 
+  margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    margin-left: 20px;
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+}

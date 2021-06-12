@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Header from '../Header/Header';
+import './SearchBeersPage.css'
 
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -142,20 +143,22 @@ function SearchBeersPage() {
   return (
     <>
     <Header />
-    <h1 style={{ display: 'block', marginTop: '45px', marginBottom: '20px', marginLeft: '20px'}}>Search Beers</h1>
+    <div className='pageTitle'>
+      <h2>Search Beers</h2>
+    </div>
 
     <Grid container spacing={3} alignItems='center' justify='center' >
       {/* Beer Name input */}
       <Grid item xs={10} style={{display: 'flex', justifyContent: 'center'}}>
-      <TextField 
-        label="Beer Name" 
-        variant="filled" 
-        id="beer name" 
-        required
-        autoComplete="off"
-        fullWidth
-        value={beerName}
-        onChange={(event) => setBeerName(event.target.value)}
+        <TextField 
+          label="Beer Name" 
+          variant="filled" 
+          id="beer name" 
+          required
+          style={{ width: 300 }}
+          autoComplete="off"
+          value={beerName}
+          onChange={(event) => setBeerName(event.target.value)}
         />
         {/* <Autocomplete
           value={beerName}
