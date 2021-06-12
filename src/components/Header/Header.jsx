@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
+import { useRadioGroup } from '@material-ui/core';
 
 // Material UI styles
 const useStyles = makeStyles({
@@ -28,6 +29,8 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  const user = useSelector((store) => store.user);
 
   // local state for drawer (hamburger menu)
   const [drawer, setDrawer] = useState(false);
@@ -84,6 +87,17 @@ function Header() {
         <Grid item xs={9}>
           <Link className='drawerLinks' id="wantToTryLink" onClick={() => history.push('/wanttotry')}>I Want to Try</Link>
         </Grid>
+        {user.authLevel === 'ADMIN' ?
+          <>
+          <p style={{marginTop: '35px', marginBottom: '5px', marginLeft: '12px', textDecoration:'underline'}}>ADMIN</p>
+          <Grid item xs={9}>
+            <Link className='drawerLinks' id="wantToTryLink" onClick={() => history.push('/admin')}>Add a Beer</Link>
+          </Grid>
+          </>
+          :
+          null
+        }
+        
         <Button onClick={handleLogout} className={classes.logOut}>Log Out</Button>
       </Grid>
     </div>

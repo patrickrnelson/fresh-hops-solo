@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './Admin.css'
 
 import Button from '@material-ui/core/Button';
@@ -7,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 function Admin() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const dominantFlavors = useSelector(store => store.dominantFlavors);
 
@@ -37,6 +39,10 @@ function Admin() {
 
   return (
     <>
+      {/* Back Button */}
+      <Button style={{margin: '10px'}} onClick={() => history.push('/home')}>Back to Home</Button>
+
+      {/* Page Title */}
       <div className='pageTitle'>
         <h2>Admin</h2>
       </div>
