@@ -5,6 +5,7 @@ import BackDialog from '../BackDialog/BackDialog'
 import Header from '../Header/Header';
 import DeleteDialog from '../DeleteDialog/DeleteDialog';
 import StatusChangeInputs from '../StatusChangeInputs/StatusChangeInputs';
+
 import './BeerDetails.css'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -150,10 +151,12 @@ function BeerDetails() {
       </div>
 
       {/* Page Title */}
-      <h1 className='beerTitle' style={{ }}>{beerDetails[0].beer}</h1>
+      <div className='pageTitle'>
+        <h2 className='beerTitle' style={{ }}>{beerDetails[0].beer}</h2>
+      </div>
 
       {/* Beer Information */}
-      <div style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
+      <div className='beerInfoDiv' style={{ marginTop: '30px', marginBottom: '15px', marginLeft: '20px'}}>
         <h2>Name</h2>
         <p className="detailsText">{beerDetails[0].beer}</p>
 

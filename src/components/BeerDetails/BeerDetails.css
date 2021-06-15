@@ -1,11 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans&family=Pinyon+Script&display=swap');
 
+.pageTitle {
+  margin-left: 400px;
+  font-size: 24px;
+  display: block;
+  margin-top: 40px; 
+  margin-bottom: 60px;
+}
+
+.beerInfoDiv {
+  
+}
+
 .beerTitle {
   text-shadow: 1.5px 1.5px #00CEE0;
   display: block;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  margin-left: 20px;
 }
 
 .detailsText {
@@ -19,3 +28,12 @@
   display: flex;
   justify-content: space-around;
 }
+
+@media (max-width: 768px) {
+  .pageTitle {
+    margin-left: 20px;
+    font-size: 20px;
+    margin-bottom: 40px;
+  }
+}
+
